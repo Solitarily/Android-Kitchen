@@ -1,0 +1,20 @@
+
+# qie F1 by hqapk 论坛：www.hqapk.com 
+
+change_mnt=yes
+
+param1=ext4
+param2=EMMC
+
+param1_sdcard=vfat
+param2_sdcard=MTD
+
+sys_mnt=\/dev\/block\/mmcblk0p17
+cache_mnt=\/dev\/block\/mmcblk0p18
+boot_mnt=\/dev\/block\/mmcblk0p16
+data_mnt=\/dev\/block\/mmcblk0p21
+sdcard_mnt=???
+modem_mnt=\/dev\/block\/mmcblk0p7
+
+fix_boot=yes
+

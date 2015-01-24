@@ -1,26 +1,24 @@
 ############################################################################
 #
-# Copyright (c) 2012 - dsixda (dislam@rocketmail.com)
+# 本定制工具完全免费，由DsiXDA开发，由“ 半指遮天 ”完成汉化翻译。
 #
-# Android Kitchen is 100% free.  This script file is intended for personal
-# and/or educational use only.  It may not be duplicated for monetary
-# benefit or any other purpose without the permission of the developer.
+#     我的新浪微博：      http://weibo.com/hqapk
+#     我的腾讯微博：      http://t.qq.com/hqapkcom
 #
 ############################################################################
 
 clear
 
-echo
+echo "      =  云卓团队提醒  =      "
 echo "----------------------------------------------------------------"
 echo  
-echo "The Bash command shell is handy for command line completion when "
-echo "using a terminal emulator (e.g. ConnectBot) on your Android"
-echo "device.  To start it from a shell, type: bash"
+echo "  bash 是在你的设备上使用shell命令的一个终端"
+echo " (例如ConnectBot)要在shell命令终端中启动它，请输入：bash"
 echo
 echo "----------------------------------------------------------------"
 echo 
 
-echo -n "Proceed with install (y/n)? (default: y): "
+echo -n " 继续安装 (y/n)? (直接回车默认: y): "
 read do_install
 
 if [ "$do_install" == "n" ]
@@ -32,9 +30,9 @@ echo
 
 if [ -d WORKING_* ]
 then
-  echo Found working folder
+  echo  发现工作文件夹
 else
-  echo No working folder found!
+  echo  没有找到工作文件夹
   exit 0
 fi
 
@@ -42,7 +40,7 @@ cd WORKING_*
 
 if [ ! -d system ]
 then
-  echo "No system folder found!"
+  echo "  没有找到 system 文件夹"
   cd ..
   exit 0
 fi
@@ -54,16 +52,16 @@ then
 
   if [ -d system/xbin ]
   then
-    echo Found /system/xbin
+    echo 发现 /system/xbin
   else
-    echo Creating /system/xbin
+    echo  清理 /system/xbin
     mkdir system/xbin
   fi
 
-  echo "Adding /system/xbin/bash"
+  echo "添加 /system/xbin/bash"
   cp ../tools/bash system/xbin/
 else
-  echo "Found $bash_path"
+  echo "发现 $bash_path"
 fi
 
 cd ..

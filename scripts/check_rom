@@ -1,40 +1,40 @@
 ############################################################################
 #
-# Copyright (c) 2011 - dsixda (dislam@rocketmail.com)
+# 本定制工具完全免费，由DsiXDA开发，由“ 半指遮天 ”完成汉化翻译。
 #
-# Android Kitchen is 100% free.  This script file is intended for personal
-# and/or educational use only.  It may not be duplicated for monetary
-# benefit or any other purpose without the permission of the developer.
+#     我的新浪微博：      http://weibo.com/hqapk
+#     我的腾讯微博：      http://t.qq.com/hqapkcom
 #
 ############################################################################
 
 #
-# This script has two optional arguments: 
+# 此脚本有两个可选参数: 
 #
-# $1 = "no_info"      - specify this when porting or extracting kernel
-# $2 = "kernel_only"  - if this is specified, then $1 is mandatory
+# $1 = "no_info"      - 移植或提取kernel时指定
+# $2 = "kernel_only"  - 如果已经指定好的，则 $1 是强制性
 #
 
 echo
-echo "CREATE WORKING FOLDER FOR ROM"
-echo "=============================="
+echo "       云卓团队提醒:  创建工作文件夹        "
+echo "===================================================================="
+echo "                "
+echo "  确保至少有一个 ROM（RUU或者第三方）在 'original_update' 文件夹下"
+echo "    注意选择，建议直接回车继续下一步  "
+echo "-------------------------------------------------------------------"
+echo "   请选择以下几个选项 : "
 echo
-echo "Ensure there is at least one ROM under the 'original_update' folder!"
-echo
-echo "Select an option:"
-echo
-echo " s - Show supported formats"
-echo " x - Abort, don't create working folder"
+echo "  s -- 显示支持的格式"
+echo "  x -- 退出，不创建工作文件夹"
+echo "  Enter -- 直接浏览'original_update' 文件夹 "
 echo ""
-echo "Or press Enter to continue"
 echo
-echo -n "? "
+echo -n " 请输入选择项或直接回车： "
 read proceed
   
 if [ "$proceed" == "x" ]
 then
   echo
-  echo "Cancelled"
+  echo " 取消"
   exit 1
 
 elif [ "$proceed" == "s" ]
@@ -43,7 +43,7 @@ then
   more tools/formats.txt
 
   echo
-  echo -n "Press Enter to continue, or type 'x' to abort: "
+  echo -n " 按回车键继续, 或选择 'x' 退出: "
   read proceed
   
   if [ "$proceed" == "x" ]
@@ -56,7 +56,7 @@ fi
 scripts/make_backup_working
 
 #
-# Check if the working folder was actually backed up
+# 检查如果备份工作文件夹
 #
 result=$?
 
@@ -64,7 +64,7 @@ if [ "$result" == "1" ]
 then
 
   echo
-  echo "Error: Old working folder is in use. Ensure its files or folders are not open."
+  echo " 云卓团队提醒：旧的工作文件夹正在使用，确保其文件或文件夹没有打开."
   scripts/press_enter
   exit 1
 
@@ -82,7 +82,7 @@ else
   then
 
     #
-    # Check for radio.img
+    # 检查 radio.img
     #
 
     echo
@@ -90,8 +90,8 @@ else
     if [ -e radio.img ]
     then
       echo
-      echo "NOTE: radio.img was found in the working folder. If you wish to"
-      echo "remove it, you may do so at any time before building the ROM."
+      echo " 云卓团队提醒：工作文件夹中发现 radio.img ，如果你想移除它，"
+      echo " 你可以在生成 ROM 之前任何时间移除。"
     else
 
       if [ -e META-INF/com/google/android/update-script ]
@@ -117,7 +117,7 @@ else
     then
 
       #
-      # Prompt to show ROM info
+      # 提示将显示 ROM 信息
       # 
 
       if [ "$1" == "" ]
@@ -130,7 +130,7 @@ else
 
     else
       echo
-      echo "No boot image found!"
+      echo " 未发现 boot.img 文件!"
       cd ..
     fi
   fi

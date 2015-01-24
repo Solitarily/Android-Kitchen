@@ -1,17 +1,16 @@
 ############################################################################
 #
-# Copyright (c) 2012 - dsixda (dislam@rocketmail.com)
+# 本定制工具完全免费，由DsiXDA开发，由“ 半指遮天 ”完成汉化翻译。
 #
-# Android Kitchen is 100% free.  This script file is intended for personal
-# and/or educational use only.  It may not be duplicated for monetary
-# benefit or any other purpose without the permission of the developer.
+#     我的新浪微博：      http://weibo.com/hqapk
+#     我的腾讯微博：      http://t.qq.com/hqapkcom
 #
 ############################################################################
 
 #
-# This script has two optional arguments:
+# 提醒:此脚本具有两个可选参数:
 #
-# $1 = path to working folder (optional)
+# $1 = 工作文件夹的路径 (可选)
 #
 
 
@@ -39,12 +38,12 @@ elif [ -e csc.zip ]
 then
   csc_zip=csc.zip
 else 
-  echo "WARNING: CSC ZIP file not found!"
+  echo " 警告： sec_csc.zip 找不到!"
 fi
 
 if [ $csc_zip ]
 then
-  echo "Extracting the required files from $csc_zip ..."
+  echo " Sec_csc.zip 中提取所需的文件..."
   unzip -q $csc_zip -d temp_csc
 
   # 
@@ -59,7 +58,7 @@ then
     if [ "$apk_files" != "" ]
     then
       echo
-      echo "These are the apps found in $csc_zip:"
+      echo " 这些都是在 sec_csc.zip 中找到的应用程序:"
       echo 
       for apk in $apk_files
       do
@@ -67,7 +66,7 @@ then
       done
 
       echo
-      echo -n "Copy the apps to your working folder (y/n)? (default: n): "
+      echo -n " 将应用程序复制到你的工作文件夹 (y/n)? (默认: n): "
 
       read do_copy
       echo
@@ -90,7 +89,7 @@ rm -f $csc_zip 2>/dev/null
 if [ "$?" == "1" ]
 then
   echo
-  echo "WARNING: $csc_zip is in use.  Remove file manually."
+  echo " 警告： sec_csc.zip 正在使用中，手动删除文件。"
   echo
 fi
 

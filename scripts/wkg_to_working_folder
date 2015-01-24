@@ -1,31 +1,30 @@
 ############################################################################
 #
-# Copyright (c) 2011 - dsixda (dislam@rocketmail.com)
+# 本定制工具完全免费，由DsiXDA开发，由“ 半指遮天 ”完成汉化翻译。
 #
-# Android Kitchen is 100% free.  This script file is intended for personal
-# and/or educational use only.  It may not be duplicated for monetary
-# benefit or any other purpose without the permission of the developer.
+#     我的新浪微博：      http://weibo.com/hqapk
+#     我的腾讯微博：      http://t.qq.com/hqapkcom
 #
 ############################################################################
 
 #
-# This script has two arguments:
+#  提醒:此脚本有两个参数:
 #
-# $1 = folder name (mandatory)
-# $2 = "kernel_only" or "name_given" (optional)
+# $1 = 文件夹名称(强制)
+# $2 = "kernel_only" 或 "name_given" (可选)
 #
 
 
 update_folder=$1
  
-echo "Selected $update_folder"
+echo " 已选定 $update_folder"
 
 # Trim spaces in folder name
 update_folder2=`echo $update_folder | tr ' ' '_'`
 
 if [ "$update_folder" != "$update_folder2" ]
 then
-  echo "Renaming to $update_folder2"
+  echo " 重命名为 $update_folder2"
   mv "original_update/$update_folder" original_update/$update_folder2
   update_folder=$update_folder2
 fi
@@ -41,17 +40,17 @@ build_dir=`scripts/set_working_folder_name $2`
 #
 
 echo
-echo "Creating working folder $build_dir ..."
+echo " 创建工作文件夹 $build_dir ..."
 mkdir $build_dir
 
 echo
-echo "Copying contents of $update_folder ..."
+echo " 复制 $update_folder 相关内容 ..."
 cp -fr original_update/$update_folder/* $build_dir 2>/dev/null
 
 if [ "$?" != "0" ]
 then
   echo
-  echo "Error: Cannot copy folder contents!"
+  echo " 云卓提醒: 无法复制相关内容文件夹!"
   cd ..
   exit 1
 fi
@@ -64,7 +63,7 @@ then
 fi
 
 echo
-echo "Listing of META-INF/com/google/android:"
+echo "META-INF/com/google/android 列表:"
 
 cd $build_dir
 cd META-INF/com/google/android
@@ -77,7 +76,7 @@ cd ../../../../..
 #
 
 echo
-echo Listing of $build_dir:
+echo $build_dir 列表:
 
 cd $build_dir
 ls -l 

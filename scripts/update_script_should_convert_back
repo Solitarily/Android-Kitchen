@@ -1,15 +1,14 @@
 ############################################################################
 #
-# Copyright (c) 2012 - dsixda (dislam@rocketmail.com)
+# 本定制工具完全免费，由DsiXDA开发，由“ 半指遮天 ”完成汉化翻译。
 #
-# Android Kitchen is 100% free.  This script file is intended for personal
-# and/or educational use only.  It may not be duplicated for monetary
-# benefit or any other purpose without the permission of the developer.
+#     我的新浪微博：      http://weibo.com/hqapk
+#     我的腾讯微博：      http://t.qq.com/hqapkcom
 #
 ############################################################################
 
 #
-# This script has one optional parameter:
+# 此脚本拥有一个可选参数:
 #
 # $1 = ignore_msg
 #
@@ -20,7 +19,7 @@ cd WORKING_*
 
 if [ ! -e META-INF/com/google/android/update-script ]
 then
-  echo "Warning: No update-script found"
+  echo " 警告: 未发现 update-script 刷机脚本"
   cd ..
   exit 0
 fi
@@ -36,7 +35,7 @@ then
   if [ "$1" == "" ]
   then
     echo
-    echo "NOTE: update-script must be converted to an updater-script before" 
+    echo " 注意: update-script 脚本必须在刷机前转换为 updater-script 脚本。" 
     echo "      flashing."
   fi
 
@@ -56,7 +55,7 @@ else
     if [ "$1" == "" ]
     then
       echo
-      echo "NOTE: This device ($device_name) requires an updater-script"
+      echo " 提醒: 此设备 ($device_name) 需要 updater-script 刷机脚本。"
     fi
 
     exit 1

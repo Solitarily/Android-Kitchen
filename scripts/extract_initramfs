@@ -1,15 +1,14 @@
 ############################################################################
 #
-# Copyright (c) 2011 - dsixda (dislam@rocketmail.com)
+# 本定制工具完全免费，由DsiXDA开发，由“ 半指遮天 ”完成汉化翻译。
 #
-# Android Kitchen is 100% free.  This script file is intended for personal
-# and/or educational use only.  It may not be duplicated for monetary
-# benefit or any other purpose without the permission of the developer.
+#     我的新浪微博：      http://weibo.com/hqapk
+#     我的腾讯微博：      http://t.qq.com/hqapkcom
 #
 ############################################################################
 
 ## 
-## The unpack-initramfs script does not work with all zImages!!
+## unpack-initramfs 脚本并不是在所有 zImages 中都能正常工作！！
 ##
 
 clear
@@ -22,10 +21,10 @@ then
   if [ -d WORKING_* ]
   then
     echo
-    echo Working folder found
+    echo  已发现工作文件夹
   else
     echo
-    echo Working folder not found, you will need to create one!
+    echo  未发现工作文件夹，你需要创建一个!
     exit 0
   fi
 
@@ -46,12 +45,12 @@ then
         
     if [ ! -e kernel ]
     then
-      echo "Error: No kernel found!"
+      echo " 云卓团队提醒: 未发现 kernel 内核文件!"
     fi
 
     if [ ! -d initramfs_root ]
     then
-      echo "Error: No initramfs_root folder found!"
+      echo " 云卓团队提醒: 未发现 initramfs_root 文件夹！"
     else
       mv -f initramfs_root boot.img-ramdisk
     fi
@@ -61,10 +60,10 @@ then
     echo
 
   else
-    echo "Error: zImage not found!"
+    echo " 云卓团队提醒:  未发现 zImage!"
     echo
     cd ..
-    echo "Removing initramfs_dir folder"
+    echo " 移除 initramfs_dir 文件夹"
     rm -rf $initramfs_dir
     exit 0
   fi      

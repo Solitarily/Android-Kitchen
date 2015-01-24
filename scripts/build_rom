@@ -1,10 +1,9 @@
 ############################################################################
 #
-# Copyright (c) 2013 - dsixda (dislam@rocketmail.com)
+# 本定制工具完全免费，由DsiXDA开发，由“ 半指遮天 ”完成汉化翻译。
 #
-# Android Kitchen is 100% free.  This script file is intended for personal
-# and/or educational use only.  It may not be duplicated for monetary
-# benefit or any other purpose without the permission of the developer.
+#     我的新浪微博：      http://weibo.com/hqapk
+#     我的腾讯微博：      http://t.qq.com/hqapkcom
 #
 ############################################################################
 
@@ -14,9 +13,9 @@ echo
 
 if [ -d WORKING_* ]
 then
-  echo Found working folder
+  echo  云卓团队提醒： 已找到工作文件夹
 else
-  echo No working folder found!
+  echo  云卓团队提醒： 未找到工作文件夹
   exit 0
 fi
 
@@ -25,9 +24,10 @@ cd WORKING_*
 if [ -e META-INF/com/google/android/update-script ] && [ -e META-INF/com/google/android/updater-script ]
 then
 
-  echo
-  echo "Error:  Both update-script and updater-script are detected in working folder." 
-  echo "        Keep only one of them before building!" 
+  echo "      = 云卓团队警告 =      "
+  echo "----------------------------------------------------------------"
+  echo "  错误:  update-script 和 updater-script 同时存在工作文件夹中." 
+  echo "  请在打包 ROM 前，确保工作文件夹中只有一个刷机脚本文件! " 
   echo
 
   cd ..
@@ -37,7 +37,7 @@ fi
 
 
 echo
-echo "Cleaning up any leftover files ..."
+echo " 云卓团队提醒：正在清除所有遗留的文件 ..."
 echo
 
 rm -f *.zip
@@ -47,18 +47,18 @@ rm -f signed*.zip
 rm -f *smali.jar
 
 #
-# Clean up *.DS_Store hidden files
+# 清理  *.DS_Store 隐藏文件
 #
 find . -name '*.DS_Store' -type f -delete
 
 #
-# Clean up stackdump files
+# 清理 stackdump 文件
 #
 find . -name sh.exe.stackdump -type f -delete
 
 
 #
-# Clean up temp files left behind by interrupted Amend/Edify conversion scripts
+# 清理临时文件留下的 Amend/Edify 转换脚本
 #
 if [ -d META-INF/com/google/android ]
 then
@@ -67,7 +67,7 @@ fi
 
 
 #
-# Clean up strange temp file issue in root of working folder
+# 清理工作文件夹ROOT目录中奇怪的临时文件问题
 #
 
 file_list=`find . -maxdepth 1 -type f`
@@ -80,15 +80,15 @@ do
 
   if [ "$header_bytes" == "04034b50" ]
   then
-    echo -n "Found file in root folder: $filename. Delete (y/n)? (default: y): "
+    echo -n " 已在文件夹中找到文件: $filename. 删除 (y/n)? (默认: y): "
     read delete_file
 
     if [ "$delete_file" != "n" ]
     then
-      echo "Deleting $filename"
+      echo " 删除 $filename"
       rm -f $filename
     else
-      echo "Keeping $filename"
+      echo " 保留 $filename"
     fi
   fi
 done
@@ -109,42 +109,42 @@ echo
 
 scripts/fix_pre_build
 
-# Check for 'dsixda Null'
+# 检查有'dsixda Null'
 cmd_line=`scripts/get_cmdline`
 
 extreme=no
 express=no
 interactive=no
 
+echo "        = 云卓团队提醒 =       "
+echo "-------------------------------------------------------------------"
 echo
-echo "=========================================================================="
+echo " 选择 ROM 创建选项:"
 echo
-echo "Select a build option:"
+echo "  1 = 交互模式 - 适用于大多数用户推荐"
+echo "      (此模式在ROM生成过程中进行指导操作)"
 echo
-echo "  1 = Interactive Mode - recommended for most users"
-echo "      (Guide me through the build)"
+echo "  2 = 一键模式 - 适用于初级用户"
+echo "      (Zipalign,Edify,签名ROM自动命名ZIP文件)"
 echo
-echo "  2 = Lazy Mode - trust the kitchen to do everything without asking"
-echo "      (Zipalign, Edify, sign ROM, auto-name ZIP)"
-echo
-echo "  3 = Express Mode - for advanced users"
-echo "      (Zipalign, Edify, don't sign ROM, auto-name ZIP)"
+echo "  3 = 直通模式 - 适合于中级用户"
+echo "      (Zipalign,Edify,不要签名ROM自动命名ZIP文件)"
 echo 
-echo "  4 = Extreme Mode - for advanced users"
-echo "      (No zipalign, no script conversion, don't sign ROM, auto-name ZIP)"
+echo "  4 = 极端模式 - 适用于高级用户"
+echo "      (没有 zipalign,无脚本转换,不要签名ROM,自动命名ZIP文件)"
 echo 
-echo "  5 = Cancel - Don't build now"
+echo "  5 = 取消 ， 现在不生成ROM"
 echo
-echo "=========================================================================="
+echo "-------------------------------------------------------------------"
 echo
-echo -n "Number (default: 1): "
+echo -n " 请输入选择项(默认: 1): "
 
 read build_mode
 
-# Default is 1, so remember to account for Enter key
+# 默认值为 1,所以记住回车键键
 if [ "$build_mode" == "5" ]
 then
-  echo "Cancelled"
+  echo "取消"
   exit 0
 elif [ "$build_mode" == "4" ]
 then
@@ -168,7 +168,7 @@ fi
 
 if [ "$?" == "1" ]
 then
-  echo "Cancelling build"
+  echo " 取消生成"
   exit 0
 fi
 
@@ -176,7 +176,7 @@ cd WORKING_*
 
 
 #
-# Convert update-script (Amend) to updater-script (Edify) for the ZIP file only
+# 在 ZIP 文件中只将 update-script (Amend) 转换为 updater-script (Edify) 
 #
 
 if [ "$extreme" == "no" ] && [ -e META-INF/com/google/android/update-script ]
@@ -193,19 +193,18 @@ then
     want_file=updater-script
 
   else
+    echo "        = 云卓团队提醒 =       "
+    echo "-----------------------------------------------------------"
+    echo 
+    echo " 在 ROM 中检测到 update-script 脚本"
     echo
-    echo "--------------------------------------------------------------------------"
+    echo " 确保与新版的recovery的兼容性，在你的 ROM ZIP文件中"
+    echo " 可以使用updater-script (Edify) 脚本而不是"
+    echo " update-script (Amend)脚本在."
     echo 
-    echo " update-script detected in ROM"
-    echo
-    echo " To ensure compatibility with newer custom recovery images, you have"
-    echo " the option of using an updater-script (Edify) instead of an"
-    echo " update-script (Amend) in your ROM's ZIP file."
+    echo " 你的工作文件夹将保持不变，并继续使用原始update-script脚本. "
     echo 
-    echo " Your working folder will remain the same and continue to have the "
-    echo " original update-script."
-    echo 
-    echo -n " Use updater-script in ROM's ZIP file (y/n)? (default: y): "
+    echo -n " 在ROM中添加updater-script脚本(y/n)? (默认: n): "
     read convert_it
   fi
 
@@ -235,15 +234,16 @@ then
       then
         proceed_change=y
       else
-        echo "Proceed with the change (y/n)?"
+        echo " 保留更改并继续 (y/n)?"
         echo 
-        echo "  y = Proceed; updater-script and update-binary will be used in the ZIP"
-        echo "      file; update-script will remain in working folder."
-        echo "  n = Cancel; updater-script and update-binary will be deleted and not"
-        echo "      used."
+        echo "  y = 继续进行; updater-script 和 update-binary 文件将被移到 ZIP 文件"
+        echo "      ZIP 文件中update-script脚本将删除"
+        echo "      但将保留在工作文件夹."
+        echo "  n = 取消; updater-script and update-binary 将被删除"
+        echo "      不使用."
         echo
          
-        echo -n "? (default: y): "
+        echo -n " 请输入选择项 （默认: y）: "
         read proceed_change 
       fi
 
@@ -257,7 +257,9 @@ then
           ../scripts/convert_to_unix META-INF/com/google/android/updater-script 
           want_file=updater-script
         else
-          echo "updater-script not found, keeping update-script"
+	  echo "         = 云卓团队提醒 =        "
+	  echo "----------------------------------------------------"
+          echo " 未发现 updater-script 脚本，保留 update-script 脚本"
           want_file=update-script
         fi
 
@@ -273,14 +275,16 @@ then
 
       if [ "$auto_convert" == "1" ] && [ "$proceed_change" == "n" ]
       then
-        echo "You cannot flash a ROM for this device unless it has an updater-script."
+	echo "         = 云卓团队提醒 =        "
+        echo "----------------------------------------------------"
+        echo "     你的ROM文件不适用此update-script脚本"
         echo
         cd ..
         exit 0
       fi
 
     else
-      echo "Keeping update-script"
+      echo " 保留update-script脚本"
       cd WORKING_*
       want_file=update-script
     fi
@@ -288,7 +292,7 @@ then
   else
     echo
     echo
-    echo "Keeping update-script"
+    echo " 保留update-script脚本"
     want_file=update-script
   fi
 
@@ -300,13 +304,13 @@ else
 
   if [ -e META-INF/com/google/android/update-script ]
   then
-    echo "update-script (Amend) found"
+    echo " 发现 update-script (Amend) 脚本"
     want_file=update-script
   fi
   
   if [ -e META-INF/com/google/android/updater-script ]
   then
-    echo "updater-script (Edify) found"
+    echo " 发现 updater-script (Edify) 脚本"
     want_file=updater-script
   fi
 
@@ -347,7 +351,7 @@ fi
 
 
 #
-# Create update.zip
+# 需要时签名 update.zip
 #
 echo
 echo Making update.zip ...
@@ -405,9 +409,12 @@ fi
 
 if [ "$interactive" == "yes" ]
 then
-  echo
-  echo "It is recommended that you sign your ROM."
-  echo -n "Sign it (y/n)? (default: y): "
+  echo 
+  echo "        = 云卓团队提醒 =       "
+  echo "-----------------------------------------"
+  echo "   建议你签名你的ROM文件"
+  echo 
+  echo -n " 是否签名(y/n)? (默认: y): "
   read do_sign
 fi
 
@@ -427,7 +434,7 @@ then
 
 else
   echo
-  echo Signing update.zip ...
+  echo  签名 update.zip ...
 
   cp ../tools/signapk_files/testkey.* .
   cp ../tools/signapk_files/signapk.jar .
@@ -445,7 +452,7 @@ if [ -e $final_file ] && [ "$res" == "0" ]
 then
 
   #
-  # Rename zip
+  # 重命名 zip
   #
   if [ "$interactive" == "yes" ]
   then
@@ -462,13 +469,13 @@ then
   echo
 
   #
-  # Make output folder
+  # 输出文件夹
   #
   if [ -d ../OUTPUT_ZIP ]
   then
-    echo "Found OUTPUT_ZIP folder" 
+    echo " 已发现 OUTPUT_ZIP 文件夹" 
   else
-    echo "Creating folder OUTPUT_ZIP ..."
+    echo " 创建 OUTPUT_ZIP 文件夹 ..."
     mkdir ../OUTPUT_ZIP
   fi
 
@@ -476,64 +483,59 @@ then
 
   echo
   echo
+  echo "        = 定制成功 =       "
+  echo "-------------------------------------------------------"
   echo
-  echo "=========================================================================="
+  echo "  恭喜你，你定制的 ROM 文件位置在 : "
+  echo "  ----> OUTPUT_ZIP/$final_file" 
   echo
-  echo "Congratulations ... your ROM is here:"
+  echo " 复制ROM文件到手机内存卡，然后进入recovery菜单刷入手机"
+  echo " 如有必要请在刷机之前执行wipe操作清除数据"
   echo
-  echo "----> OUTPUT_ZIP/$final_file" 
+  echo " 如果你的ROM不能启动，或者发生其它不可解决问题"
+  echo " 请到云卓论坛：  www.hqapk.com      发帖求助。"
   echo
-  echo "Copy this to your device and flash from custom recovery menu."
-  echo
-  echo "=========================================================================="
-  echo
-  echo "NOTE 1: Remember to do a factory reset or data/cache wipe if necessary!"
-  echo
-  echo "NOTE 2: Always refer to the Android Kitchen FAQ @ xda-developers.com for "
-  echo "common issues such as:"
-  echo
-  echo " - Errors during flashing (e.g. Status 0)"
-  echo " - Non-booting ROM after flashing ZIP file"
+  echo "   感谢您使用云卓论坛专用版厨房定制工具     "
+  echo "-------------------------------------------------------"
 
   if [ "$sign_update" == "no" ]
   then
     echo
-    echo "NOTE 3: You will need to disable signature checks in the recovery"
-    echo "menu to flash this ROM!  If you wish to sign this ROM later, please use"
-    echo "the Sign ZIP option in the Advanced menu of the kitchen."
+    echo "        = 云卓团队提醒 =       "
+    echo "----------------------------------------------------------"
+    echo " 你需要在recovery菜单选项中禁用签名校验功能来刷入这个ROM，"
+    echo " 如果你稍后想签名这个ROM，请使用厨房高级菜单中签名ZIP选项."
+	echo
   fi
 
   echo
-  echo "Good luck!"
 
 else 
 
   echo
-  echo "Was not able to create $final_file!"
+  echo " 不能创建 $final_file!"
   echo
 
   if [ "$sign_update" == "yes" ]
   then
     if [ `uname | grep Linux` ] 
     then
-      echo "Ensure you have a recent version of the Sun Java JDK"
+      echo " 确保你有安装最新版本的 Sun Java JDK"
     
     elif [ `uname | grep CYGWIN` ]
     then
-      echo "Ensure you have the Sun Java JDK installed on your PC." 
-      echo
-      echo "If you already have the JDK, then perhaps the path to java.exe was"
-      echo "not defined properly:"
+	  echo "        = 云卓团队提醒 =       "
+	  echo "--------------------------------------------------------------"
+      echo " 确保你的电脑已安装 Sun Java JDK" 
+      echo " 如果已安装 JDK，请确定是否正确定义了环境变量安装路径"
+      echo " 例如 In $HOME/.bash_profile, add to the end:"
+      echo " PATH=/cygdrive/c/Program\ Files/Java/jdk1.6.0_18/bin:\${PATH}" 
       echo 
-      echo "e.g.  In $HOME/.bash_profile, add to the end:"
-      echo "      PATH=/cygdrive/c/Program\ Files/Java/jdk1.6.0_18/bin:\${PATH}" 
-      echo 
-      echo "      The above is an example. Your path may be different."
 
     elif [ `sw_vers | grep -o Mac` ]
     then
-      echo "You may need to install SoyLatte for Mac OS X (to replace the standard "
-      echo "Java JDK)"
+      echo " 你可能需要为 Mac OS X 安装 SoyLatte"
+      echo " (以替换标准的 Java JDK)"
     fi
   fi
 fi

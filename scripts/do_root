@@ -1,10 +1,9 @@
 ############################################################################
 #
-# Copyright (c) 2012 - dsixda (dislam@rocketmail.com)
+# 本定制工具完全免费，由DsiXDA开发，由“ 半指遮天 ”完成汉化翻译。
 #
-# Android Kitchen is 100% free.  This script file is intended for personal
-# and/or educational use only.  It may not be duplicated for monetary
-# benefit or any other purpose without the permission of the developer.
+#     我的新浪微博：      http://weibo.com/hqapk
+#     我的腾讯微博：      http://t.qq.com/hqapkcom
 #
 ############################################################################
 
@@ -16,7 +15,7 @@ fi
 
 if [ ! -d WORKING_* ]
 then
-  echo "No working folder found!"
+  echo " 未发现工作文件夹!"
   scripts/press_enter
   exit 0
 fi
@@ -25,28 +24,25 @@ scripts/check_galaxy_s_and_s2
 sgs=$?
 
 
-echo
-echo "ROOTING"
-echo "--------------------------------------------"
-echo 
-echo "The following will be done for root:"
-echo
-echo "- Add Superuser app and su binary"
-echo "- Add necessary lines to the update-script"
+echo "       = 云 卓 团 队 提 醒 =  "
+echo "--------------------------------------------------------"
+echo "    获取 ROOT 权限 , 步骤如下:  "
+echo "--------------------------------------------------"
+echo "  添加 Superuser.apk 和 su 二进制文件"
+echo "  将所需要的命令行添加到 update-script 脚本"
 
 if [ "$sgs" == "0" ]
 then
-  echo "- Update default.prop in the ramdisk"
+  echo "-  在 ramdisk 更新 default.prop"
 fi
 echo 
 echo "--------------------------------------------"
-echo
 
 cd WORKING_*
 
 if [ ! -d system ]
 then
-  echo "No system folder found!"
+  echo " 未发现 System 文件夹!"
   cd ..
   scripts/press_enter
   exit 0
@@ -56,7 +52,7 @@ cd system
 
 if [ ! -e build.prop ]
 then
-  echo "Error: build.prop not found!"
+  echo " 云卓团队提醒: 未发现 build.prop 文件!"
   cd ../..
   scripts/press_enter
   exit 0
@@ -78,8 +74,11 @@ overwrite=0
 
 if [ "$su_path" != "" ] && [ "$super_path" != "" ] 
 then
-  echo "The /system folder contains $su_path and $super_path"
-  echo -n "Overwrite (y/n)? (default: n): "
+  echo "       = 云 卓 团 队 提 醒 =  "
+  echo "--------------------------------------------------------"
+  echo "  /system 文件夹su二进制文件 和 Superuser.apk 文件已经存在"
+  echo 
+  echo -n "覆盖(y/n)? (默认: n): "
   read do_su
 
   if [ "$do_su" != "y" ]
@@ -94,19 +93,19 @@ then
 
 fi
 
-
-echo "Which version of the Superuser package do you want"
-echo "to install?"
+echo "         =  云 卓 团 队 提 醒  =   "
+echo "----------------------------------------------------"
+echo "  请选择你想要安装的不同版本 Superuser 程序包 ? "
 echo
-
-echo " c - Chainfire's SuperSU"
-echo " d - ChainsDD's version " 
-echo " v - Original version (very old)"
+echo "   c - Chainfire 版本(超级授权专业版SuperSU)"
+echo "   d - ChainsDD 版本 (超级用户精英版Superuser)" 
+echo "   v - 最初的版本     (非常老)"
 echo
-echo " x - Cancel rooting (default)"
+echo " x - 取消 ROOT  权限              (默认)"
 echo
-
-echo -n "? "
+echo "    提醒：如不确定建议选择' d '  "
+echo
+echo -n " 请输入选择项  "
 read enterVersion
 echo
 
@@ -125,7 +124,7 @@ elif [ "$enterVersion" == "v" ]
 then
   folder=old
 else
-  echo "Cancelled"
+  echo " 取消"
   cd ../..
   exit 1
 fi
@@ -133,7 +132,7 @@ fi
 if [ "$overwrite" == "1" ]
 then
   echo
-  echo "Overwriting old 'su' binary and Superuser app ..."
+  echo " 覆盖旧的 su 二进制文件和 Superuser.apk ..."
   rm -fv $su_path
   rm -fv $super_path
 fi
@@ -142,9 +141,9 @@ fi
 
 if [ -d xbin ]
 then
-  echo Found /system/xbin
+  echo  发现 /system/xbin
 else
-  echo Creating /system/xbin
+  echo 正在创建 /system/xbin
   mkdir xbin
 fi
 
@@ -173,7 +172,7 @@ then
 fi
 
 echo 
-echo "Finished rooting"
+echo " 云卓团队提醒：ROOT 权限完成 "
 echo
 
 scripts/press_enter

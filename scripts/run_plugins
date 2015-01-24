@@ -1,10 +1,9 @@
 ############################################################################
 #
-# Copyright (c) 2012 - dsixda (dislam@rocketmail.com)
+# 本定制工具完全免费，由DsiXDA开发，由“ 半指遮天 ”完成汉化翻译。
 #
-# Android Kitchen is 100% free.  This script file is intended for personal
-# and/or educational use only.  It may not be duplicated for monetary
-# benefit or any other purpose without the permission of the developer.
+#     我的新浪微博：      http://weibo.com/hqapk
+#     我的腾讯微博：      http://t.qq.com/hqapkcom
 #
 ############################################################################
 
@@ -15,7 +14,7 @@ echo
 
 if [ ! -d scripts/plugins ] 
 then
-  echo "Error: /scripts/plugins folder not found!"
+  echo " 云卓论坛提醒: 未发现 /scripts/plugins 文件夹！"
   exit 0
 fi
 
@@ -27,15 +26,15 @@ cd ../..
 
 if [ "$grep_cmd" == "" ]
 then
-  echo "No *.plugin files found under /scripts/plugins!"
+  echo " 没有找到 /scripts/plugins 下的 *.plugin 文件!"
   echo
-  echo "Press Enter to continue"
+  echo " 请按 Enter 继续"
   read enterKey
   exit 0
 
 else
 
-  echo -n "Please wait "
+  echo -n " 请稍后 "
 
   long_line="--------------------------------------"
   count=0
@@ -43,14 +42,14 @@ else
   for plugin_file in $grep_cmd
   do
     echo -n "."
-    # Converting end-of-line character in files created in DOS 
+    # 在 dos 状态下创建的文件行尾字符转换 
     scripts/convert_to_unix scripts/plugins/$plugin_file
   done
 
   echo
 
   #
-  # Show the menu
+  # 显示菜单
   #
 
   while :
@@ -61,7 +60,9 @@ else
     refresh_names=0
 
     echo
-    echo "PLUGIN SCRIPTS"
+    echo "      = 插件脚本 =      "
+    echo "------------------------------------------"
+    echo " 发现如下插件脚本，请直接选择加入。 "
     echo $long_line
     echo
 
@@ -69,7 +70,7 @@ else
     do
       count=$(($count+1))
 
-      # Store file names in an array
+      # 存储文件名称在排列中
       file_array[$count]=$plugin_file
 
       echo "  ($count) $plugin_file"
@@ -79,10 +80,10 @@ else
     echo
     echo $long_line
     echo
-    echo "  0 - Exit    r - Refresh list"
+    echo "  0 - 退出    r - 刷新列表"
     echo
     echo
-    echo -n "Enter an option: "
+    echo -n " 请输入一个选项: "
     read enterOption
 
     if [ "$enterOption" == "0" ]
@@ -94,7 +95,7 @@ else
     then
       refresh_names=1
     
-    # Verify input is a number
+    # 验证输入是一个数字
     elif [ "`echo $enterOption | sed 's/[0-9]*//'`" == "" ]
     then
 
@@ -106,7 +107,7 @@ else
       fi
 
       #
-      # Run script
+      # 运行脚本
       #
       if [ -e scripts/plugins/$file_chosen ]
       then
@@ -114,7 +115,7 @@ else
         chmod 755 scripts/plugins/$file_chosen
         scripts/plugins/$file_chosen
       else
-        echo "Error: File not found!"
+        echo " 提醒: 未发现文件！"
         refresh_names=1 
       fi
 
@@ -124,7 +125,7 @@ else
       continue
     fi
 
-    if [ $refresh_names == 1 ]
+    if [ $refresh_names==1 ]
     then
       cd scripts/plugins
       grep_cmd=`find . | grep "\.plugin\$" | sed 's/.\///'`

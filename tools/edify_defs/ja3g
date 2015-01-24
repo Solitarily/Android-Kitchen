@@ -1,0 +1,21 @@
+
+# International Samsung Galaxy S4 GT-I9500
+
+change_mnt=yes
+
+param1=ext4
+param2=EMMC
+
+param1_sdcard=vfat
+param2_sdcard=MTD
+
+sys_mnt=\/dev\/block\/mmcblk0p20
+cache_mnt=\/dev\/block\/mmcblk0p19
+boot_mnt=\/dev\/block\/mmcblk0p9
+data_mnt=\/dev\/block\/mmcblk0p21
+sdcard_mnt=???
+#/dev/block/mmcblk0p3     /efs        
+#/dev/block/mmcblk0p10    /recovery 
+modem_mnt=\/dev\/block\/mmcblk0p7
+
+fix_boot2=yes

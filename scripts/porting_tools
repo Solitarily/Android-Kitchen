@@ -1,10 +1,9 @@
 ############################################################################
 #
-# Copyright (c) 2011 - dsixda (dislam@rocketmail.com)
+# 本定制工具完全免费，由DsiXDA开发，由“ 半指遮天 ”完成汉化翻译。
 #
-# Android Kitchen is 100% free.  This script file is intended for personal
-# and/or educational use only.  It may not be duplicated for monetary
-# benefit or any other purpose without the permission of the developer.
+#     我的新浪微博：      http://weibo.com/hqapk
+#     我的腾讯微博：      http://t.qq.com/hqapkcom
 #
 ############################################################################
 
@@ -17,26 +16,23 @@ do
   clear
 
   echo
-  echo "Porting"
-  echo "-------"
+  echo "          = 移 植 功 能 =                              "
+  echo "-------------------------------------------------------------"
+  echo "  此操作还只是实验性功能，并不一定适用所有设备。"
+  echo "  此移植操作还只是实验性功能，并不一定适用所有设备；"
+  echo "  此脚本为通用脚本，某些额外的步骤可能需要手动进行移植；"
+  echo "  如果是新的设备开发，请不要使用此选项，"
+  echo "  除非你已有 ROM 和理解他们是如何工作的！"
+  echo 
   echo
-  echo "WARNING: The porting option is only experimental and for advanced"
-  echo "users only.  The scripts use a general set of rules for porting a"
-  echo "ROM, so additional steps may need to be performed manually by the"
-  echo "user for the ROM to be ported properly."
-  echo
-  echo "If you are new to ROM development, then do not use this option"
-  echo "until you have built some basic (non-ported!) ROMs and have"
-  echo "understood how they work!"
-  echo
-  echo "Enter a choice:"
+  echo "  选 项 :"
   echo 
 
-  echo "  a = Port ROM from another device"
-  echo "  e = Extract kernel and modules from another ROM"
-  echo "  x = Exit"
+  echo "  a = 移植 ROM 从另一设备"
+  echo "  e = 从另一个 ROM 提取 kernel 和 modules"
+  echo "  x = 退出"
   echo
-  echo -n "? "
+  echo -n " 请输入选择项 "
 
   read enterLetter
 

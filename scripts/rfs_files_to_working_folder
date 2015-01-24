@@ -1,19 +1,18 @@
 ############################################################################
 #
-# Copyright (c) 2012 - dsixda (dislam@rocketmail.com)
+# 本定制工具完全免费，由DsiXDA开发，由“ 半指遮天 ”完成汉化翻译。
 #
-# Android Kitchen is 100% free.  This script file is intended for personal
-# and/or educational use only.  It may not be duplicated for monetary
-# benefit or any other purpose without the permission of the developer.
+#     我的新浪微博：      http://weibo.com/hqapk
+#     我的腾讯微博：      http://t.qq.com/hqapkcom
 #
 ############################################################################
 
 #
-# This script has two optional arguments:
+# = 云卓团队提醒 = 此脚本有两个可选参数:
 #
-# $1 = "no_create" or "create" or "create_working 
-#         - must specify no_create if working folder already exists
-# $2 = "kernel_only" or "name_given" - if this is specified then $1 is mandatory
+# $1 = "no_create" 或 "创建" 或 "create_working 
+#         - 必须指定 no_create 如果工作文件夹已经存在
+# $2 = "kernel_only" 或 "name_given" - 如果这指定则是强制性的 $1
 #
 
 if [ "$1" == "no_create" ] 
@@ -29,7 +28,7 @@ then
     system_img=system.rfs
     csc_img=csc.rfs
   else
-    echo "Error: No system RFS image found in $build_dir!"
+    echo "云卓团队警告: $build_dir中未发现 system.rfs !"
     exit 1
   fi
 
@@ -44,13 +43,13 @@ then
   fi
 
   # Sometimes images have zero permissions set when extracted from TAR archive,
-  # making them unreadable!
+  # 使它们无法读取!
   chmod -R 777 $build_dir
 
 else
 
   #
-  # Check for $system_img, $csc_img and zImage/boot.img in original_update  
+  # 检查  $system_img, $csc_img and zImage/boot.img in original_update  
   #
 
   if [ -e original_update/factoryfs.rfs ]
@@ -60,11 +59,11 @@ else
 
     if [ -e original_update/zImage ]
     then
-      echo "Found original_update/zImage"
+      echo "已发现 original_update/zImage"
       scripts/show_rooted_kernel_msg
       kernel_img=zImage
     else
-      echo "Warning: No original_update/zImage found"
+      echo " 提醒：未发现 original_update/zImage "
     fi
 
   elif [ -e original_update/system.rfs ]
@@ -74,46 +73,46 @@ else
 
     if [ -e original_update/boot.img ]
     then
-      echo "Found original_update/boot.img"
+      echo "已发现 original_update/boot.img"
       kernel_img=boot.img
     else
-      echo "Warning: No original_update/boot.img found"
+      echo " 提醒：未发现 original_update/boot.img "
     fi
 
   else
-    echo "Error: No system RFS image found in original_update folder!"
+    echo " 提醒：未发现original_update/system_img !"
     exit 1
   fi
 
-  echo "Found original_update/$system_img"
+  echo "已发现 original_update/$system_img"
 
   if [ -e original_update/$csc_img ]
   then
-    echo "Found original_update/$csc_img"
+    echo "已发现 original_update/$csc_img"
   else
     scripts/show_cache_warning original_update/$csc_img
   fi
 
 
   #
-  # Working folder name
+  # 工作文件夹名称
   #
   build_dir=`scripts/set_working_folder_name $2`
 
   echo
-  echo "Creating working folder $build_dir ..."
+  echo " 创建工作文件夹 $build_dir ..."
   mkdir $build_dir
   mkdir $build_dir/system
 
   echo
 
-  # Kernel is optional
+  # 内核可选
   if [ -e original_update/$kernel_img ]
   then
     cp -vf original_update/$kernel_img $build_dir
   fi
 
-  # Cache is optional
+  # Cache 可选
   if [ -e original_update/$csc_img ]
   then
     cp -vf original_update/$csc_img $build_dir/system
@@ -134,7 +133,7 @@ fi
 system_dir=$build_dir/system
 cd $system_dir
 
-# Get full path
+# 获取完整路径
 system_dir=`pwd`
 cd ../..
 
@@ -145,12 +144,12 @@ cd ../..
 
 mkdir -p $build_dir/META-INF/com/google/android
 echo
-echo "Adding an update-script ..."
+echo " 正在添加 update-script 刷机脚本 ..."
 cp tools/update_files/update-script $build_dir/META-INF/com/google/android/
 echo
 
 #
-# Extract files from $system_img
+# 从 $system_img 提取文件
 #
 
 if [ `uname | grep CYGWIN` ]
@@ -166,7 +165,7 @@ rm -f $system_img 2>/dev/null
 if [ "$?" == "1" ]
 then
   echo
-  echo "WARNING: $system_img is in use.  Remove file manually after application is closed."
+  echo " 警告:  $system_img 正在使用中，请在应用程序关闭后手动删除文件。"
   echo
 fi
 
@@ -175,28 +174,28 @@ cd ..
 if [ ! -d system ]
 then
   echo
-  echo "Error:  No /system folder found!"
+  echo " 提醒:  未发现 /system 文件夹！"
   exit 1
 fi
 
 if [ ! -d system/framework ]
 then
   echo
-  echo "Error: No /system/framework folder found!"
+  echo " 提醒: 未发现 /system/framework 文件夹！"
   exit 1
 fi
 
 if [ ! -d system/app ]
 then
   echo
-  echo "Error: No /system/app folder found!"
+  echo " 提醒: 未发现 /system/app 文件夹！"
   exit 1
 fi
 
 if [ "`ls system`" == "" ]
 then
   echo 
-  echo "Error: /system folder is empty!"
+  echo " 提醒: /system 文件夹是空白的！"
   echo
   exit 1
 fi
@@ -205,15 +204,15 @@ fi
 cd ..
 
 echo
-echo "The file $system_img has been fully unpacked into:"
+echo " factoryfs.rfs 文件已经完全解包到:"
 echo "  $system_dir"
 
 
 if [ -e $src_dir/$csc_img ]
 then
   echo
-  echo "Do you wish to extract the Customer Software Customization (CSC)"
-  echo -n "from the $csc_img (y/n)? (default: y): "
+  echo " 你想提取客户软件的定制(CSC)"
+  echo -n "解压来自  $csc_img (y/n)? (默认为: y): "
 
   read do_extract
   echo
@@ -225,7 +224,7 @@ then
   else
 
     #
-    # Extract files from $csc_img
+    # 从 $csc_img 提取文件
     #
     if [ `uname | grep CYGWIN` ]
     then
@@ -240,7 +239,7 @@ then
     if [ "$?" == "1" ]
     then
       echo
-      echo "WARNING: $csc_img is in use.  Remove file manually after application is closed."
+      echo " 警告: $csc_img 正在使用中，请在应用程序关闭后手动删除文件。"
       echo
     fi
 
@@ -252,19 +251,19 @@ fi
 
 
 #
-# Insert fake boot.img
+# 插入假 boot.img
 #
 scripts/check_no_bootimg
 
 
 #
-# update-script and other adjustments
+# update-script 脚本 and 和其他调整
 #
 if [ "$2" != "kernel_only" ] && [ "$2" != "name_given" ]
 then
   scripts/fix_update_script 
 
-  # Modify the update-script with features found in Nandroid backup
+  # update-script 脚本与修改 Nandroid 备份功能
   scripts/fix_update_script_with_features
 
   scripts/remove_recovery
@@ -272,10 +271,10 @@ fi
 
 
 echo
-echo Listing of $build_dir:
+echo $build_dir 列表:
 echo
 ls -l $build_dir
 
 echo
-echo "Finished setting up working folder!"
+echo " 提醒:工作文件夹设置完成!"
 

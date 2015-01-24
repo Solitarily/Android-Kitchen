@@ -1,10 +1,9 @@
 ############################################################################
 #
-# Copyright (c) 2011 - dsixda (dislam@rocketmail.com)
+# 本定制工具完全免费，由DsiXDA开发，由“ 半指遮天 ”完成汉化翻译。
 #
-# Android Kitchen is 100% free.  This script file is intended for personal
-# and/or educational use only.  It may not be duplicated for monetary
-# benefit or any other purpose without the permission of the developer.
+#     我的新浪微博：      http://weibo.com/hqapk
+#     我的腾讯微博：      http://t.qq.com/hqapkcom
 #
 ############################################################################
 
@@ -12,42 +11,42 @@ echo
 
 if [ -d BOOT-EXTRACTED ]
 then
-  echo Found BOOT-EXTRACTED folder, checking contents ...
+  echo 发现 BOOT-EXTRACTED 文件夹，检查内容 ...
 
   if [ -d BOOT-EXTRACTED/boot.img-ramdisk ]
   then
-    echo Found boot.img-ramdisk
+    echo 发现 boot.img-ramdisk
 
     if [ -e BOOT-EXTRACTED/zImage ]
     then
-      echo Found zImage
+      echo 发现 zImage
     else
-      echo Did not find BOOT-EXTRACTED/zImage
+      echo 找不到 BOOT-EXTRACTED/zImage
       exit 0
     fi
 
   else
-    echo Did not find BOOT-EXTRACTED/boot.img-ramdisk folder!
+    echo 找不到现 boot-extracted/boot.img-ramdisk 文件夹!
     exit 0
   fi
 
 else
-  echo Did not find BOOT-EXTRACTED folder!
+  echo 找不到 BOOT-EXTRACTED 文件夹!
   exit 0
 fi
 
 
 if [ -d WORKING_* ]
 then
-  echo Working folder found
+  echo 已发现工作文件夹
 else
-  echo Working folder not found!
+  echo 未发现工作文件夹!
   exit 0
 fi
 
 
 echo 
-echo "Building initrd.gz ..."
+echo " 创建 initrd.gz ..."
 
 cd BOOT-EXTRACTED/boot.img-ramdisk
 find . | cpio -o -H newc | gzip > ../initrd.gz
@@ -60,14 +59,14 @@ cd WORKING_*
 if [ -e boot.img ]
   then
   echo
-  echo "Replacing boot.img in working folder with NAND boot folder ..."
+  echo " 替换工作文件夹 boot.img 到 NAND boot文件夹 ..."
   rm -f boot.img
 fi
 
 if [ -d boot ]
 then
   echo
-  echo "Removing old NAND boot folder ..."
+  echo " 删除旧的 NAND boot 文件夹 ..."
   rm -rf boot
 fi
 

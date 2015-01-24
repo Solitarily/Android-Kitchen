@@ -1,10 +1,9 @@
 ############################################################################
 #
-# Copyright (c) 2011 - dsixda (dislam@rocketmail.com)
+# 本定制工具完全免费，由DsiXDA开发，由“ 半指遮天 ”完成汉化翻译。
 #
-# Android Kitchen is 100% free.  This script file is intended for personal
-# and/or educational use only.  It may not be duplicated for monetary
-# benefit or any other purpose without the permission of the developer.
+#     我的新浪微博：      http://weibo.com/hqapk
+#     我的腾讯微博：      http://t.qq.com/hqapkcom
 #
 ############################################################################
 
@@ -13,23 +12,22 @@ clear
 
 curr_dir=`pwd`
 
+echo "      =  提  醒  =      "
+echo "----------------------------------------------------------------------"
+echo "此脚本将会解压任何文件夹的 'data.img'文件（通常发现在 Nandroid 备份）"
 echo
-echo "This script will extract the contents from a 'data.img' file"
-echo "(normally found in a Nandroid backup) located in any folder." 
-echo
-echo "The contents will be extracted to a new folder under"
-echo "$curr_dir." 
+echo "此内容将会解压到 $curr_dir 下的一个新文件夹。"
 echo 
 echo "----------------------------------------------------------------------"
 echo 
-echo -n "Proceed (y/n)? (default: y): "
+echo -n " 继续 (y/n)? (默认: y): "
 
 read proceed
 echo
 
 if [ "$proceed" == "n" ]
 then
-  echo "Cancelled"
+  echo " 取消"
   exit 0
 fi
 
@@ -39,26 +37,26 @@ img_dir="data`echo -n $f`_$date_str"
 img_path=$curr_dir/$img_dir
 
 echo
-echo "Creating folder $img_path ..."
+echo " 创建文件夹 $img_path ..."
 mkdir $img_dir
 
 echo
-echo "---> Place data.img into the folder mentioned above <--"
+echo "---> 将 data.img 放到上面提到的文件夹<--"
 
 scripts/press_enter
 
 if [ ! -e $img_dir/data.img ]
 then
-  echo "Error: data.img not found!"
+  echo " 云卓团队提醒: 未发现 data.img 文件!"
   echo
-  echo "Removing $img_dir folder"
+  echo " 移除 $img_dir 文件夹"
   rm -rf $img_dir
   exit 1
 fi      
   
 
 #
-# Check for YAFFS/TAR/EXT*
+# 检查有 YAFFS/TAR/EXT*
 #
 
 scripts/check_if_img_yaffs $img_dir data.img
@@ -82,7 +80,7 @@ then
   fi
 
   echo
-  echo Extracting contents of data.img ...
+  echo 提取 data.img 内容 ...
   cd $img_dir
   result=`../tools/unyaffs_files/$unyaffs_file data.img 2>/dev/null`
   cd ..
@@ -91,15 +89,15 @@ else
 
   cd $img_dir
 
-  # Check for TAR archive
+  # 检查 TAR 存档
   test_tar=`od -A n --strings -j 0 -N 5 data.img`
 
   if [ "$test_tar" == "data/" ]
   then
-    echo "data.img is a TAR archive"
-    echo "Extracting files ..." 
+    echo " data.img 是一个 TAR 存档"
+    echo " 提取文件 ..." 
 
-    # Don't show timestamp warning
+    # 不显示时间戳警告
     tar xf data.img 2>/dev/null
 
     cd ..
@@ -107,7 +105,7 @@ else
   else
 
     echo
-    echo "NON-YAFFS/NON-TAR FILE FORMAT DETECTED"
+  echo " 检测到 NON-YAFFS（非YAFFS）文件格式"
     echo
 
     # Get full path
@@ -126,7 +124,7 @@ rm -f data.img 2>/dev/null
 if [ "$?" == "1" ]
 then
   echo
-  echo "WARNING: data.img is in use.  Remove file manually after application is closed."
+  echo " 云卓团队警告: data.img 正在使用中，请在应用程序关闭后手动删除文件。"
   echo
 fi
 
@@ -135,21 +133,21 @@ cd ..
 if [ "$check_dump" != "" ]
 then
   echo
-  echo "Error:  stackdump file found under $img_dir due to incompatibility"
-  echo "        with unyaffs."
+  echo " 云卓团队提醒: 由于不兼容 unyaffs ，stackdump 文件发现在 $img_dir 下。"
+  echo
   exit 1
 fi
 
 if [ "`ls $img_dir`" == "" ]
 then
   echo 
-  echo "Error:  $img_path is empty!"
+  echo " 云卓团队提醒:  $img_path 是空的"
   echo
   exit 1
 fi
 
 echo
-echo "Listing of $img_path:"
+echo " 正在列表 $img_path:"
 echo
 ls -l $img_dir
 

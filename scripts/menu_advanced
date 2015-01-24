@@ -1,12 +1,12 @@
 ############################################################################
 #
-# Copyright (c) 2012 - dsixda (dislam@rocketmail.com)
+# 本定制工具完全免费，由DsiXDA开发，由“ 半指遮天 ”完成汉化翻译。
 #
-# Android Kitchen is 100% free.  This script file is intended for personal
-# and/or educational use only.  It may not be duplicated for monetary
-# benefit or any other purpose without the permission of the developer.
+#     我的新浪微博：      http://weibo.com/hqapk
+#     我的腾讯微博：      http://t.qq.com/hqapkcom
 #
 ############################################################################
+
 
 #!/bin/bash
  
@@ -19,24 +19,26 @@ do
 
   echo 
   echo "============================================================"
-  echo " Android Kitchen $version - by dsixda (xda-developers.com)"
+  echo "     Android Kitchen  厨房定制工具     V0.225   By 半指遮天 "
   echo "============================================================"
+  echo "     论坛地址：bbs.hqapk.com   ｜   技术支持  ： 云卓论坛   "
+  echo "============================================================"
+  echo "> 高级选项"
   echo
-  echo "> ADVANCED OPTIONS"
+  echo " 11 - 对您的 ROM 进行 Deodex 操作（将apk和odex两个文件合并）"
+  echo " 12 - boot image 工具(解压/打包/etc脚本) " 
+  echo " 13 - 添加 /data/app 支持功能（可预置可删除内置程序）"
+  echo " 14 - 添加支持 /etc/init.d 刷机脚本（busybox run-parts）"
+  echo " 15 - 解压 data.img 功能"
+  echo " 16 - 签名 APK 安装文件或 ZIP 刷机文件（支持批量操作）" 
+  echo " 17 - 对 update-script 或 updater-script 刷机脚本进行转换"
+  echo " 18 - 混合菜单/插件脚本"
   echo
-  echo " 11 - De-odex files in your ROM"
-  echo " 12 - Tools for boot image (unpack/re-pack/etc.)" 
-  echo " 13 - Add /data/app functionality"
-  echo " 14 - Add /etc/init.d scripts support (busybox run-parts)"
-  echo " 15 - Unpack data.img"
-  echo " 16 - Sign APK or ZIP file(s)" 
-  echo " 17 - Convert update-script or updater-script"
-  echo " 18 - Plugin scripts"
+  echo " 99 - 从工作文件夹建立ROM刷机包"
+  echo " 00 - 返回（传统选项）菜单"
+  echo " 88 - 返回（基础选项）主菜单"
   echo
-  echo " 99 - Build ROM from working folder"
-  echo "  0 - BACK TO MAIN MENU"
-  echo
-  echo -n "Enter option: "
+  echo -n " 请输入选择项: "
   read opt
 
   if [ "$opt" != "0" ]
@@ -56,8 +58,9 @@ do
       17) scripts/update_script_convert_menu; continue;;
       18) scripts/run_plugins; continue;;
       99) scripts/build_rom;;
-      0) exit 1;;
-      *) echo "Invalid option"; continue;;
+      00) scripts/menu_legacy $version; continue;;
+      88) exit 1;;
+      *) echo " 错误选项 "; 继续;;
     esac
   fi
 

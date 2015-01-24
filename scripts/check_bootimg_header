@@ -1,17 +1,15 @@
 ############################################################################
 #
-# Copyright (c) 2012 - dsixda (dislam@rocketmail.com)
+# 本定制工具完全免费，由DsiXDA开发，由“ 半指遮天 ”完成汉化翻译。
 #
-# Android Kitchen is 100% free.  This script file is intended for personal
-# and/or educational use only.  It may not be duplicated for monetary
-# benefit or any other purpose without the permission of the developer.
+#     我的新浪微博：      http://weibo.com/hqapk
+#     我的腾讯微博：      http://t.qq.com/hqapkcom
 #
 ############################################################################
-
 #
-# This script has one optional parameter:
+# 此脚本有一个可选参数:
 #
-# $1 = folder name
+# $1 = 文件夹名称
 #
 
 base_dir=`pwd`
@@ -24,7 +22,7 @@ else
 fi
 
 #
-# Check for strange boot.img header
+# 检查到有问题的boot.img文件头
 #
 
 check_header=`od -A n -h -j 0 -N 8 boot.img | sed 's/ //g'`
@@ -32,23 +30,24 @@ check_header=`od -A n -h -j 0 -N 8 boot.img | sed 's/ //g'`
 if [ "$check_header" != "4e415244494f2144" ]
 then
 
-  echo
-  echo "Android 'magic' header not found at start of boot.img"
-  echo "Checking if it exists elsewhere ..."
+  echo "      = 云 卓 团 队 提醒 =      "
+  echo "------------------------------------------"
+  echo " 找不到Android 'magic' boot.img 头位置"
+  echo " 检查是否存在其他地方 ..."
 
-  # Mac OS X adds extra spaces between the numbers!
+  # Mac OS X 中添加多余的数字之间的空格!
   hex_offset=`od -x -A x boot.img | grep -m 1 "4e41 [ ]*5244 [ ]*494f [ ]*2144" | sed -e 's/ .*//'`
 
   if [ "$hex_offset" != "" ]
   then
 
     #
-    # Remove leading bytes before the Android header 
+    # 删除前导字节在 Android 的标题之前
     #
 
     dec_offset=`printf "%d" 0x$hex_offset`
-    echo "Android header found at offset $dec_offset"
-    echo "Removing extra stuff before it so boot.img can be read properly ..."
+    echo " Android header 被发现偏移在 $dec_offset"
+    echo " 在 boot.img 能够正确读取之前正在删除额外的东西 ..."
 
     dd if=boot.img of=newboot.img bs=1 skip=$dec_offset
     rm -f boot.img
@@ -58,7 +57,7 @@ then
     exit 0
 
   else
-    echo "Warning: Android header not found in boot.img (unsupported format)"
+    echo " 云卓团队警告: 在 boot.img 中未找到 android 头(不受支持的格式)"
     cd $base_dir
     exit 1
   fi

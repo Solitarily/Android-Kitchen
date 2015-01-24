@@ -1,29 +1,26 @@
 ############################################################################
 #
-# Copyright (c) 2011 - dsixda (dislam@rocketmail.com)
+# 本定制工具完全免费，由DsiXDA开发，由“ 半指遮天 ”完成汉化翻译。
 #
-# Android Kitchen is 100% free.  This script file is intended for personal
-# and/or educational use only.  It may not be duplicated for monetary
-# benefit or any other purpose without the permission of the developer.
+#     我的新浪微博：      http://weibo.com/hqapk
+#     我的腾讯微博：      http://t.qq.com/hqapkcom
 #
 ############################################################################
 
 
 clear
 
-echo
+echo "      =  云卓团队提醒 =      "
 echo "----------------------------------------------------------------"
 echo  
-echo "This option allows you to use a custom boot animation in place"
-echo "of the default one."
+echo "  此选项允许使用自定义开机动画来替换默认开机画面。"
 echo 
-echo "After enabling this option, your boot animation should be copied"
-echo "under the /data/local folder as 'bootanimation.zip'."
+echo " 开启此选项后，请将开机动画bootanimation.zip复制到/data/local文件夹"
 echo
 echo "----------------------------------------------------------------"
 echo
 
-echo -n "Proceed (y/n)? (default: y): "
+echo -n " 继续(y/n)? (默认: y): "
 read do_install
 
 if [ "$do_install" == "n" ]
@@ -36,11 +33,11 @@ echo
 if [ -d WORKING_* ]
 then
   echo
-  echo Working folder found
+  echo  已发现工作文件夹
   cd WORKING_*
 else
   echo
-  echo Working folder not found, you will need to create one!
+  echo  警告：未发现工作文件夹，你必须先创建一个!
   exit 0
 fi
 
@@ -48,9 +45,9 @@ echo
 
 if [ -d data/local ]
 then
-  echo /data/local already exists
+  echo /data/local 已存在
 else
-  echo Creating /data/local
+  echo 创建 /data/local
   mkdir -p data/local
 fi
 

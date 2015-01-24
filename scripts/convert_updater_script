@@ -1,10 +1,9 @@
 ############################################################################
 #
-# Copyright (c) 2012 - dsixda (dislam@rocketmail.com)
+# 本定制工具完全免费，由DsiXDA开发，由“ 半指遮天 ”完成汉化翻译。
 #
-# Android Kitchen is 100% free.  This script file is intended for personal
-# and/or educational use only.  It may not be duplicated for monetary
-# benefit or any other purpose without the permission of the developer.
+#     我的新浪微博：      http://weibo.com/hqapk
+#     我的腾讯微博：      http://t.qq.com/hqapkcom
 #
 ############################################################################
 
@@ -28,23 +27,22 @@ then
 
 else
   echo
-  echo Working folder not found, you will need to create one!
+  echo  未发现工作文件夹，你需要创建一个!
   exit 0
 fi
 
 
 if [ "$1" == "" ]
 then
-
-  echo "Conversion Tool: updater-script (Edify) to update-script (Amend)"
-  echo "--------------------------------------------------------------------"
+  echo "         =  云 卓 团 队 提 醒  =    "
+  echo "--------------------------------------------------------------------------"
+  echo "  转换工具: updater-script (Edify) 转换为 update-script (Amend)"
+  echo "--------------------------------------------------------------------------"
+  echo "  此脚本会将你的 updater-script 脚本转换为 update-script 脚本"
+  echo "  请确保的的工作文件夹中 META-INF/com/google/android "
+  echo "  文件夹下有 updater-script 脚本."
   echo
-  echo "This script will convert your updater-script into an update-script."
-  echo
-  echo "Ensure you have an updater-script under META-INF/com/google/android"
-  echo "of your working folder."
-  echo
-  echo -n "Proceed with conversion (y/n)? (default: y): "
+  echo -n " 进行转换(y/n)? (默认: y): "
 
   read proceed_now
   echo
@@ -65,11 +63,13 @@ then
   
   if [ -e update-script ]
   then
-    echo "Error: Although you have an updater-script, you also have an update-"
-    echo "       script in the same folder. Remove one of them."
+    echo "         =  云 卓 团 队 提 醒  =    "
+    echo "--------------------------------------------------------------------------"
+    echo " 工作文件夹下同时存在 updater-script 脚本与 update-script 脚本"
+    echo "  请删除中其中某个文件，再继续下一步 "
     echo
 
-    echo -n "Remove update-script and continue conversion (y/n)? (default: y) "
+    echo -n " 删除 update-script 脚本然后继续转换(y/n)? (默认: y): "
     read remove_it
     echo
     if [ "$remove_it" != "n" ]
@@ -87,18 +87,18 @@ then
   fi
 
 else
-  echo "Error: updater-script not found!"
+  echo " 云卓团队提醒: 未发现 updater-script 脚本!"
   cd ../../../../..
   exit 0
 fi
 
 
 
-
-echo "Converting to update-script, please wait ..."
+echo "         = 云 卓 团 队 提 醒  =    "
+echo "--------------------------------------------------------"
 echo
-
-
+echo " 将转换为 update-script 脚本，请稍后 ..."
+echo
 # If there is no mount point definitions for this device in the
 # tools/edify_defs folder, create a basic one based on the 
 # updater-script contents
@@ -109,9 +109,9 @@ cd WORKING_*
 cd META-INF/com/google/android
 
 
-echo "- Initial formatting ..."
+echo " 格式初始化"
 
-# The 'strings' command is used in case the ui_print statement has special symbols in it
+# Ui_print 语句中有特殊符号的情况下使用字符串命令
 more updater-script \
   | sed -e ':a;N;$!ba;s/([ ]*\n/(/g' \
   | sed -e ':a;N;$!ba;s/\n[ ]*\&\&/ \&\&/g' \
@@ -128,20 +128,20 @@ more updater-script \
 
 
 #
-# Replace tabs with spaces!
+# 制表符替换空格!
 #
 tr '\011' ' ' <temp.log >temp.log.new
 mv -f temp.log.new temp.log
 
 
 #
-# Remove comments
+# 删除注释
 #
 sed -i -e '/^#/d' temp.log
 
 
 #
-# Some updater-scripts use alternatives to the regular mount/unmount commands
+# 一些updater-scripts脚本使用的常规mount/unmount命令
 #
 sed -i -e '/^run_program("\/sbin\/mount"/d' temp.log
 sed -i -e '/^run_program("\/sbin\/umount"/d' temp.log
@@ -213,7 +213,7 @@ done
 
 
 #
-# Fix the mess left over sometimes by the assert statement
+# 修复有时 assert 语句所留下的烂摊子
 #
 sed -i \
   -e 's/^==[ ]*\(.*$\)/\1/g' \
@@ -243,7 +243,7 @@ do
   do
 
     #
-    # Replace 3 consecutive lines if they match the required strings
+    # 如果它们匹配所需的字符串，替换 3 连续行
     #
 
     img_name=${img_list[${i}]}
@@ -289,7 +289,7 @@ line_num=`sed -n -e '/run_program(/{=;q}' temp.log`
 while [ "$line_num" != "" ]
 do
 
-  # run_program spans multiple lines
+  # run_program 跨多行
   has_end=`sed -n -e ''$line_num'p' temp.log | grep -c "\");[ ]*$"`
   
   # Combine the next line
@@ -320,7 +320,7 @@ done
 #
 # delete
 #
-echo "- delete ..."
+echo "- 删除 ..."
 line_num=`sed -n -e '/delete(/{=;q}' temp.log`
 
 while [ "$line_num" != "" ]
@@ -338,7 +338,7 @@ done
 
 
 #
-# Remove apply_patch
+# 删除 apply_patch
 #
 sed -i -e 's/apply_patch.*[;]//g' temp.log
 
@@ -350,7 +350,7 @@ sed -i -e 's/apply_patch.*[;]//g' temp.log
 #
 echo "- symlink ..."
 
-# If the symlink command consists of only target file, then use this
+# 如果目标文件只包含符号链接命令，然后使用此
 sed -i -e 's/symlink("\([^\"]*\)", "\([^\"]*\)");/symlink \1 \2/g' temp.log
 
 line_num=`sed -n -e '/symlink(/{=;q}' temp.log`
@@ -362,14 +362,14 @@ do
 
   src=`sed -ne ''$line_num' s/symlink("\([^"]*\)".*/\1/pg' temp.log`
 
-  # Fix sed issue where backslashes in $src are misinterpreted as part of the sed syntax 
-  # rather than the string
+  # $src反斜杠误解的sed语法的一部分，修复sed的问题
+  # 而不是字符串
   src=`echo $src | sed -e 's/\//dsixda_slash/g'`
 
-  # sed1 : The formatting code near the top of this conversion script may have removed some commas
-  # sed2 : All targets will be moved to their own line
-  # sed3 : Substitute back the backslashes, if any
-  # sed4 : Fix up last line of symlink set
+  # sed1 : 此转换脚本的顶部附近的格式设置代码可能已删除一些逗号
+  # sed2 : 所有目标将会都移到自己的行
+  # sed3 : 替代反斜杠，如有
+  # sed4 : 修复了符号链接集的最后一行
   sed -i \
     -e ''$line_num' s/"[ ]*"/", "/g' \
     -e ''$line_num' s/", [ ]*"/\nsymlink '"$src"' /g' \
@@ -377,7 +377,7 @@ do
     -e ''$line_num' s/");//g' \
   temp.log 
 
-  # No longer need first line after all targets moved to other lines
+  # 不再需要第一行所有目标都移动到其他行后
   sed -i -e ''$line_num'd' temp.log
 
   #
@@ -386,7 +386,7 @@ do
   if [ "`diff temp.log temp.log.old`" == "" ]
   then
     echo
-    echo "ERROR: Problem converting symlinks"
+    echo "错误: 转换符号链接出现问题"
     rm -f temp.log.old temp.log
     exit 1
   fi
@@ -400,10 +400,10 @@ rm -rf temp.log.old
 
 
 
-echo "- Final formatting ..."
+echo "- 最后格式化 ..."
 
 #
-# Fix up the update-script 
+# 修复 update-script 脚本
 #
 sed -i \
   -e 's/;//g' \
@@ -490,7 +490,7 @@ temp.log
 
 
 #
-# Patch up any conversion issues here
+# 这里修补任何转换问题
 #
 
 sed -i \
@@ -532,7 +532,7 @@ temp.log
 
 
 #
-# Remove blank lines
+# 删除空行
 #
 sed -i -e '/^$/d' temp.log
 
@@ -612,7 +612,7 @@ rm -f temp.log.old
 
 
 #
-# Device-specific mount points
+# 特定设备的mount
 #
 cd ../../../../..
 scripts/adjust_mnt update-script
@@ -628,20 +628,19 @@ then
 
   mv -f updater-script updater-script.orig
 
-  echo "--------------------------------------------------------------------"
-  echo
-  echo "An update-script has been created under META-INF/com/google/android"
-  echo "of your working folder.  Please review it for potential errors."
+  echo "         =  云 卓 团 队 提 醒  =    "
+  echo "-----------------------------------------------------------------------------"
+  echo " update-script 脚本已被创建在工作文件夹中 META-INF/com/google/android 下，"
+  echo " 请检查它避免存在错误。"
   echo ""
-  echo "The original updater-script has been renamed to updater-script.orig."
-  echo "It will not be included in your completed ROM's ZIP file, but please"
-  echo "DO NOT remove it, as it may be required by the kitchen." 
+  echo " 原始 updater-script 脚本将被重命名为 updater-script.orig ，"
+  echo " 它将不会包括在 ROM 刷机包 ZIP 文件，但请不要删除它，因厨房可能还需要它。"
   echo
 
   if [ -e update-binary ]
   then
     mv -f update-binary update-binary.orig
-    echo "The update-binary has also been renamed to update-binary.orig."
+    echo " update-binary 也已重命名为 update-binary.orig."
   fi
 
   cd $base_dir
@@ -649,17 +648,16 @@ then
 
   if [ "$?" == "1" ]
   then
-    echo
-    echo "NOTE: Because we cannot fully convert Edify syntax into Amend"
-    echo "      format, this update-script will automatically be converted"
-    echo "      back to an updater-script in the final ROM's update.zip."
-    echo "      However, your working folder will still contain the update-"
-    echo "      script."
+    echo "         =  云 卓 团 队 提 醒  =    "
+    echo "-----------------------------------------------------------------------------"
+    echo "   因为无法完全转换 Edify 语法成 Amend 格式，在最终 ROM 的 update.zip "
+    echo "   文件中 update-script 脚本将会自动转换回 updater-script 脚本。"
+    echo "   然而，工作文件夹中将会仍旧包含 update-script 脚本."
     echo
   fi
 
 else
-  echo "Error: update-script not created!"
+  echo " 云卓团队提醒: update-script 脚本未被创建!"
 fi
 
 cd $base_dir

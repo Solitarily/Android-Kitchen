@@ -1,10 +1,9 @@
 ############################################################################
 #
-# Copyright (c) 2012 - dsixda (dislam@rocketmail.com)
+# 本定制工具完全免费，由DsiXDA开发，由“ 半指遮天 ”完成汉化翻译。
 #
-# Android Kitchen is 100% free.  This script file is intended for personal
-# and/or educational use only.  It may not be duplicated for monetary
-# benefit or any other purpose without the permission of the developer.
+#     我的新浪微博：      http://weibo.com/hqapk
+#     我的腾讯微博：      http://t.qq.com/hqapkcom
 #
 ############################################################################
 
@@ -15,7 +14,7 @@ if [ "$?" == "1" ]
 then
   clear
   echo
-  echo "Feature not supported by kitchen for this ROM"
+  echo " 本定制工具不支持此ROM"
   exit 0
 fi
 
@@ -27,20 +26,17 @@ elif [ "$1" == "show_help" ]
 then
 
   clear
-  echo
+  echo "       =  提醒  =      "
   echo "-----------------------------------------------------------------"
   echo  
-  echo "Apps2SD is a feature that will allow all your apps to be"
-  echo "installed onto the SD card to save storage space on your device."
+  echo "   Apps2SD 是一种功能，将允许所有应用程序可以安装到 SD 卡内，"
+  echo "  以节省你设备上的存储空间；此功能适用于内部存储较小的设备，"
+  echo "  如果你的设备拥有较大的内部存储（例如ONE X）那么不需要这个功能"
+  echo " （实际使用中可能此功能会占用机器内存，大存储设备不建议使用）"
   echo
-  echo "NOTE: It is meant for devices with SMALL internal storage space,"
-  echo "so if your device has large internal memory (such as on the Nexus"
-  echo "S) then Apps2SD is not required and MAY NOT BE COMPATIBLE EITHER!"
-  echo
-  echo "This kitchen uses the Darktremor Apps2SD method. Ensure you have"
-  echo "a fast memory card (e.g. Class 6), and that it is partitioned"
-  echo "with an appropriate filesystem, preferably EXT3.  A swap"
-  echo "partition is usually not necessary."
+  echo "  厨房使用 Darktremor Apps2SD 方法，请确保您的存储卡有较快速度"
+  echo "  （例如Class 6）, 使用适合文件系统的分区最好是 EXT3"
+  echo "  通常并不需要 Swap 分区"
   echo
   echo "-----------------------------------------------------------------"
   echo
@@ -55,13 +51,13 @@ if [ -e tools/edify_defs/$device_name ]
 then
   if [ "$change_mnt" != "UNKNOWN" ] || [ "$change_mnt_dell" != "UNKNOWN" ]
   then
-    echo "WARNING: This device ($device_name) most likely will NOT support Apps2SD!"
+    echo " 警告: 此设备 ($device_name)  很可能不支持 Apps2SD！"
     echo
   fi
 fi
 
 
-echo -n "Proceed with installing Apps2SD (y/n)? (default: y): "
+echo -n " 继续安装 Apps2SD (y/n)? (默认: y): "
 read do_apps2sd
 
 if [ "$do_apps2sd" == "n" ]
@@ -78,7 +74,7 @@ then
 
   if [ ! -e META-INF/com/google/android/update-script ]
   then
-    echo "Error: update-script not found!"
+    echo " 错误: update-script 脚本找不到"
     cd ..
     exit 0
   fi
@@ -87,14 +83,16 @@ then
 
   if [ "$su_path" == "" ]
   then
-    echo "'su' binary not found under working folder!"
-    echo "You must root your ROM first."
+    echo "       = 提醒 =       "
+    echo "----------------------------------------------"
+    echo "  工作文件夹下找不到 SU 二进制文件！"
+    echo "  首先你必须 ROOT 你的 ROM"
     cd ..
     exit 0
   else
 
     echo
-    echo "Found $su_path"
+    echo " 发现 $su_path"
 
     cd .. 
     scripts/a2sd_exists
@@ -102,7 +100,7 @@ then
     if [ "$?" == "1" ]
     then
       echo
-      echo "a2sd is already installed!"
+      echo " Apps2SD 安装成功"
       scripts/add_cachesd_to_update_script
       exit 0
     fi
@@ -111,7 +109,7 @@ then
 
 else
   echo
-  echo Working folder not found, you will need to create one!
+  echo  ARET团队提醒：找不到工作文件夹，你需要创建一个。
   exit 0
 fi
 
@@ -134,7 +132,7 @@ if [ -d BOOT-EXTRACTED/boot.img-ramdisk ]
 then
   cd BOOT-EXTRACTED/boot.img-ramdisk
 else
-  echo "Error: BOOT-EXTRACTED/boot.img-ramdisk folder not found!"
+  echo " 错误: 找不到 BOOT-EXTRACTED/boot.img-ramdisk 文件夹"
   exit 0
 fi
 
@@ -147,16 +145,16 @@ if [[ "$test_property" != "0" && "$test_start_a2sd" != "0" ]] || \
    [[ "$test_property" != "0" && "$test_sysinit" != "0" ]] || \
    [[ "$test_property" != "0" && "$test_cm_sysinit" != "0" ]] 
 then
-  echo "init.rc already has content to start a2sd!"
+  echo " init.rc 中已经开启 a2sd"
   cd ../..
   echo 
-  echo "Removing BOOT-EXTRACTED folder ..."
+  echo " 删除 BOOT-EXTRACTED 文件夹 ..."
   rm -rf BOOT-EXTRACTED
 
 else
 
   echo
-  echo Modifying init.rc in ramdisk to enable Apps2SD ...
+  echo  修改 ramdisk 中的 init.rc 开启 Apps2SD...
 
 
   if [ "$test_sysinit" != "0" ] 
@@ -197,7 +195,7 @@ if [ "$res" == "0" ]
 then
 
   #
-  # apps2sd may have included Bash binary
+  # apps2sd 可能包括 Bash 二进制文件
   #
   find_cmd=`find tools/apps2sd_files -name bash`
   if [ "$find_cmd" != "" ]
@@ -206,7 +204,7 @@ then
   fi
 
   #
-  # Prompt for busybox run-parts method
+  # 提示 busybox 运行方法
   #
   if [ "$test_sysinit" == "0" ] 
   then
@@ -219,6 +217,6 @@ then
   scripts/add_cachesd_to_update_script
 
   echo
-  echo Finished
+  echo 完成
 
 fi

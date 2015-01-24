@@ -1,0 +1,26 @@
+
+# 蓝天信L300  BY 首发论坛：bbs.hqapk.com 
+
+change_mnt=yes
+
+param1=ext4
+param2=EMMC
+
+param1_sdcard=vfat
+param2_sdcard=MTD
+
+sys_mnt=\/dev\/block\/mmcblk0p5
+cache_mnt=\/dev\/block\/mmcblk0p6
+boot_mnt=\bootimg\
+data_mnt=\/dev\/block\/mmcblk0p7
+recovery_mnt=\/dev\/recovery
+#/sdcard         vfat        /dev/block/mmcblk0p8
+#/external_sd    vfat        /dev/block/mmcblk1p1
+#/sd-ext         auto        /dev/block/mmcblk1p2
+#/boot           emmc        /dev/bootimg
+#/recovery       emmc        /dev/recovery
+#/uboot          emmc        /dev/uboot
+
+#modem_mnt=\/dev\/block\/mmcblk0p7
+
+fix_boot2=yes

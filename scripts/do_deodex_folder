@@ -1,20 +1,19 @@
 ############################################################################
 #
-# Copyright (c) 2013 - dsixda (dislam@rocketmail.com)
+# 本定制工具完全免费，由DsiXDA开发，由“ 半指遮天 ”完成汉化翻译。
 #
-# Android Kitchen is 100% free.  This script file is intended for personal
-# and/or educational use only.  It may not be duplicated for monetary
-# benefit or any other purpose without the permission of the developer.
+#     我的新浪微博：      http://weibo.com/hqapk
+#     我的腾讯微博：      http://t.qq.com/hqapkcom
 #
 ############################################################################
 
 #
-# This script has two parameters:
+# 此脚本有两个参数:
 #
-# $1 = folder(s) to deodex under /system (mandatory)
-#       e.g. framework
-#       e.g. "framework app" 
-# $2 = whether to enable logging (y or n) (optional) 
+# $1 = 对 /system 下的文件夹进行 Deodex 操作(强制)
+#       例如 framework
+#       例如 "framework app" 
+# $2 = 是否启用日志(y 或 n) (可选) 
 #
 
 dir_list=$1
@@ -22,7 +21,7 @@ do_log=$2
 
 if [ "$dir_list" == "" ]
 then
-  echo "No folders for deodexing specified!"
+  echo " 没有指定 Deodex 文件夹!"
   exit 0
 fi
 
@@ -36,13 +35,13 @@ num_odex_app=`find system/app | grep -c "\.odex$"`
 
 
 #
-# Create log file
+# 创建日志文件
 #
 
 if [ "$do_log" == "" ]
 then
   echo
-  echo -n "Enable logging to file (y/n)? (default: y): "
+  echo -n " 是否启用日志文件(y/n)? (默认: y): "
   read do_log
 fi
 
@@ -63,14 +62,14 @@ cd WORKING_*
 if [ "$do_log" == "y" ]
 then
   echo
-  echo "Creating log file $log_file ..."
+  echo " 创建日志文件 $log_file ..."
 
   echo "" >> ../$log_file
   echo "smali/baksmali version: $version" >> ../$log_file
 fi
 
 #
-# Go through each folder specified
+# 通过指定每个文件夹
 #
 
 for folder in ${dir_list[@]}
@@ -79,7 +78,7 @@ do
   if [ "$do_log" == "y" ]
   then
     echo "" >> ../$log_file
-    echo "Folder: $folder" >> ../$log_file
+    echo " 文件夹: $folder" >> ../$log_file
     echo "-------------------" >> ../$log_file
   fi
 
@@ -91,11 +90,11 @@ do
     num_odex_folder=$num_odex_app
   else
     echo
-    echo "Error: Folder $folder not valid!"
+    echo " 云卓团队提醒: 文件夹 $folder 无效!"
 
     if [ "$do_log" == "y" ]
     then
-      echo "Invalid folder" >> ../$log_file
+      echo " 无效文件夹" >> ../$log_file
     fi
 
     continue
@@ -107,7 +106,7 @@ do
 
   echo
   echo
-  echo "Going into $path ..."
+  echo " 转到 $path ..."
   echo
 
   cd $path
@@ -116,17 +115,17 @@ do
 
   if [ "$grep_cmd" == "" ]
   then
-    echo "Nothing found under $path!"
+    echo " 在 $path 中未发现任何东西!"
 
     if [ "$do_log" == "y" ]
     then
-      echo "Nothing here" >> ../../../$log_file
+      echo " 这里没有什么" >> ../../../$log_file
     fi
 
   else
 
     #
-    # Finally, deodex each file
+    # 最后,deodex 每个文件
     #
     cp -f ../../../tools/deodex_files/baksmali-$version.jar baksmali.jar
     cp -f ../../../tools/deodex_files/smali-$version.jar smali.jar
@@ -136,25 +135,29 @@ do
 
       count=$(($count+1))
       echo
-      echo "NOW AT FILE $count OF $num_odex_folder IN $path: $odex_file"
+      echo " 现在 $num_odex_folder 中的 $count 文件在 $path: $odex_file"
 
       while [ -e $odex_file ]
       do
 
         ../../../scripts/do_deodex_file $api_level $odex_file ../framework
         
+        #
+        # 如果它失败将使用暴力方法
+        #
+
         if [ -e $odex_file ]
         then
          
           if [ -e $odex_file ] 
           then
 
-            echo "ERROR: Aborting $odex_file"
+            echo " 云卓团队提醒: 正在中止 $odex_file"
             found_error=1
             
             if [ "$do_log" == "y" ]
             then
-              echo "* ERROR: Aborting $odex_file!" >> ../../../$log_file
+              echo "*  云卓团队提醒: 正在中止 $odex_file!" >> ../../../$log_file
             fi
 
             break
@@ -163,7 +166,7 @@ do
           then
             if [ "$do_log" == "y" ]
             then
-              echo "$odex_file successfully deodexed" >> ../../../$log_file
+              echo " $odex_file Deodex 操作成功" >> ../../../$log_file
             fi
 
             break
@@ -172,7 +175,7 @@ do
         else
           if [ "$do_log" == "y" ]
           then
-            echo "$odex_file successfully deodexed" >> ../../../$log_file
+            echo " $odex_file Deodex 操作成功" >> ../../../$log_file
           fi
         fi
       done
@@ -183,12 +186,13 @@ do
     rm -f smali.jar
 
     echo
-    echo "Finished $path"
+    echo " 云卓团队提醒 : 完成 $path"
 
     if [ "$found_error" == "1" ]
     then
-      echo
-      echo "WARNING: Could not deodex the following (you can try to deodex these files again):"
+	  echo "      = 云 卓 团 队 提 醒 =  "
+	  echo "--------------------------------------------------------"
+      echo " 不能 deodex 以下 *.odex (你可以重试，deodex 这些文件):"
       echo `ls *.odex`
       echo
       cd ../..
@@ -204,7 +208,7 @@ done
 if [ "$do_log" == "y" ]
 then
   echo
-  echo "A summary of the deodexing has been logged in $log_file"
+  echo " Deodexing 的日志已被记录在 $log_file"
 fi
 
 cd $base_dir

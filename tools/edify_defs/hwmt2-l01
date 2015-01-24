@@ -1,0 +1,30 @@
+
+# HUAWEU MATE2-L01
+
+change_mnt=yes
+
+param1=ext4
+param2=EMMC
+
+param1_sdcard=vfat
+param2_sdcard=MTD
+
+sys_mnt=\/dev\/block\/platform\/hi_mci.0\/by-name\/system\
+cache_mnt=\/dev\/block\/platform\/hi_mci.0\/by-name\/cache\
+boot_mnt=\/dev\/block\/platform\/hi_mci.0\/by-name\/boot\
+data_mnt=\/dev\/block\/platform\/hi_mci.0\/by-name\/userdata\
+cust_mnt=\/dev\/block\/platform\/hi_mci.0\/by-name/cust\
+
+#mount("ext4", "EMMC", "/dev/block/platform/hi_mci.0/by-name/cust", "/cust");
+#package_extract_dir("cust", "/cust");
+#delete_recursive("/data/cust");
+
+#sys_mnt=\/dev\/block\/mmcblk0p26
+#cache_mnt=\/dev\/block\/mmcblk0p21
+#boot_mnt=\/dev\/block\/mmcblk0p17
+#data_mnt=\/dev\/block\/mmcblk0p28
+sdcard_mnt=???
+
+#modem_mnt=\/dev\/block\/mmcblk0p7
+
+fix_boot2=yes

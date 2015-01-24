@@ -1,10 +1,9 @@
 ############################################################################
 #
-# Copyright (c) 2012 - dsixda (dislam@rocketmail.com)
+# 本定制工具完全免费，由DsiXDA开发，由“ 半指遮天 ”完成汉化翻译。
 #
-# Android Kitchen is 100% free.  This script file is intended for personal
-# and/or educational use only.  It may not be duplicated for monetary
-# benefit or any other purpose without the permission of the developer.
+#     我的新浪微博：      http://weibo.com/hqapk
+#     我的腾讯微博：      http://t.qq.com/hqapkcom
 #
 ############################################################################
 
@@ -24,18 +23,18 @@ do
     echo
     echo
     echo
-    echo "Welcome to dsixda's Android Kitchen"
+    echo " 欢迎使用“半指遮天”V224汉化专用版"
     echo
-    echo -n "Please wait "
+    echo -n " 感谢使用，正在打开，请稍等....  "
     for (( count = 0 ; $count <= $i ; count++ ))
     do
-      echo -n "."
+      echo -n ".....bbs.hqapk.com....."
     done
 
     show_header=0
 
   else
-    echo -n "."
+    echo -n ".....bbs.hqapk.com....."
   fi
 
   found_error=0
@@ -49,20 +48,17 @@ do
   if [ "$result" == "127" ]
   then
     echo
-    echo
-    echo "Error:  The application '$bin' is not installed - the kitchen"
-    echo "        will not function properly without it.  Ensure you did"
-    echo "        not miss a step during installation!  Refer to the"
-    echo "        Android Kitchen FAQ at xda-developers.com for further"
-    echo "        assistance."
-    echo
-    echo "        ** PLEASE READ THE FAQ BEFORE ASKING QUESTIONS!! **"
+	echo "      = 云 卓 团 队 提 醒 =      "
+	echo "----------------------------------------------------------"
+    echo "  此应用程序 $bin 没有安装。没有它本定制工具无法正确运行；"
+    echo "  本定制工具和安装 $bin 所需二进制文件的疑难问题；"
+    echo "  请到XDA智能手机网论坛或者安智网查阅相关厨房安装教程； "
+
     echo 
 
     if [ "$bin" == "clear" ]
     then
-      echo "        YES, THIS ERROR IS ALREADY COVERED IN THE FAQ.  DO NOT"
-      echo "        WASTE YOUR TIME MESSAGING ME. JUST READ IT, PLEASE. ;)"
+      echo "  请阅读前常见问题解答"
       echo 
     fi
 
@@ -76,11 +72,11 @@ do
     if [ "$grep_cmd" == "" ]
     then
       echo
+      echo "      = 云 卓 团 队 提 醒 =      "
+      echo "--------------------------------------------------------------"
+      echo " 没有安装 'sed' 的正确版本，请确认你所安装 sed 的 GNU 版本。"
+      echo " 请到云卓论坛查阅相关常见问题"
       echo
-      echo "Error:  You do not have the correct version of '$bin' installed."
-      echo "        Refer to the FAQ for the Android Kitchen at"
-      echo "        xda-developers.com to ensure you have installed the GNU"
-      echo "        version of $bin."
       echo
 
       found_error=1
@@ -90,7 +86,7 @@ do
 
   if [ $found_error == 1 ]
   then
-    #echo -n "Ignore and proceed anyway (y/n)? (default: n): "
+    #echo -n " 忽略并继续 (y/n)? (默认: n): "
     #read proceedCheck
     proceedCheck=n
 

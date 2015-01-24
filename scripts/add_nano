@@ -1,31 +1,28 @@
 ############################################################################
 #
-# Copyright (c) 2011 - dsixda (dislam@rocketmail.com)
+# 本定制工具完全免费，由DsiXDA开发，由“ 半指遮天 ”完成汉化翻译。
 #
-# Android Kitchen is 100% free.  This script file is intended for personal
-# and/or educational use only.  It may not be duplicated for monetary
-# benefit or any other purpose without the permission of the developer.
+#     我的新浪微博：      http://weibo.com/hqapk
+#     我的腾讯微博：      http://t.qq.com/hqapkcom
 #
 ############################################################################
 
 
 clear
 
-echo
+echo "        = 云卓团队提醒 =       "
 echo "----------------------------------------------------------------"
 echo  
-echo "Nano is a text editor that can be run from the ADB shell on your "
-echo "computer or from a terminal emulator (e.g. ConnectBot) on your"
-echo "Android device.  To run it from a shell, type: nano"
+echo " Nano是一个能够在电脑的ADB终端或超级终端（例如ConnectBot）中运行"
+echo " 的文本编辑器，打开它需要在终端中输入: nano"
 echo
-echo "The scripts 'sysrw' and 'sysro' will also be included to make it"
-echo "easier to mount the /system folder (as read-write or read-only)"
-echo "for file editing purposes as root."
+echo " sysrw 和 sysro 脚本能够使设备轻松挂载 /system 文件夹（读写或只读）"
+echo " 用于编辑系统文件"
 echo
 echo "----------------------------------------------------------------"
 echo
 
-echo -n "Proceed with install (y/n)? (default: y): "
+echo -n " 继续添加 (y/n)? (默认: y): "
 read do_install
 
 if [ "$do_install" == "n" ]
@@ -45,8 +42,8 @@ fi
 
 
 #
-# sysro/sysrw require busybox to mount
-# The regular 'mount' doesn't work for all devices
+# sysro/sysrw 需要 busybox 挂载
+# 常规 'mount' 不一定适合所有设备
 #
 
 scripts/convert_to_unix tools/nano_files/sysrw
@@ -60,7 +57,7 @@ if [ "$sys_path" == "" ]
 then
   cp -fv ../tools/nano_files/sysrw system/xbin/
 else 
-  echo "Found $sys_path"
+  echo " 发现 $sys_path"
 fi
 
 sys_path=`find . -name sysro`
@@ -68,7 +65,7 @@ if [ "$sys_path" == "" ]
 then
   cp -fv ../tools/nano_files/sysro system/xbin/ 
 else 
-  echo "Found $sys_path"
+  echo " 发现 $sys_path"
 fi
 
 cd ..
@@ -81,7 +78,7 @@ scripts/check_galaxy_s_and_s2
 if [ "$?" == "1" ]
 then
   echo
-  echo "Nano feature not supported by kitchen for this ROM"
+  echo " 此 ROM 不支持厨房的 Nano 功能"
 
 else
   scripts/ensure_boot_extracted
@@ -95,7 +92,7 @@ else
       then
         cd BOOT-EXTRACTED/boot.img-ramdisk
       else
-        echo "Error: BOOT-EXTRACTED/boot.img-ramdisk folder not found!"
+        echo " 错误: 未发现 BOOT-EXTRACTED/boot.img-ramdisk 文件夹!"
         exit 0
       fi
 
@@ -110,12 +107,12 @@ else
 
   if [ `grep -c TERMINFO init.rc` == 1 ]
   then
-    echo "TERMINFO already defined in init.rc"
+    echo " TERMINFO 已存在 init.rc 中"
     cd ../..
     rm -rf BOOT-EXTRACTED
 
   else
-    echo "Setting TERMINFO in init.rc ..."
+    echo " 设置 TERMINFO 在 init.rc 中 ..."
     perl -pi -e 's/    export PATH /    export TERMINFO \/system\/etc\/terminfo\n    export PATH /g' init.rc
 
     if [ -e init.rc.bak ]
@@ -125,7 +122,7 @@ else
 
     if [ "`grep TERMINFO init.rc`" == "" ]
     then
-      echo "Error: Could not update init.rc!"
+      echo " 错误: 无法更新 init.rc!"
       cd ../..
       rm -rf BOOT-EXTRACTED
       exit 0
@@ -135,7 +132,7 @@ else
     scripts/build_boot_img
 
     echo
-    echo "Adding /system/etc/terminfo ..."
+    echo " 添加 /system/etc/terminfo ..."
     echo
 
     cd WORKING_*
@@ -158,7 +155,7 @@ else
     cp -fv ../tools/nano_files/nano system/xbin/
     cd ..
   else 
-    echo "Found nano binary"
+    echo " 发现 nano 二进制文件"
   fi
 
   scripts/add_nano_to_update_script

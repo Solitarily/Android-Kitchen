@@ -1,10 +1,9 @@
 ############################################################################
 #
-# Copyright (c) 2012 - dsixda (dislam@rocketmail.com)
+# 本定制工具完全免费，由DsiXDA开发，由“ 半指遮天 ”完成汉化翻译。
 #
-# Android Kitchen is 100% free.  This script file is intended for personal
-# and/or educational use only.  It may not be duplicated for monetary
-# benefit or any other purpose without the permission of the developer.
+#     我的新浪微博：      http://weibo.com/hqapk
+#     我的腾讯微博：      http://t.qq.com/hqapkcom
 #
 ############################################################################
 
@@ -22,7 +21,7 @@ grep_cmd=`find . | grep \\.odex$ | sort -f`
 
 if [ "$grep_cmd" == "" ]
 then
-  echo "Error: No files found!"
+  echo " 云卓团队提醒: 未发现文件!"
   cd ..
   scripts/press_enter
   exit 0
@@ -33,14 +32,14 @@ count=0
 rm -f ../temp.list
 
 echo >> ../temp.list
-echo "All ODEX files:" >> ../temp.list
+echo " 所有 ODEX 文件:" >> ../temp.list
 echo >> ../temp.list
 
 for filename in $grep_cmd 
 do
   count=$(($count+1))
 
-  # Store file names in an array
+  # 文件名存储在一个数组
   file_array[$count]=$filename
   echo "  ($count) $filename" >> ../temp.list
 done
@@ -49,7 +48,7 @@ more ../temp.list
 rm -f ../temp.list
 
 echo
-echo -n "Enter file number (0 = cancel): "
+echo -n " 输入文件编号 (0 = 取消): "
 
 read enterNumber
 
@@ -58,7 +57,7 @@ then
   cd ..
   exit 0
 
-# Verify input is a number
+# 验证输入是一个数字
 elif [ "`echo $enterNumber | sed 's/[0-9]*//'`" == "" ]
 then
 

@@ -1,0 +1,19 @@
+
+# HUAWEI C610 BY 云卓论坛：www.hqapk.com
+
+change_mnt=yes
+
+param1=ext4
+param2=EMMC
+
+param1_sdcard=vfat
+param2_sdcard=MTD
+
+sys_mnt=\/dev\/block\/mmcblk0p17
+cache_mnt=\/dev\/block\/mmcblk0p15
+boot_mnt=\/dev\/block\/mmcblk0p12
+data_mnt=\/dev\/block\/mmcblk0p18
+recovery_mnt=\/dev\/block\/mmcblk0p13
+sdcard_mnt=\/dev\/block\/mmcblk1p1
+
+fix_boot2=yes

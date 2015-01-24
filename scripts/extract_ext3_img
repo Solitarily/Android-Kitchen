@@ -1,10 +1,9 @@
 ############################################################################
 #
-# Copyright (c) 2013 - dsixda (dislam@rocketmail.com)
+# 本定制工具完全免费，由DsiXDA开发，由“ 半指遮天 ”完成汉化翻译。
 #
-# Android Kitchen is 100% free.  This script file is intended for personal
-# and/or educational use only.  It may not be duplicated for monetary
-# benefit or any other purpose without the permission of the developer.
+#     我的新浪微博：      http://weibo.com/hqapk
+#     我的腾讯微博：      http://t.qq.com/hqapkcom
 #
 ############################################################################
 
@@ -14,8 +13,8 @@ img_file=$2
 
 if [ "$img_dir" == "" ] || [ "$img_file" == "" ] 
 then
-  echo "Error:  extract_ext3_img is missing information."
-  echo "        Syntax: extract_ext3_img <file_directory> <img_file_name>"
+  echo " 提醒: extract_ext3_img 信息丢失"
+  echo " 语句: extract_ext3_img <file_directory> <img_file_name>"
   echo
   exit 1
 fi
@@ -24,7 +23,7 @@ img_path=$img_dir/$img_file
 
 if [ ! -e $img_path ]
 then
-  echo "Error: $img_path not found!"
+  echo " 云卓团队提醒: 未发现 $img_path!"
   echo
   exit 1
 fi
@@ -42,25 +41,25 @@ then
     clear
 
     echo 
-    echo "Unpack the $img_file"
-    echo "-----------------------"
+    echo "       = 云 卓 团 队 提 醒 =  "
+    echo "---------------------------------------------"
+    echo "     解包 $img_file   "
+    echo "---------------------------------------------"
+    echo "  选择 ROM 内img文件的解压软件和解压方式 ,  "
+    echo "  请在此处正确判断设备的 EXT 文件系统类型； "
+    echo "  如不能做出选择，请选择相近机型或全部尝试. "
+    echo
+    echo "  例如  EXT3（旧的设备）：如 HTC Desire HD "
+    echo "        EXT4（新的设备）：如 HTC Desire S  "
     echo 
-    echo "Enter a choice below to unpack your image file, assuming it"
-    echo "uses an EXT filesystem. You might find that one option works"
-    echo "better than the other."
-    echo
-    echo "e.g.  EXT3: Older devices such as HTC Desire HD"
-    echo "      EXT4: Newer devices such as HTC Desire S"
-    echo 
-    echo "  1 - Run Explore2fs  (Best choice for EXT3)"
-    echo "  2 - Run Ext2Explore (EXT3/EXT4)"
-    echo "  3 - I'm finished unpacking / Abort"
+    echo "     解压软件和解压方式选项  "
+    echo "---------------------------------------------"
+    echo "  1 - 运行 Explore2fs  (EXT3 推荐)"
+    echo "  2 - 运行 Ext2Explore (EXT3/EXT4 适用)"
+    echo "  3 - 我已经完成解包 / 退出"
     echo
     echo
-    echo "NOTE: If any of the tools listed above have problems with"
-    echo "      extraction, then try the other option(s) listed."
-    echo
-    echo -n "Select number: "
+    echo -n " 请输入选择项数字: "
 
     read enterNumber
 
@@ -77,13 +76,13 @@ then
       break
     
     else
-      echo "Invalid option"
+      echo " 错误选项"
     fi
 
     if [ "$enterNumber" == "1" ] || [ "$enterNumber" == "2" ]
     then
       echo
-      echo "--> If you're satisfied with extraction, select option 3 in next menu"
+      echo " --> 如果你满意提取，在接下来的菜单中选择 3"
       echo
 
       scripts/press_enter
@@ -102,14 +101,14 @@ elif [ `uname | grep Linux` ]
 then
 
   echo
-  echo "Mounting $img_file to loopback device and then extracting files ..."
+  echo " 挂载到设备img所在文件夹 $img_file，然后提取文件 ..."
   
   cd $img_dir
 
   user_=`whoami`
   mkdir ../tmp
 
-  # For ext4 (To prevent hanging when unmounting, use: ro,noexec,noload)
+  # 从 ext4 的 (为了防止挂载卸载时，请使用：ro,noexec,noload)
   sudo mount -o loop,ro,noexec,noload $img_file ../tmp 2>/dev/null  
   res=$?
 
@@ -137,7 +136,7 @@ then
     rmdir ../tmp
     sudo chown -R $user_ *
   else
-    echo "Error: Unable to mount $img_file"
+    echo " 警告: 无法 mount  $img_file"
   fi
 
   rm -f unyaffs*stackdump
@@ -148,7 +147,7 @@ elif [ `sw_vers | grep -o Mac` ]
 then
   
   #
-  # Mac support 
+  # Mac 支持-he8us 的帮助
   # - Thanks to he8us for adding the FUSE routine
   #
 
@@ -237,18 +236,18 @@ then
 
     mkdir $mount_dir
 
-    echo "Trying to mount the filesystem"
+    echo " 正在尝试挂载文件系统 ..."
     buffer=`$fuse_cmd $img_file $mount_dir`
-    echo $buffer
+    echo " 文件系统已经挂载"
   fi
 
   listing=`ls $mount_dir`
-  echo "File system listed, analyzing $mount_dir ..."
+    echo " 文件系统已经列出，正在分析"
   
   if [ "$listing" != "" ]
   then
 
-    echo "Copying files"
+      echo " 复制文件"
 
     if [ "$img_file" == "ext4_cache.img" ] || [ "$img_file" == "cache.rfs" ]
     then

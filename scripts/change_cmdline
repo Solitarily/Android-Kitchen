@@ -1,10 +1,9 @@
 ############################################################################
 #
-# Copyright (c) 2012 - dsixda (dislam@rocketmail.com)
+# 本定制工具完全免费，由DsiXDA开发，由“ 半指遮天 ”完成汉化翻译。
 #
-# Android Kitchen is 100% free.  This script file is intended for personal
-# and/or educational use only.  It may not be duplicated for monetary
-# benefit or any other purpose without the permission of the developer.
+#     我的新浪微博：      http://weibo.com/hqapk
+#     我的腾讯微博：      http://t.qq.com/hqapkcom
 #
 ############################################################################
 
@@ -13,7 +12,7 @@ clear
 
 if [ ! -d WORKING_* ]
 then
-  echo "No working folder found!"
+  echo " 未发现工作文件夹!"
   exit 0
 fi
 
@@ -21,7 +20,7 @@ cd WORKING_*
 
 if [ ! -e boot.img ]
 then
-  echo "No boot.img found!"
+  echo " 未发现 boot.img!"
   exit 0
 fi
 
@@ -37,44 +36,42 @@ else
 fi
 
 echo
-echo "The current command line value in the boot.img is:"
+echo "       = 云 卓 团 队 提 醒 =     "
+echo "-----------------------------------------------------"
+echo " 在当前命令行值的boot.img文件:"
+echo "  $current_cmd2"
+echo " 通常你不应该改变这个值，在你的ROM他的特点是"
+echo " 用于*高级*用户，使用不同的值"
 echo
-echo "$current_cmd2"
-echo
-echo
-echo "NOTE: You normally should NOT change this value in your ROM."
-echo "This feature is intended for *advanced* users who want to"
-echo "experiment with different values."
-echo
-echo -n "Would you like to change it (y/n)? (default: y): "
+echo -n "你想更改它 (y/n)? (默认: y): "
 
 read do_change
 echo
 
 if [ "$do_change" == "n" ]
 then
-  echo "OK, command line will not be changed"
+  echo " Ok, 命令行没有更改"
 
 else 
 
-  echo -n "Please enter the new command line (or press Enter to clear): "
+  echo -n " 请输入新的命令行（或按回车键清除）: "
   read new_cmd
   echo
 
   if [ "$new_cmd" == "" ]
   then
-   echo "Warning: Empty string entered for command line"
+   echo " 云卓团队警告: 为命令行输入空字符串"
 
   elif [ ${#new_cmd} -lt 3 ]
   then
-    echo "Error: String must be more than 2 characters long"
+    echo " 云卓团队提醒: 字符串必须长于2个字符"
     echo
     exit 0
   fi
 
   if [ "$new_cmd" == "$current_cmd" ]
   then
-    echo "Your value is the same as the original command line value"
+    echo " 您的命令代码值与原始值相同"
     echo
     exit 0
   fi
@@ -95,16 +92,16 @@ else
   fi
 
   echo
-  echo "------------------------------------------------------------"
-  echo
-  echo "In boot.img, command line is now set to:"
+  echo "       = 云卓团队提醒 =     "
+  echo "-----------------------------------------------------"
+  echo " boot.img 在命令行现在设置为："
   echo
   echo "$current_cmd2"
 
   if [ "$current_cmd" != "$new_cmd" ]
   then
     echo
-    echo "Warning: Command line is not the same as specified"
+    echo " 云卓团队警告: 指定命令行不相同"
   fi
 
 fi

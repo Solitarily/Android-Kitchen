@@ -1,12 +1,12 @@
 ############################################################################
 #
-# Copyright (c) 2012 - dsixda (dislam@rocketmail.com)
+# 本定制工具完全免费，由DsiXDA开发，由“ 半指遮天 ”完成汉化翻译。
 #
-# Android Kitchen is 100% free.  This script file is intended for personal
-# and/or educational use only.  It may not be duplicated for monetary
-# benefit or any other purpose without the permission of the developer.
+#     我的新浪微博：      http://weibo.com/hqapk
+#     我的腾讯微博：      http://t.qq.com/hqapkcom
 #
 ############################################################################
+
 
 #!/bin/bash
  
@@ -19,24 +19,26 @@ do
 
   echo 
   echo "============================================================"
-  echo " Android Kitchen $version - by dsixda (xda-developers.com)"
+  echo "    Android Kitchen  厨房定制工具     V0.225   By 半指遮天  "
   echo "============================================================"
+  echo "    论坛地址 ：bbs.hqapk.com  ｜    技术支持  ：云卓论坛    "
+  echo "============================================================"
+  echo "> 溢出选项（传统选项）"
   echo
-  echo "> LEGACY OPTIONS"
+  echo " 21 - 检查 update-script 刷机脚本是否有错误"
+  echo " 22 - 添加无线共享功能 ，Android 2.1以上不需要此功能 "
+  echo " 23 - 为提升速度添加内置内存分配优化(仅限官方ROM)"
+  echo " 24 - 添加 Nano文本编辑器 +sysro/sysrw(调整system分区读写权限脚本)"
+  echo " 25 - 添加 Bash (shell命令的解释器)"
+  echo " 26 - 添加 Apps2SD 功能"
+  echo " 27 - 添加支持自定义开机动画功能"
+  echo " 28 - 移植工具 (仅限测试功能)"
   echo
-  echo " 21 - Check update-script for errors"
-  echo " 22 - Add wireless tethering"
-  echo " 23 - Add task killer tweak for speed (stock ROM only)"
-  echo " 24 - Add Nano text editor + sysro/sysrw"
-  echo " 25 - Add Bash (command shell)"
-  echo " 26 - Add Apps2SD"
-  echo " 27 - Add custom boot animation functionality"
-  echo " 28 - Porting tools (experimental)"
+  echo " 99 - 从工作文件夹建立 ROM 刷机包"
+  echo " 00 - 返回（高级选项）菜单"
+  echo " 88 - 返回（基础选项）主菜单"
   echo
-  echo " 99 - Build ROM from working folder"
-  echo "  0 - BACK TO MAIN MENU"
-  echo
-  echo -n "Enter option: "
+  echo -n " 请输入选择项: "
   read opt
 
   if [ "$opt" != "0" ]
@@ -56,8 +58,9 @@ do
       27) scripts/add_custom_boot_anim;;
       28) scripts/porting_tools; continue;;
       99) scripts/build_rom;;
-      0) exit 1;;
-      *) echo "Invalid option"; continue;;
+      00) scripts/menu_advanced $version; continue;;
+      88) exit 1;;
+      *) echo " 错误选项 "; 继续;;
     esac
   fi
 

@@ -1,10 +1,9 @@
 ############################################################################
 #
-# Copyright (c) 2013 - dsixda (dislam@rocketmail.com)
+# 本定制工具完全免费，由DsiXDA开发，由“ 半指遮天 ”完成汉化翻译。
 #
-# Android Kitchen is 100% free.  This script file is intended for personal
-# and/or educational use only.  It may not be duplicated for monetary
-# benefit or any other purpose without the permission of the developer.
+#     我的新浪微博：      http://weibo.com/hqapk
+#     我的腾讯微博：      http://t.qq.com/hqapkcom
 #
 ############################################################################
 
@@ -14,31 +13,20 @@ do
 
   clear
 
-  echo
-  echo "----------------------------------------------------------------"
+  echo "      = 云 卓 团 队 提 醒 =       "
+  echo "-----------------------------------------------------------------------------"
+  echo " Deodex 操作的含义是使 ROM 变得定制化和轻便化；它将你的文件放在一起，"
+  echo " 使它们能够用于 themes、icons、trackball/trackpad、modifications、etc 。"
   echo  
-  echo "Deodexing (or de-odex'ing) will take the *.odex files in your "
-  echo "ROM and convert them into classes.dex files, which will then be" 
-  echo "zipped into their *.apk or framework *.jar files."
-  echo ""
-  echo "The intent of deodexing is to allow for theming, customization"
-  echo "and portability of the ROM.  It puts your files into a state"
-  echo "where they can be used for themes, icons, trackball/trackpad"
-  echo "modifications, etc."
-  echo
-  echo "The process usually takes several minutes and does NOT require"
-  echo "you to sign any of the files afterwards."
-  echo
-  echo "NOTE: Reversing the de-odexing process by getting back the odex"
-  echo "files ('re-odexing') is not supported in the kitchen and would"
-  echo "be impossible to implement."
-  echo 
-  echo "----------------------------------------------------------------"
+  echo " Deodex 操作(或 de-odex)将会把 ROM 中的 *.odex 文件转换成 classes.dex 文件，"
+  echo " 并将它们压缩进相应的 *.apk 或 framework 中的 *.jar 文件。"
+  echo "  此进程通常需要几分钟时间，并且不需要你签名这些文件。"
+  echo "-----------------------------------------------------------------------------"
   echo
 
   if [ ! -d WORKING_* ]
   then
-    echo No working folder found!
+    echo  未发现工作文件夹
     scripts/press_enter
     exit 0
   fi
@@ -47,7 +35,7 @@ do
 
   if [ ! -d system/app ]
   then
-    echo "system/app is missing!"
+    echo " system/app 丢失"
     cd ..
     scripts/press_enter
     exit 0
@@ -55,7 +43,7 @@ do
 
   if [ ! -d system/framework ]
   then
-    echo "system/framework is missing!"
+    echo " system/framework 丢失"
     cd ..
     scripts/press_enter
     exit 0
@@ -80,7 +68,7 @@ do
     # Case 1 - No odex files in preload or /system/app
     if [ $num_preload_odex == 0 ] && [ $num_sysapp_odex == 0 ] 
     then
-      echo "No ODEX files found in /preload/symlink/system/app or /system/app"
+      echo "在 /preload/symlink/system/app 或 /system/app 未发现 ODEX 文件 "
       echo
 
     # Case 2 - No apk/odex files in preload but odex files in /system/app
@@ -89,7 +77,7 @@ do
 
       if [ ! -e preload_apk_list ]
       then
-        echo "Warning: No APK/ODEX files found in /preload/symlink/system/app"
+        echo "警告: 在 /preload/symlink/system/app 未发现 APK/ODEX 文件"
         echo
       fi
 
@@ -97,17 +85,19 @@ do
     elif [ $num_preload_odex -gt 0 ] || [ $num_preload_apk -gt 0 ]
     then
 
-      echo "NOTE: $num_preload_apk APK and $num_preload_odex ODEX files are detected in /preload folder."
-      echo
-      echo "Temporarily move files from preload symlink folder to /system/app (y/n)?"
-      echo -n "(default: y): "
+	  echo 
+      echo "      = 云 卓 团 队 提 醒 =       "
+      echo "-------------------------------------------------"
+      echo "在 /preload 文件夹发现 $num_preload_apk 个 APK 和 $num_preload_odex 个 ODEX 文件."
+      echo "临时移动文件从 preload 软链文件夹到 /system/app (y/n)?"
+      echo -n "(默认: y): "
 
       read move_files
       echo
 
       if [ "$move_files" == "n" ]
       then
-        echo "WARNING: Not moving!"
+        echo "警告: 没有移动!"
       else
 
         if [ $num_preload_apk -gt 0 ] 
@@ -137,14 +127,15 @@ do
   num_odex_fr=`find system/framework | grep -c "\.odex$"`
   num_odex_app=`find system/app | grep -c "\.odex$"`
 
-  echo "Found $num_odex_fr *.odex files in /system/framework"
-  echo "Found $num_odex_app *.odex files in /system/app"
+  echo " 已在 system/framework 中发现 $num_odex_fr *.odex 文件"
+  echo " 已在 system/app 中发现 $num_odex_app *.odex 文件"
 
   if [ -e preload/symlink/system/app/preload_apk_list ]
   then
-    echo
-    echo "NOTE: A set of APK files will be moved back to /preload folder"
-    echo "after de-odexing is completed."
+    echo "      = 云 卓 团 队 提 醒 =       "
+    echo "-------------------------------------------------"
+    echo " 一组 APK 文件将是移动回到 /preload 文件夹"
+    echo " 在 de-odexing 后完成."
     echo 
   fi
 
@@ -152,7 +143,7 @@ do
   if [ $num_odex_fr == 0 ] && [ $num_odex_app == 0 ]
   then
     echo
-    echo "No need to de-odex!"
+    echo "不需要 de-odex!"
     cd ..
     scripts/press_enter
     exit 0
@@ -160,9 +151,10 @@ do
 
   if [ $num_odex_fr == 0 ] && [ $num_odex_app -gt 0 ]
   then
-    echo
-    echo "WARNING: You must deodex the app folder if you had already"
-    echo "deodexed the framework folder."
+    echo "      =云 卓 团 队 警 告 =       "
+    echo "-------------------------------------------------"
+    echo "如果 framework 文件夹已经进行了 deodex 操作，则 app 文件夹"
+    echo "也必须进行 deodex 操作."
     echo
   fi
 
@@ -174,22 +166,21 @@ do
 
 
   #
-  # Show menu choices
+    # 显示菜单选项
   #
 
-  echo
-  echo "Enter a choice:"
+  echo "      = 选 项 =       "
+  echo "-------------------------------------------------"
+  echo " 选择前请确保你设置了正确的API级别 "
   echo
 
   if [ $num_odex_app -gt 0 ] || [ $num_odex_fr -gt 0 ]
   then
-    echo " bb  = Back up both folders (do first!)"
+    echo "  bb = 这两个文件夹备份 (建议每次定制先备份)"
   fi
 
-  echo "  v  = Set Android OS version (Current API level = $api_level)"
-  echo
-  echo "       IMPORTANT: Ensure you set the correct API level"
-  echo
+    echo "  v  = 设置 Android 系统的 API 级别 (当前级别 = $api_level)"
+    echo
 
   if [ $num_odex_fr -gt 0 ]
   then
@@ -201,12 +192,12 @@ do
   fi
   if [ $num_odex_app -gt 0 ] && [ $num_odex_fr -gt 0 ]
   then
-    echo "  b  = Deodex both folders (recommended)"
+    echo "  b  = Deodex 两个文件夹（推荐）"
   fi
-  echo "  s  = Deodex a single file"
-  echo "  x  = Exit"
-  echo
-  echo -n "? "
+    echo "  s  = Deodex  单个文件"
+    echo "  x  = 退出"
+    echo
+    echo -n "  请输入选择项： "
 
   read enterChoice
 
@@ -250,10 +241,10 @@ do
       cd system/$f
 
       echo
-      echo "Creating backup folder $backup_folder outside working folder ..."
+      echo "在工作文件夹以外创建备份文件夹  $backup_folder..."
       mkdir ../../../$backup_folder
-      cp  -r * ../../../$backup_folder/
-      echo "Finished backup of $f folder."
+      cp  * ../../../$backup_folder/
+      echo " $f 文件夹已完成备份."
 
       cd ../..
     done
@@ -274,8 +265,8 @@ do
 
   sgs2_fix=no
 
-  # Add java.awt.jar to framework folder (fix Email.apk and MobilePrint.apk)
-  # - Thanks to xeudoxus
+  # 将 java.awt.jar 添加到 framework 文件夹 (修复 Email.apk 和 MobilePrint.apk)
+  # - Thanks to jinzi 
   if [ `echo $dir_list | grep -c app` -gt 0 ] && \
       [ -e system/framework/com.samsung.device.jar ] && [ ! -e system/framework/java.awt.jar ]
   then
@@ -301,21 +292,22 @@ do
   num_odex_fr=`find system/framework | grep -c "\.odex$"`
 
   echo
-  echo "$num_odex_app *.odex files remain in system/app"
-  echo "$num_odex_fr *.odex files remain in system/framework"
+  echo " $num_odex_app *.odex 文件仍保留在 system/app"
+  echo " $num_odex_fr *.odex 文件仍保留在 system/framework"
 
   if [ $num_odex_fr == 0 ] && [ $num_odex_app -gt 0 ]
   then
-    echo
-    echo "WARNING: You must deodex the app folder if you had already"
-    echo "deodexed the framework folder."
+    echo "      = 云 卓 团 队 提 醒 =       "
+    echo "-------------------------------------------------"
+    echo " 如果 app 文件夹已经 Deodex"
+    echo " 那么 framework 文件夹也需要 Deodex"
   fi
 
   # For some Samsung Exynos Galaxy S2 / Note ROMs
   if [ $num_odex_app == 0 ] && [ $num_apk_app != 0 ] && [ -e preload/symlink/system/app/preload_apk_list ]
   then
     echo
-    echo "Moving back all *.apk originally found in /preload/symlink/system/app ..."
+    echo "移回所有最初发现在 /preload/symlink/system/app 的 *.apk ..."
     echo
 
     for apk in `cat preload/symlink/system/app/preload_apk_list`

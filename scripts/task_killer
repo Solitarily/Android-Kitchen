@@ -1,10 +1,9 @@
 ############################################################################
 #
-# Copyright (c) 2012 - dsixda (dislam@rocketmail.com)
+# 本定制工具完全免费，由DsiXDA开发，由“ 半指遮天 ”完成汉化翻译。
 #
-# Android Kitchen is 100% free.  This script file is intended for personal
-# and/or educational use only.  It may not be duplicated for monetary
-# benefit or any other purpose without the permission of the developer.
+#     我的新浪微博：      http://weibo.com/hqapk
+#     我的腾讯微博：      http://t.qq.com/hqapkcom
 #
 ############################################################################
 
@@ -14,7 +13,7 @@ scripts/check_galaxies
 if [ "$?" == "1" ]
 then
   echo
-  echo "Feature not supported by kitchen for this ROM"
+  echo " 本定制工具的此功能不适用于这个 ROM"
   exit 0
 fi
 
@@ -29,7 +28,7 @@ then
     then
       cd BOOT-EXTRACTED/boot.img-ramdisk
     else
-      echo "Error: BOOT-EXTRACTED/boot.img-ramdisk folder not found!"
+      echo " 云卓提醒: 未发现 BOOT-EXTRACTED/boot.img-ramdisk 文件夹！"
       exit 0
     fi
 
@@ -45,7 +44,7 @@ clear
 
 
 #
-# The memory variables changed in Gingerbread
+# 在姜饼中更改内存变量
 #
 
 list_type=old
@@ -66,7 +65,7 @@ fi
 
 
 echo
-echo Currently:
+echo 目前:
 echo
 
 for i in $count_list
@@ -90,7 +89,7 @@ do
   if [ "$str" == "NOT FOUND" ]
   then
     echo 
-    echo "Error: Could not obtain required parameters"
+    echo " 云卓团队提醒: 无法获得需要的参数"
     cd ../..
     rm -rf BOOT-EXTRACTED
     exit 0
@@ -99,14 +98,13 @@ do
 done
 
 
+echo "        =  提 醒  =       "
+echo "-------------------------------------------------------------------"
+echo "您将会被问及上述每个参数的改变值。如果您想要开启 Task Killer Tweak"
+echo "（运行内存调整优化），但是并不确定改变值，则仅需要在提示出现时按下"
+echo "回车键，此脚本将会尝试自动为你设定。" 
 echo
-echo "You will now be asked to change each of the values above.  If you "
-echo "want to enable the task killer tweak but are unsure of what values"
-echo "to use, then simply press Enter at the prompts and the script" 
-echo "will try to do it for you."
-echo
-echo "Type x at any time if you want to cancel and exit.  None of the"
-echo "values will be saved if you cancel."
+echo "任何想要取消并退出的时候请键入 x ，则任何参数的改变值将不会保存。"
 echo
 
 for i in $count_list
@@ -117,7 +115,7 @@ do
     read_val="?"
   else
 
-    echo -n "${init_params[${i}]} (default for tweak: ${default_vals[${i}]}): "
+    echo -n "${init_params[${i}]} (默认调整: ${default_vals[${i}]}): "
     read read_val
 
     if [ "$read_val" == "x" ] 
@@ -141,7 +139,7 @@ clear
 
 
 echo
-echo "You wanted the following:"
+echo " 你想要以下 : "
 echo
 
 changes_made=0
@@ -175,20 +173,20 @@ echo
 
 if [ $changes_made == 0 ]
 then
-  echo "Nothing was changed."
+  echo " 没有任何改变。"
   cd ../..
   rm -rf BOOT-EXTRACTED
   exit 0
 fi
 
 
-echo -n "Are these values OK (y/n)? (default: y): "
+echo -n " 这些值确定 (y/n)? (默认: y): "
 
 read promptOk
 
 if [ "$promptOk" == "n" ]
 then
-  echo "Cancelled"
+  echo " 取消"
   cd ../..
   rm -rf BOOT-EXTRACTED
   exit 0
@@ -243,7 +241,7 @@ fi
 
 
 echo
-echo Saved to file:
+echo 保存到文件中:
 echo
 
 for i in $count_list

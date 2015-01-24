@@ -1,20 +1,18 @@
 ############################################################################
 #
-# Copyright (c) 2013 - dsixda (dislam@rocketmail.com)
+# 本定制工具完全免费，由DsiXDA开发，由“ 半指遮天 ”完成汉化翻译。
 #
-# Android Kitchen is 100% free.  This script file is intended for personal
-# and/or educational use only.  It may not be duplicated for monetary
-# benefit or any other purpose without the permission of the developer.
+#     我的新浪微博：      http://weibo.com/hqapk
+#     我的腾讯微博：      http://t.qq.com/hqapkcom
 #
 ############################################################################
-
 
 cd WORKING_*
 
 if [ ! -d system ]
 then
   echo
-  echo "Error: No /system folder found!"
+  echo " 云卓团队提醒: 未发现 /system 文件夹！"
   cd ..
   exit 0
 fi
@@ -24,16 +22,16 @@ if [ -e META-INF/com/google/android/update-script ]
 then
 
   #
-  # Check for symbolic links in /system/bin and add symlinks to update-script
+  # 检查 /system/bin 中的符号链接和添加符号链接到 update-script 脚本
   #
 
-  # Don't go all the way into system/bin, because some of the binaries in
-  # there may collide with your operating system's file operation commands
-  # (e.g. ls, rm)!
+  # 不要进入 system/bin 的所有方式, 因为一些二进制文件
+  # 有可能发生冲突与你的系统文件操作命令
+  # (例如： ls, rm)!
   cd system
 
   echo
-  echo -n "Looking for symbolic links under /system/bin ..."
+  echo -n " 正在查找 /system/bin 下的符号链接 ..."
   
   symlinks=`find bin -type l -exec ls -l {} \; | sed 's/.* bin\/\([^ ]*\).*/\1/g'`
   source_files=`find bin -type l -exec ls -l {} \; | sed 's/.*-> //g'`
@@ -81,7 +79,7 @@ then
   if [ "$symlinks" == "" ] && [ "`grep "symlink toolbox" ../META-INF/com/google/android/update-script`" == "" ]
   then
 
-    echo "None detected"
+    echo " 什么也没检测到！ "
 
     #
     # Build a set of default symlinks in update-script if none found in /system/bin
@@ -89,7 +87,7 @@ then
 
     if [ "`grep "symlink toolbox" ../META-INF/com/google/android/update-script`" == ""  ] && [ -e bin/toolbox ]
     then
-      echo -n "Adding a default set of toolbox symlinks to update-script "
+      echo -n " 正在添加默认 toolbox 符号链接到 update-script 脚本"
 
       cp ../../tools/update_files/default_symlinks .
       sed -i -e '/copy_dir PACKAGE:system SYSTEM:/r default_symlinks' ../META-INF/com/google/android/update-script
@@ -118,26 +116,26 @@ then
 
       if [ ! -e bin/bugreport ]
       then
-        echo "Adding bugreport symlink ..."
+        echo " 正在添加 bugreport 符号链接 ..."
         sed -i -e 's/copy_dir PACKAGE:system SYSTEM:/copy_dir PACKAGE:system SYSTEM:\nsymlink dumpstate SYSTEM:bin\/bugreport\n/' ../META-INF/com/google/android/update-script 
       fi
 
       if [ ! -e bin/dumpcrash ]
       then
-      echo "Adding dumpcrash symlink ..."
+      echo " 正在添加 dumpcrash 符号链接 ..."
         sed -i -e 's/copy_dir PACKAGE:system SYSTEM:/copy_dir PACKAGE:system SYSTEM:\nsymlink dumpstate SYSTEM:bin\/dumpcrash\n/' ../META-INF/com/google/android/update-script 
       fi
     fi
 
 
   #
-  # Check if symlinks found in ROM
+  # 检查 ROM 中找到的符号链接
   #
 
   elif [ "$symlinks" != "" ]
   then
 
-    echo -n "They will now be added to the update-script and removed from system/bin "
+    echo -n " 它们将会添加到 update-script 刷机脚本并从 system/bin 移除"
 
     for (( i=0 ; i < ${#symlinks[@]} ; i++ ))
     do
@@ -183,7 +181,7 @@ then
     echo
 
   else
-    echo "No symbolic links in ROM; they are found in update-script"
+    echo " 在 ROM 中未发现符号链接；在 update-script 脚本中发现"
   fi
 
   cd ..

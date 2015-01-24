@@ -1,17 +1,16 @@
 ############################################################################
 #
-# Copyright (c) 2011 - dsixda (dislam@rocketmail.com)
+# 本定制工具完全免费，由DsiXDA开发，由“ 半指遮天 ”完成汉化翻译。
 #
-# Android Kitchen is 100% free.  This script file is intended for personal
-# and/or educational use only.  It may not be duplicated for monetary
-# benefit or any other purpose without the permission of the developer.
+#     我的新浪微博：      http://weibo.com/hqapk
+#     我的腾讯微博：      http://t.qq.com/hqapkcom
 #
 ############################################################################
 
 #
-# This script has two optional arguments:
+# 此脚本有两个可选参数:
 # $1 = "for_build"
-# $2 = yes/no (ignore prompt) - relies on $1 being present, default=yes
+# $2 = yes/no (忽略提示) - 目前依赖 $1 , 默认=yes
 #
 
 
@@ -22,9 +21,9 @@ then
 
   if [ -d WORKING_* ]
   then
-    echo Found working folder
+    echo 已发现工作文件夹
   else
-    echo No working folder found!
+    echo 未发现工作文件夹!
     exit 1
   fi
 fi
@@ -42,7 +41,7 @@ then
   zipalign_file=zipalign.mac
 
 else
-  echo Error: Operating system not detected, cannot use zipalign
+  echo  云卓团队提醒：未检测到system，无法使用 zipalign
   exit 1
 fi
 
@@ -55,27 +54,25 @@ then
   if [ "$2" == "no" ]
   then
     echo
-    echo -n "Would you like to optimize the APK files by zipaligning them (y/n)? (default: y): "
+    echo -n " 是否对 APK 文件进行 Zipalign 优化(y/n)? (默认: y): "
     read do_zipalign
   fi    
 
 else
   clear
 
-  echo
+  echo "         = 云 卓 团 队 提 醒 =  "
   echo "---------------------------------------------------------------"
   echo  
-  echo "Zipalign is a procedure that will optimize all of the *.apk"
-  echo "files under your working folder for better RAM utilization."
+  echo "  Zipalign 可以提高Android系统的整体执行效率和优化内存资源 。"
   echo
-  echo "NOTE: The option to zipalign all *.apk files will also be"
-  echo "provided when you build your ROM, so it is not necessary to"
-  echo "zipalign now."
+  echo "  此操作将会对所有 *.apk 文件进行 Zipalign 操作，"
+  echo "  创建 ROM 时同样会提供此操作选项，现在并不是必须进行。"
   echo 
-  echo "---------------------------------------------------------------"
+  echo "-------------------------------------------------------------------"
   echo
 
-  echo -n "Proceed with zipalign (y/n)? (default: y): "
+  echo -n "继续并 Zipalign (y/n)? (默认: y): "
   read do_zipalign
 fi
 
@@ -97,7 +94,7 @@ for filename in $grep_cmd
 do
 
   #
-  # Handle spaces in file names
+  # 处理文件名称中的空格
   #
   if [ "`echo $filename | grep .apk$`" == "" ]
   then
@@ -114,7 +111,7 @@ do
   elif [ "$name1" != "" ]
   then
 
-    # Replace space with underscore temporarily
+    # 暂时用下划线替换空格
     name2=$filename
     original_name="$name1 $name2"
     filename=`echo $original_name | tr ' ' '_'`
@@ -145,10 +142,10 @@ do
   else
 
     return_val=1
-    echo "Error: Unable to zipalign, aborting"
+    echo " 错误: 无法 Zipalign，正在终止"
     if [ `uname | grep Linux` ]
     then
-      echo "If you are using 64-bit Linux, ensure you installed package ia32-libs"
+      echo " 如果你使用的 64 位 Linux，确保您安装包 ia32 库"
     fi
     break
   fi
@@ -162,7 +159,7 @@ echo
 
 if [ "$return_val" == "0" ]
 then
-  echo "Finished zipaligning"
+  echo " 云卓团队提醒：zipaligning 已完成"
 fi
 
 exit $return_val

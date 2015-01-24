@@ -1,10 +1,9 @@
 ############################################################################
 #
-# Copyright (c) 2013 - dsixda (dislam@rocketmail.com)
+# 本定制工具完全免费，由DsiXDA开发，由“ 半指遮天 ”完成汉化翻译。
 #
-# Android Kitchen is 100% free.  This script file is intended for personal
-# and/or educational use only.  It may not be duplicated for monetary
-# benefit or any other purpose without the permission of the developer.
+#     我的新浪微博：      http://weibo.com/hqapk
+#     我的腾讯微博：      http://t.qq.com/hqapkcom
 #
 ############################################################################
 
@@ -17,14 +16,14 @@ then
   
   if [ ! -e META-INF/com/google/android/update-script ]
   then
-    echo "Error: update-script not found, cannot continue"
+    echo " 云卓团队提醒: 未发现 update-script 脚本，无法继续"
     cd ..
     exit 0
   fi
 
   if [ ! -e system/build.prop ]
   then
-    echo "Error: build.prop not found, cannot continue"
+    echo " 云卓团队提醒: 未发现 build.prop 文件，无法继续"
     cd ..
     exit 0
   fi
@@ -32,12 +31,12 @@ then
   cd ..
 
 else
-  echo "No working folder found!"
+  echo " 云卓团队警告: 未发现工作文件夹"
   exit 0
 fi
 
 echo
-echo -n "Please wait "
+echo -n " 云卓团队提醒: 正在查找，请稍后...... "
 
 #
 # Get version of kitchen
@@ -66,13 +65,13 @@ fi
 
 if [ ! -d BOOT-EXTRACTED ] 
 then
-  echo "Warning: BOOT-EXTRACTED folder not found"
+  echo " 云卓团队警告: 未发现 BOOT-EXTRACTED 文件夹"
 fi
 
 
 clear
 echo
-echo -n "Please wait "
+echo -n " 云卓团队提醒: 正在查找，请稍后...... "
 
 echo -n "."
 scripts/check_galaxies
@@ -88,19 +87,19 @@ is_galaxy_s4_common=$?
 
 
 #
-# Check Android OS version
+# 检查 Android OS 版本
 #
 
-echo -n "."
+echo -n "......云卓论坛......"
 android_os=`scripts/get_build_prop_val ro.build.version.release`
 
 
 
 #
-# Check Build Number
+# 检查内部版本号
 #
 
-echo -n "."
+echo -n "......云卓论坛......"
 cd WORKING_*
 cd system
 
@@ -118,27 +117,27 @@ rom_name=`scripts/get_build_prop_val $id_var`
 
 
 #
-# Check Device
+# 检查设备
 #
 
-echo -n "."
+echo -n "......云卓论坛......"
 device_name=`scripts/get_device_name`
 
 
 #
-# Check Model
+# 检查型号
 #
 
-echo -n "."
+echo -n "......云卓论坛......"
 model=`scripts/get_product_model`
 
 
 
 #
-# Check root
+# 检查 root
 #
 
-echo -n "."
+echo -n "......云卓论坛......"
 cd WORKING_*
 
 if [ "`find . -name su`" == "" ] 
@@ -173,10 +172,10 @@ fi
 
 
 #
-# Check busybox
+# 检查 busybox
 #
 
-echo -n "."
+echo -n "......云卓论坛......"
 cd WORKING_*
 
 if [ "`find . -name busybox`" == "" ] 
@@ -191,10 +190,10 @@ cd ..
 
 
 #
-# Check apps2sd
+# 检查 apps2sd
 #
 
-echo -n "."
+echo -n "......云卓论坛......"
 scripts/a2sd_exists
 
 if [ "$?" == "1" ]
@@ -207,10 +206,10 @@ fi
 
 
 #
-# Check wireless tethering
+# 检查无线热点
 #
 
-echo -n "."
+echo -n "......云卓论坛......"
 scripts/pre_froyo_check
 is_old=$?
 
@@ -244,10 +243,10 @@ fi
 
 
 #
-# Check /data/app
+# 检查 /data/app
 #
 
-echo -n "."
+echo -n "......云卓论坛......"
 scripts/data_app_exists
 
 if [ "$?" == "1" ]
@@ -259,10 +258,10 @@ fi
 
 
 #
-# Check /data/local
+# 检查 /data/local
 #
 
-echo -n "."
+echo -n "......云卓论坛......"
 cd WORKING_*
 cd META-INF/com/google/android
 grep_data_local=`grep -c "0771 DATA:local" update-script`
@@ -278,10 +277,10 @@ cd ../../../../..
 
 
 #
-# Check if ROM contains Nano
+# 检查ROM 是否包含 Nano
 #
 
-echo -n "."
+echo -n "......云卓论坛......"
 scripts/nano_exists
 res=$?
 if [ "$res" = "0" ] 
@@ -295,10 +294,10 @@ fi
 
 
 #
-# Check if ROM contains Bash
+# 检查ROM 是否包含 Bash
 #
 
-echo -n "."
+echo -n "......云卓论坛......"
 cd WORKING_*
 
 if [ "`find . -name bash`" == "" ]
@@ -314,15 +313,15 @@ cd ..
 
 
 #
-# Check for CSC version
+# CSC 版本检查
 #
 
-echo -n "."
+echo -n "......云卓论坛......"
 cd WORKING_*
 
 show_csc=no
 
-if [ -e system/CSCVersion.txt ] || [ "$device_name" == "GT-I9001" ] || [ "$device_name" == "GT-I9070" ] || [ "$is_galaxies" == "1" ]
+if [ -e system/CSCVersion.txt ] || [ "$device_name" == "GT-I9001" ] || [ "$is_galaxies" == "1" ]
 then
 
   show_csc=yes
@@ -346,10 +345,10 @@ if [ "$is_galaxy_ss2" == "1" ] || [ "$is_galaxy_s3_exynos" == "1" ] || \
 then
 
   #
-  # Check if ROM contains modem.bin
+  # 检查 ROM 是否包含 modem.bin
   #
 
-  echo -n "."
+  echo -n "......云卓论坛......"
   cd WORKING_*
 
   if [ -e modem.bin ]
@@ -364,10 +363,10 @@ then
 else
 
   #
-  # Check if ROM contains radio.img
+  # 检查 ROM 是否包含 radio.img
   #
 
-  echo -n "."
+  echo -n "......云卓论坛......"
   cd WORKING_*
 
   if [ -e radio.img ]
@@ -385,15 +384,15 @@ fi
 
 
 #
-# Check if ROM is deodexed
+# 检查 ROM 是否是 deodexed
 #
 
-echo -n "."
+echo -n "......云卓论坛......"
 cd WORKING_*
 
 if [ ! -d system/framework ]
 then
-  deodex_fr_status="NO FOLDER"
+  deodex_fr_status="没有文件夹"
 else
   if [ "`find system/framework -name *.odex`" == "" ]
   then
@@ -405,7 +404,7 @@ fi
 
 if [ ! -d system/app ]
 then
-  deodex_app_status="NO FOLDER"
+  deodex_app_status="没有文件夹"
 else
   if [ "`find system/app -name *.odex`" == "" ]
   then
@@ -421,10 +420,10 @@ cd ..
 
 
 #
-# Check if ROM does a wipe
+# 检查 ROM 是否会 wipe
 #
 
-echo -n "."
+echo -n "......云卓论坛......"
 cd WORKING_*
 
 cd META-INF/com/google/android
@@ -441,10 +440,10 @@ cd ../../../../..
 
 
 #
-# Check for BusyBox run-parts method
+# 检查 BusyBox run-parts 方法
 #
 
-echo -n "."
+echo -n "......云卓论坛......"
 
 if [ -e BOOT-EXTRACTED/boot.img-ramdisk ]
 then
@@ -469,45 +468,45 @@ fi
 clear
 
 echo
-echo "Working folder information (v$kitchen_ver)"
+echo " 工作文件夹信息"
 echo
-echo " Android OS version             : $android_os"
-echo " Device                         : $device_name"
-echo " Model                          : $model"
-echo " ROM Name                       : $rom_name"
+echo " Android OS 版本                : $android_os"
+echo " 设备                           : $device_name"
+echo " 型号                           : $model"
+echo " ROM 名称                       : $rom_name"
 
 if [ "$show_csc" == "yes" ]
 then
-  echo " CSC version                    : $csc_version"
+  echo " CSC 版本                     : $csc_version"
 fi
 
-echo " Rooted (Superuser app + su)    : $su_status"
-echo " Rooted (unsecured boot.img)    : $unsecure_status"                                         
-echo " BusyBox installed              : $bb_status"
-echo " BusyBox run-parts support      : $runparts_status"
-echo " Apps2SD (Apps to EXT) enabled  : $apps2sd_status" 
+echo " Rooted (Superuser.apk + su)    : $su_status"
+echo " Rooted (无安全限制 boot.img)   : $unsecure_status"                                         
+echo " BusyBox 是否安装               : $bb_status"
+echo " BusyBox run-parts 支持         : $runparts_status"
+echo " Apps2SD (Apps 到 EXT) 开启     : $apps2sd_status" 
 
 if [ "$is_old" == "1" ]; then
-echo " Wireless tethering installed   : $tether_status"
+echo " 无线热点是否安装               : $tether_status"
 fi
 
-echo " /data/app enabled              : $data_app_status"
-echo " Custom boot animation allowed  : $custom_anim_status"                                                         
-echo " Nano text editor installed     : $nano_status"
-echo " Bash shell support             : $bash_status"
-echo " /system/framework is deodexed  : $deodex_fr_status"
-echo " /system/app is deodexed        : $deodex_app_status"
+echo " /data/app 已开启               : $data_app_status"
+echo " 允许自定义开机动画             : $custom_anim_status"                                                         
+echo " Nano 是否安装                  : $nano_status"
+echo " Bash shell 支持                : $bash_status"
+echo " /system/framework 已经 Deodex  : $deodex_fr_status"
+echo " /system/app 已经 Deodex        : $deodex_app_status"
 
 if [ "$is_galaxy_ss2" == "1" ] || [ "$is_galaxy_s3_exynos" == "1" ] || \
      [ "$is_gnote2_common" == "1" ] || [ "$is_galaxy_s4_common" == "1" ]
 then
-  echo " modem.bin found                : $modem_status"
+echo " 已发现 modem.bin               : $modem_status"
 elif [ "$is_galaxies" != "1" ]
 then
-  echo " radio.img found                : $radio_status"
+echo "已发现 radio.img                : $radio_status"
 fi
 
-echo " ROM will wipe all data         : $wipe_status"
+echo " ROM 将会 WIPE 所有数据         : $wipe_status"
 echo
 
 if [ "$is_old" == "1" ]

@@ -1,10 +1,9 @@
 ############################################################################
 #
-# Copyright (c) 2011 - dsixda (dislam@rocketmail.com)
+# 本定制工具完全免费，由DsiXDA开发，由“ 半指遮天 ”完成汉化翻译。
 #
-# Android Kitchen is 100% free.  This script file is intended for personal
-# and/or educational use only.  It may not be duplicated for monetary
-# benefit or any other purpose without the permission of the developer.
+#     我的新浪微博：      http://weibo.com/hqapk
+#     我的腾讯微博：      http://t.qq.com/hqapkcom
 #
 ############################################################################
 
@@ -18,7 +17,7 @@ then
   my_platform=`scripts/get_build_prop_val ro.board.platform MY_DEVICE_WORKING`
 
   #
-  # Note: Don't delete MY_DEVICE_WORKING yet, it will be required later in this script
+  # 提醒: 暂时不要删除 MY_DEVICE_WORKING ，它在脚本中需要
   #
 fi
 
@@ -36,12 +35,10 @@ fi
 #
 
 clear
-echo
-echo "***************************************************************"
-echo 
-echo "--> Obtain a ROM that you want to port from ANOTHER DEVICE <--"
-echo
-echo "***************************************************************"
+echo "        =  云 卓 团 队 提 醒 =       "
+echo "----------------------------------------------------"
+echo "--> 获得一个你想要移植到其它设备的 ROM 文件 <--"
+echo "----------------------------------------------------"
 
 scripts/check_rom no_info
 
@@ -67,7 +64,7 @@ then
    
       if [ ! -d initramfs_root ]
       then
-        echo "Error: Unable to unpack initramfs_root folder!"
+        echo " 提醒: 无法解包 initramfs_root 文件夹！"
       else
         mkdir ../BOOT-EXTRACTED
         echo
@@ -89,7 +86,7 @@ then
   else
     cd ..
     echo
-    echo "Quitting and cleaning up folders ..."
+    echo " 退出和清除文件夹 ..."
 
     rm -rf MY_KERNEL
     rm -rf MY_DEVICE_WORKING
@@ -97,8 +94,10 @@ then
   fi
 
 else
-  echo "You did not choose a ROM"
-  echo "Quitting and cleaning up folders ..."
+  echo "        = 提 醒 =       "
+  echo "------------------------------------------"
+  echo " 您无法选择 ROM ，退出并清除文件夹 "
+  echo ""
   rm -rf MY_KERNEL
   rm -rf MY_DEVICE_WORKING
   exit 0
@@ -106,33 +105,31 @@ fi
 
 if [ ! -d BOOT-EXTRACTED ]
 then
-  echo "Error: BOOT-EXTRACTED folder not found"
+  echo " 提醒: 未发现 BOOT-EXTRACTED 文件夹"
   exit 0
 fi
 
 
 
 clear
-echo
-echo "***************************************************************"
-echo 
-echo " PORTING YOUR ROM"
-echo
-echo "***************************************************************"
+echo "   =  提 醒 =    "
+echo "----------------------------------"
+echo "    移植你的 ROM  "
+echo "----------------------------------"
 
 #
-# Replace kernel, modify ramdisk and then build new boot.img
+# 替换 kernel、 修改 ramdisk，然后生成新的 boot.img
 #
 
 echo
-echo "Copying MY_KERNEL/zImage to BOOT-EXTRACTED folder"
+echo " 复制 MY_KERNEL/zImage 到 BOOT-EXTRACTED 文件夹"
 cp -f MY_KERNEL/zImage BOOT-EXTRACTED/
 
 
 echo
-echo "Copying MY_KERNEL/boot.img to the new working folder so that"
-echo "the correct base address can be determined before building"
-echo "the new boot.img."
+echo " 复制 MY_KERNEL/boot.img 到新工作文件夹，所以建立新 boot.img"
+echo " 之前能够决定正确的基本地址。"
+echo
 
 cd WORKING_*
 cp -f ../MY_KERNEL/boot.img .
@@ -141,7 +138,7 @@ echo
 
 
 #
-# Rename *.rc files if required
+# 如果需要重命名 *.rc 文件
 #
 
 board=`scripts/get_product_board`
@@ -163,7 +160,7 @@ then
 
     if [ "$rc_file" != "$new_name" ]
     then
-      echo "Renaming ..."
+      echo " 重命名 ..."
       mv -v $rc_file $new_name
       echo
     fi      
@@ -184,36 +181,37 @@ then
   if [ "$find_busybox" == "" ]
   then
     echo
-    echo "----------------------------------------------------------------------"
+    echo "        = 提 醒 =       "
+    echo "------------------------------------------------------------"
+    echo "  此 ramdisk 的 init.rc 引用了 busybox ，但以下工作文件夹中 "
+    echo "  未发现 busybox ，如果确认不需要  busybox 并且打包 ROM ；"
+    echo "  你的设备将不能启用开机动画 。"
+    echo "-----------------------------------------------------------"
     echo 
-    echo "WARNING:  The ramdisk's init.rc refers to busybox, but it is not found "
-    echo "          in the working folder.   If you build this ROM the way it is"
-    echo "          right now, it may not get past the boot screen on your device."
-    echo 
-    echo "          I found this:"
+    echo "   发现这些 : "
     echo 
     grep busybox BOOT-EXTRACTED/boot.img-ramdisk/init.rc
     echo 
-    echo "Some tips:"
-    echo 
-    echo "- You may need to copy busybox to the folder referenced above. You can "
-    echo "  find the binary under the 'tools' folder."
-    echo "- Ensure your update-script file also has the following line or similar:"
+    echo "        = 提 醒 =       "
+    echo "-----------------------------------------------------------"
+    echo "  如需要复制 busybox 到上述所有文件夹，可在 'tools' 文件夹 "
+    echo "  中找到所需二进制文件 busybox 。"
+    echo "  同时，请确保 update-script 文件拥有如下代码行或相似内容: "
     echo "  set_perm 0 0 04755 SYSTEM:xbin/busybox"
-    echo "- You might still be missing some symlinks under /system/xbin"
+    echo "  以及确定是否遗漏了 /system/xbin 中的一些 symlink"
     echo ""
-    echo -n "Do you want the script to fix this for you (y/n)? (default: y): "
+    echo -n "  希望在脚本中修正这些吗 (y/n)? (默认: y): "
     
     read proceed_fix
     if [ "$proceed_fix" != "n" ]
     then
       scripts/add_busybox
     else
-      echo "No fix made" 
+      echo " 没做任何修正" 
     fi
 
     echo
-    echo "When you are ready to build the boot.img, press Enter to continue ..."
+    echo " 准备生成 boot.img ，请按回车键继续 ..."
     read enterKey
   fi
 
@@ -225,26 +223,26 @@ scripts/build_boot_img
 
 
 #
-# Set values in build.prop
+# 在 build.prop 中设置值
 #
 
 if [ "$my_device" == "UNKNOWN" ]
 then
-  echo "WARNING: Won't modify ro.product.device in build.prop (device=UNKNOWN)"
+  echo " 警告: 不会修改 ro.product.device 在 build.prop 设置文件中(device=UNKNOWN)"
 else
   scripts/set_build_prop_val ro.product.device $my_device
 fi
 
 if [ "$my_board" == "UNKNOWN" ]
 then
-  echo "WARNING: Won't modify ro.product.board in build.prop (board=UNKNOWN)"
+  echo " 警告: 不会修改 ro.product.board 在 build.prop 设置文件中(board=UNKNOWN)"
 else
   scripts/set_build_prop_val ro.product.board $my_board
 fi
 
 if [ "$my_platform" == "UNKNOWN" ]
 then
-  echo "WARNING: Won't modify ro.board.platform in build.prop (platform=UNKNOWN)"
+  echo " 警告: 不会修改 ro.board.platform 在 build.prop 设置文件中(platform=UNKNOWN)"
 else
   scripts/set_build_prop_val ro.board.platform $my_platform
 fi  
@@ -252,14 +250,14 @@ fi
 
 
 #
-# Copy module files to donor ROM
+# 复制 module 文件到 donor ROM
 #
 
 if [ -d MY_KERNEL/system ]
 then
   cd WORKING_*
   echo 
-  echo "Copying modules/drivers ..."
+  echo " 正在复制 modules/drivers ..."
   cp -rf ../MY_KERNEL/system/* system/
   cd ..
 fi
@@ -273,7 +271,7 @@ if [ -e tools/samsung_files/sgs_variants/$my_device ] || \
     [ -e tools/samsung_files/sgs2_variants/$my_device ]
 then
   echo 
-  echo "Copying zImage ..."
+  echo " 正在复制 zImage ..."
   cp -vf MY_KERNEL/zImage WORKING_*/
 else
   cd WORKING_*
@@ -306,7 +304,7 @@ then
   fi
 
   #
-  # Use your device's original updater-script to assist with checking mount points later on
+  # 使用你的设备程序原始updater-script脚本来协助稍后检查装载点
   #
   if [ -e ../../../../../MY_DEVICE_WORKING/META-INF/com/google/android/updater-script ]
   then
@@ -324,26 +322,21 @@ rm -rf MY_KERNEL
 rm -rf MY_DEVICE_WORKING
 
 
-
+clear
 echo
-echo "=============================================================="
+echo "        = 提 醒 =       "
+echo "-----------------------------------------------------------"
 echo
-echo "If all went well, you should now have the ROM ported for your"
-echo "kitchen.  Make any necessary adjustments and then build the"
-echo "ROM when you are ready."
+echo " 如果一切顺利，使用本定制工具可以成功移植或打包 ROM  。   "
+echo " 请在打包前确定是否所有步骤完善 。                        "
 echo
-echo "IMPORTANT"
-echo "---------"
-echo "If the new ROM has a size that is much greater than that of"
-echo "most ROMs for your device, you may need to remove some apps"
-echo "from the working folder so that the ROM can fit into the"
-echo "internal flash of your device.  Otherwise, your device MAY NOT"
-echo "BOOT."
+echo " 新制作 ROM 容量大小请勿超过设备内存的最大容量，否则设备  "
+echo " 将不能启动，您需要从工作文件夹删除一些非必要的应用程序。 "
 echo
-echo "If your device does not boot up after flashing a ported ROM"
-echo "built by the kitchen, then refer to the kitchen's FAQ to find"
-echo "out how to debug the issue by dumping the recovery log file"
-echo "and/or by doing a 'logcat'."
+echo " 如设备刷入新制作的 ROM 后不能启动，请参考论坛厨房技术支持"
+echo " 学习怎样使用 Recovery 日志文件 'logcat' 调试解决问题 。  "
 echo 
-
+echo " 感谢您使用云卓团队汉化的ROM定制工具，本工具首发如下网站："
+echo "            云卓论坛：  www.hqapk.com                     "
+echo "-----------------------------------------------------------"
 

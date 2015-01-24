@@ -1,10 +1,9 @@
 ############################################################################
 #
-# Copyright (c) 2011 - dsixda (dislam@rocketmail.com)
+# 本定制工具完全免费，由DsiXDA开发，由“ 半指遮天 ”完成汉化翻译。
 #
-# Android Kitchen is 100% free.  This script file is intended for personal
-# and/or educational use only.  It may not be duplicated for monetary
-# benefit or any other purpose without the permission of the developer.
+#     我的新浪微博：      http://weibo.com/hqapk
+#     我的腾讯微博：      http://t.qq.com/hqapkcom
 #
 ############################################################################
 
@@ -16,12 +15,12 @@ then
 
   echo
 
-  # Delete from line 1 to the line saying 'Release Notes'
-  # Delete the range of text from "<br..> to "\n" (on the next line)
-  # Re-format certain formatting tags (ul, li, quotes)
+  # 删除从 行 1 到行说明'版本注释'
+  # 删除的文本从范围 "<br..> to "\n" (在下一行)
+  # Re-format 某些格式设置标记 (ul, li, 引号)
   # Grab the text between "<br" and "/html" and within it, set .* (all) to nothing
-  # Remove remaining HTML tags
-  # Delete all blank lines
+  # 删除其余的 HTML 标记
+  # 删除所有空行
   more notes.html | sed -e '1,/Release Notes/ d' \
                   | sed -e '0,/<br[^>]*>/s//\n/' \
                   | sed -e 's/<ul>/\n/g' \

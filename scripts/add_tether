@@ -1,25 +1,22 @@
 ############################################################################
 #
-# Copyright (c) 2011 - dsixda (dislam@rocketmail.com)
+# 本定制工具完全免费，由DsiXDA开发，由“ 半指遮天 ”完成汉化翻译。
 #
-# Android Kitchen is 100% free.  This script file is intended for personal
-# and/or educational use only.  It may not be duplicated for monetary
-# benefit or any other purpose without the permission of the developer.
+#     我的新浪微博：      http://weibo.com/hqapk
+#     我的腾讯微博：      http://t.qq.com/hqapkcom
 #
 ############################################################################
 
 
 clear
-echo
+echo "   = 云卓团队 提 醒 =  "
 echo "-----------------------------------------------------------------"
-echo 
-echo "The Wireless Tethering option adds an app that allows your device"
-echo "to act as a wireless router.  Devices with Android 2.2 (Froyo) or"
-echo "later usually have this feature built into the operating system."
-echo ""
-echo "The app will be added under the folder /data/app.  If /data/app"
-echo "functionality was not already enabled then the script will do it"
-echo "automatically."
+echo
+echo " 无线热点共享功能，能够使你的设备变成一个无线热点；"
+echo " 使用 Android 2.2（Froyo）或者更高版本的设备一般不需要添加。"
+echo
+echo " 此功能应用程序会添加到 /data/app 文件夹下，"
+echo " 如果 /data/app功能没有开启，此脚本将自动开启。"
 echo
 echo "-----------------------------------------------------------------"
 echo
@@ -29,7 +26,7 @@ is_old=$?
 
 if [ "$is_old" == "1" ] 
 then
-  echo -n "Proceed with Wireless Tethering (y/n)? (default: y): "
+  echo -n " 继续添加无线热点(y/n)? (默认: y): "
   read do_tether
 
   if [ "$do_tether" == "n" ]
@@ -38,11 +35,13 @@ then
   fi
 elif [ "$is_old" == "2" ]
 then
-  echo "Error: No system folder found!"
+  echo " 错误: 未发现 system 文件夹!"
   exit 0
 
 else
-  echo -n "ROM is newer than Android 2.1, add app anyway (y/n)? (default: n): "
+  echo "   = 云卓团队 提 醒 =  "
+  echo "------------------------------------------------------------"
+  echo -n " ROM 版本高于 Android 2.1 ，仍然添加(y/n)? (默认: n): "
   read do_tether
 
   if [ "$do_tether" != "y" ]
@@ -65,38 +64,40 @@ if [ -d BOOT-EXTRACTED ]
 then
   echo
 else
-  echo "BOOT-EXTRACTED folder not found"
+  echo " 未发现 BOOT-EXTRACTED 文件夹"
   exit 0
 fi
 
 
 #
-# Check for root (just look at default.prop in boot.img)
+# 检查 root (看看 default.prop 在 boot.img)
 #
 
-echo "Wireless tethering requires a rooted ROM"
+echo "  无线热点功能需要已获得 Root 权限的 ROM"
 
 if [ -d BOOT-EXTRACTED/boot.img-ramdisk ]
 then
   cd BOOT-EXTRACTED/boot.img-ramdisk
 else
-  echo "Error: BOOT-EXTRACTED/boot.img-ramdisk folder not found!"
+  echo " 错误: 未发现 BOOT-EXTRACTED/boot.img-ramdisk 文件夹!"
   exit 0
 fi
 
 if [ "`grep -m 1 ro.secure default.prop`" == "ro.secure=1" ] 
 then
-  echo "ROM is not fully rooted, because ro.secure=1 in default.prop."
-  echo "We will root it now ..."
+  echo "        = 云卓团队提醒 =       "
+  echo "-----------------------------------------------------------------"
+  echo " ROM 没有完全获取 Root 权限，因为default.prop文件内 ro.secure=1 "
+  echo " 我们将会使系统获得 Root 权限 ..."
   echo
-  echo "Press Enter when you are ready"
+  echo " 准备好了请按回车键"
   read enterKey
   cd ../..
   rm -rf BOOT-EXTRACTED
   scripts/do_root
 
 else
-  echo "Boot.img is already unsecure"
+  echo " Boot.img 已经解除了安全权限"
   cd ../..
   rm -rf BOOT-EXTRACTED
 fi
@@ -111,7 +112,7 @@ fi
 
 
 #
-# Copy APK
+# 复制 APK
 #
 
 tether_file=wireless_tether*
@@ -127,7 +128,7 @@ do
   res=`find . -name $find_tether`
   if [ "$res" != "" ]
   then
-    echo "$res already found"
+    echo " 已发现 $res"
     tether_found=1
   fi
 
@@ -145,11 +146,11 @@ else
   cd WORKING_*
 
   echo
-  echo "Copying app ..."
+  echo " 复制应用程序 ..."
   cp -v ../tools/apps/$tether_file data/app/
   cd ..
 fi
 
 echo
-echo "Done"
+echo " 云卓团队提醒：完成"
 

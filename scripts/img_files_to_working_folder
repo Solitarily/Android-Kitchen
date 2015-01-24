@@ -1,19 +1,17 @@
 ############################################################################
 #
-# Copyright (c) 2013 - dsixda (dislam@rocketmail.com)
+# 本定制工具完全免费，由DsiXDA开发，由“ 半指遮天 ”完成汉化翻译。
 #
-# Android Kitchen is 100% free.  This script file is intended for personal
-# and/or educational use only.  It may not be duplicated for monetary
-# benefit or any other purpose without the permission of the developer.
+#     我的新浪微博：      http://weibo.com/hqapk
+#     我的腾讯微博：      http://t.qq.com/hqapkcom
 #
 ############################################################################
-
 #
-# This script has two optional arguments:
+#  提醒：此脚本有两个可选参数:
 #
-# $1 = "no_create" or "create" or "create_working 
-#         - must specify no_create if working folder already exists
-# $2 = "kernel_only" or "name_given" - if this is specified then $1 is mandatory
+# $1 = "no_create" 或 "创建" 或 "create_working 
+#         - 必须指定 no_create 如果工作文件夹已经存在
+# $2 = "kernel_only" 或 "name_given" - 如果这指定则是强制性的 $1
 #
 
 if [ "$1" == "no_create" ] 
@@ -35,30 +33,30 @@ else
   dest_dir=$current_dir/original_update
 
   #
-  # Check for system.img/boot.img/lib.img in original_update  
+  # 在 original_update 中检查  System.img/boot.img/lib.img 
   #
   if [ -e original_update/system.img ]
   then
-    echo "Found original_update/system.img"
+    echo " 已发现 original_update/system.img"
     if [ -e original_update/boot.img ]
     then
-      echo "Found original_update/boot.img"
+      echo " 已发现 original_update/boot.img"
     fi
 
     if [ -e original_update/lib.img ]
     then
-      echo "Found original_update/lib.img"
+      echo " 已发现 original_update/lib.img"
     fi
 
   else
 
     if [ -e original_update/boot.img ]
     then
-      echo "Found original_update/boot.img"
-      echo "Error: No original_update/system.img found"
+      echo " 已发现 original_update/boot.img"
+      echo " 云卓团队提醒: 未发现 original_update/system.img"
     else
       echo
-      echo "Error: No ROMs found under original_update folder!"
+      echo " 云卓团队提醒: 未在 original_update 文件夹下发现 ROM 文件!"
     fi
 
     exit 1
@@ -66,27 +64,27 @@ else
 
 
   #
-  # Working folder name
+  # 工作文件夹名称
   #
   build_dir=`scripts/set_working_folder_name $2`
 
   echo
-  echo "Creating working folder $build_dir ..."
+  echo " 创建工作文件夹 $build_dir ..."
   mkdir $build_dir
   mkdir $build_dir/system
 
   if [ -e original_update/boot.img ]
   then
-    echo "Copying boot.img ..."
+  echo " 复制 boot.img ..."
     cp original_update/boot.img $build_dir
   fi
 
-  echo "Copying system.img ..."
+  echo " 复制 system.img ..."
   cp original_update/system.img $build_dir/system
 
   if [ -e original_update/lib.img ]
   then
-    echo "Copying lib.img ..."
+    echo " 复制 lib.img ..."
     mkdir -p $build_dir/system/lib
     cp original_update/lib.img $build_dir/system/lib
   fi
@@ -95,18 +93,18 @@ fi
 
 
 #
-# Directory tree
+# 目录树
 #
 
 mkdir -p $build_dir/META-INF/com/google/android
 echo
-echo "Adding an update-script ..."
+echo " 添加 update-script 脚本 ..."
 cp tools/update_files/update-script $build_dir/META-INF/com/google/android/
 
 
 
 #
-# Check for YAFFS/TAR/EXT*
+# 检查 YAFFS/TAR/EXT*
 #
 
 system_dir=$build_dir/system
@@ -132,7 +130,7 @@ then
   fi
 
   echo
-  echo Extracting contents of system.img ...
+  echo  提取 system.img 的内容 ...
   cd $system_dir
   result=`../../tools/unyaffs_files/$unyaffs_file system.img 2>/dev/null`
 
@@ -141,7 +139,7 @@ else
   cd $system_dir
 
   #
-  # Check for TAR archive
+  # 检查 TAR 存档
   #
   test_tar=`od -A n --strings -j 0 -N 7 system.img`
 
@@ -154,7 +152,7 @@ else
   else
 
     #
-    # Check for Samsung EXT4
+    # 检查 Samsung EXT4
     #
     test_ext4=`od -A n -h -j 0 -N 5 system.img | sed 's/ //g'`
 
@@ -169,7 +167,7 @@ else
     else
 
       echo
-      echo "NON-YAFFS/NON-TAR FILE FORMAT DETECTED IN ROM"
+  echo " ROM 中已存在 NON-YAFFS 文件格式"
       echo
 
       # Get full path
@@ -190,7 +188,7 @@ rm -f system.img 2>/dev/null
 if [ "$?" == "1" ]
 then
   echo
-  echo "WARNING: system.img is in use.  Remove file manually after application is closed."
+  echo " 云卓团队提醒: system.img 正在使用中，请在应用程序关闭后手动删除文件。"
   echo
 fi
 
@@ -200,36 +198,36 @@ cd ..
 if [ "$check_dump" != "" ]
 then
   echo
-  echo "Error: Stackdump file found under /system folder due to incompatibility"
-  echo "       with unyaffs."
+  echo " 云卓团队提醒: /system 文件夹中发现的 Stackdump 文件与 unyaffs 不兼容。"
+  echo
   exit 1
 fi
 
 if [ ! -d system ]
 then
   echo
-  echo "Error:  No /system folder found!"
+  echo " 云卓团队提醒:  未发现 /system 文件夹！"
   exit 1
 fi
 
 if [ ! -d system/framework ]
 then
   echo
-  echo "Error: No /system/framework folder found!"
+  echo " 云卓团队提醒: 未发现 /system/framework 文件夹！"
   exit 1
 fi
 
 if [ ! -d system/app ]
 then
   echo
-  echo "Error: No /system/app folder found!"
+  echo " 云卓团队提醒: 未发现 /system/app 文件夹！"
   exit 1
 fi
 
 if [ "`ls system`" == "" ]
 then
   echo 
-  echo "Error: /system folder is empty!"
+  echo " 云卓团队提醒: /system文件夹为空！"
   echo
   exit 1
 fi
@@ -237,14 +235,14 @@ fi
 
 
 #
-# Extract the contents of lib.img, which will go under /system/lib
+# lib.img内容将解压到 /system/lib 下
 #
 
 if [ -e system/lib/lib.img ]
 then
 
   echo 
-  echo "Found lib.img, which contains contents of /system/lib ..."
+  echo " 已发现 /system/lib 文件夹下面 lib.img ..."
 
   cd ..
 
@@ -260,18 +258,18 @@ then
   if [ "$?" == "1" ]
   then
     echo
-    echo "WARNING: lib.img is in use.  Remove file manually after application is closed."
+    echo " 云卓团队提醒: lib.img 正在使用中，请在应用程序关闭后手动删除文件。"
     echo
   fi
 
   #
-  # Check for empty /system/lib folder
+  # 检查 /system/lib 文件夹为空
   #
   lib_files=`ls $system_dir/lib`
   if [ "$lib_files" == "lib.img" ] || [ "$lib_files" == "" ]
   then
     echo
-    echo "Error: No files extracted from lib.img"
+    echo  云卓团队提醒: 没有从 lib.img 中提取文件"
     exit 1
   fi
 
@@ -294,13 +292,13 @@ else
 	cd ..
 
 	#
-	# Check for location of Android header in boot.img so that it can be
-	# added to working folder correctly
+	# 检查 boot.img 的 Android 头位置
+	# 正确添加到工作文件夹
 	#
 
 	scripts/check_bootimg_header
 
-	# Not a valid boot.img
+	# 不是有效的 boot.img
 	if [ "$?" == "1" ]
 	then
 
@@ -323,8 +321,10 @@ else
 		if [ "$is_gs" == "1" ] || [ "$is_gs2" == "1" ]
 		then
 		  echo
-		  echo "NOTE: The boot.img may actually be a kernel (zImage) instead.  We will"
-		  echo "rename it to zImage."
+		  echo "        = 云 卓 团 队 提 醒 =       "
+		  echo "---------------------------------------------------"
+		  echo "  此 boot.img 实际上可能是一个内核(zImage)代替，"
+		  echo "  将会重命名为 zImage . "
 		  echo
 
 		  cd WORKING_*
@@ -339,7 +339,7 @@ else
 fi
 
 
-# Wi-fi fix - required for some Huawei devices
+# Wi-fi 修复-某些华为设备所需要的
 scripts/fix_huawei_wifi
 
 # Sony Xperia 2011-12 devices - bloatware
@@ -349,17 +349,17 @@ if [ "$2" != "kernel_only" ] && [ "$2" != "name_given" ]
 then
   scripts/fix_update_script 
 
-  # Modify the update-script with features found in Nandroid backup
+  # 修改update-script脚本与Nandroid 备份功能
   scripts/fix_update_script_with_features
 
   scripts/remove_recovery
 fi
 
 
-echo Listing of $build_dir:
+echo $build_dir 列表:
 echo
 ls -l $build_dir
 
 echo
-echo "Finished setting up working folder!"
+echo " 云卓论坛提醒:工作文件夹设置完成!"
 

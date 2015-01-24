@@ -1,10 +1,9 @@
 ############################################################################
 #
-# Copyright (c) 2011 - dsixda (dislam@rocketmail.com)
+# 本定制工具完全免费，由DsiXDA开发，由“ 半指遮天 ”完成汉化翻译。
 #
-# Android Kitchen is 100% free.  This script file is intended for personal
-# and/or educational use only.  It may not be duplicated for monetary
-# benefit or any other purpose without the permission of the developer.
+#     我的新浪微博：      http://weibo.com/hqapk
+#     我的腾讯微博：      http://t.qq.com/hqapkcom
 #
 ############################################################################
 
@@ -17,7 +16,7 @@ then
   if [ ! -e move_cache_sd ]
   then
 
-    echo -n "Do you want to move dalvik-cache to SD card (y/n)? (default: y): "
+    echo -n " 你是否想移动dalvik-cache到SD卡(y/n)? (默认: y): "
     read do_cachesd
 
     if [ "$do_cachesd" != "n" ]
@@ -27,14 +26,14 @@ then
       scripts/add_busybox
       cd WORKING_*
 
-      echo "Adding move_cache_sd to working folder"
+      echo " 添加 move_cache_sd 到工作文件夹中 ..."
       cp ../tools/apps2sd_files/move_cache_sd .
 
       cd META-INF/com/google/android 
 
       if [ `grep -c move_cache_sd update-script` == 0 ]
       then
-        echo "Adding move_cache_sd to update-script"
+        echo " 添加 move_cache_sd 到 update-script 脚本"
         if [ `grep -c "write_raw_image .*:boot.img BOOT:" update-script` != 0 ]
         then
           sed -i -e 's/write_raw_image \(.*boot.img\) BOOT:/run_program PACKAGE:move_cache_sd\nwrite_raw_image \1 BOOT:/' update-script
@@ -45,9 +44,9 @@ then
 
       if [ `grep -c move_cache_sd update-script` == 0 ]
       then
-        echo "Error: move_cache_sd not added to update-script!"
+        echo " 错误: 不能添加 move_cache_sd 到 update-script 脚本"
       else
-        echo "move_cache_sd is currently in the update-script"
+        echo " move_cache_sd 目前是在 update-script 脚本"
       fi
 
       cd ../../../..
@@ -55,12 +54,14 @@ then
     fi
 
   else
-    echo "move_cache_sd already found under working folder"
+    echo " move_cache_sd 已在工作文件夹发现"
 
   fi
 
 else
-  echo "Warning: system/sd not found under working folder!"
+  echo "       =  云卓团队警告 =       "
+  echo "--------------------------------------------------------"
+  echo "  未在工作文件夹中找到 system/sd!"
 
 fi
 

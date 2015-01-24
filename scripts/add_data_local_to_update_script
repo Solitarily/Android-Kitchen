@@ -1,10 +1,9 @@
 ############################################################################
 #
-# Copyright (c) 2011 - dsixda (dislam@rocketmail.com)
+# 本定制工具完全免费，由DsiXDA开发，由“ 光头佬 ”完成汉化翻译。
 #
-# Android Kitchen is 100% free.  This script file is intended for personal
-# and/or educational use only.  It may not be duplicated for monetary
-# benefit or any other purpose without the permission of the developer.
+#     我的新浪微博：      http://weibo.com/339662345
+#     我的腾讯微博：      http://t.qq.com/jinzi521
 #
 ############################################################################
 
@@ -14,7 +13,9 @@ cd META-INF/com/google/android
 
 if [ ! -e update-script ]
 then
-  echo "Error: update-script not found"
+  echo "       = 云卓团队警告 =       "
+  echo "--------------------------------------------"
+  echo " 错误: 未发现 update-script 脚本"
   cd ../../../../..
   exit 0
 fi
@@ -23,10 +24,14 @@ grep_data_local=`grep -c "0771 DATA:local" update-script`
 
 if [ "$grep_data_local" == "1" ]
 then
-  echo "update-script already has /data/local content"
+  echo "       = 云卓团队提醒 =       "
+  echo "--------------------------------------------------------"
+  echo "  update-script 脚本中已经包含 data/local 内容"
 
 else
-  echo "Updating update-script with /data/local entries"
+  echo "       = 云卓团队提醒 =       "
+  echo "--------------------------------------------------------"
+  echo "   添加 data/local 内容到 update-script 脚本 "
 
   if [ `grep -c "format .*DATA:" update-script` == 0 ]
   then
@@ -38,8 +43,8 @@ else
     fi      
   else 
     #
-    # The 'delete DATA:local' command is redundant because you're formatting the DATA partition,
-    # but we'll do that in case the user decides later to remove the format command. 
+    # '删除 DATA:local' 命令是多余的因为你要格式化 DATA 分区,
+    # 但我们可以做到用户决定以后要删除格式化命令
     #
     sed -i -e 's/format\(.*\)DATA:[ ]*[\n]*/format\1DATA:\ndelete DATA:local\n/' update-script
   fi
@@ -55,11 +60,15 @@ else
 
   if [ $grep_data_local == 0 ]
   then
-    echo "Error: Unable to update update-script with /data/local"
+    echo "       = 云卓团队提醒 =       "
+	echo "--------------------------------------------------------"
+    echo "   无法在 update-script 脚本中添加 /data/local 内容 "
   else
     echo
-    echo "You can now put your custom bootanimation.zip under /data/local."
-    echo "If it is missing then the ROM will use the default boot animation."
+	echo "       = 云卓团队提醒 =       "
+	echo "----------------------------------------------------------------"
+    echo " 你可以放置自定义开机动画 bootanimation.zip 到 /data/local文件夹"
+    echo " 如果 ROM 中没有自定义动画，开机时将使用默认开机动画"
   fi
 fi
 

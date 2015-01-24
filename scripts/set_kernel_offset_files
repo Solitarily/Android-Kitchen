@@ -1,17 +1,16 @@
 ############################################################################
 #
-# Copyright (c) 2012 - dsixda (dislam@rocketmail.com)
+# 本定制工具完全免费，由DsiXDA开发，由“ 半指遮天 ”完成汉化翻译。
 #
-# Android Kitchen is 100% free.  This script file is intended for personal
-# and/or educational use only.  It may not be duplicated for monetary
-# benefit or any other purpose without the permission of the developer.
+#     我的新浪微博：      http://weibo.com/hqapk
+#     我的腾讯微博：      http://t.qq.com/hqapkcom
 #
 ############################################################################
 
 #
-# This script has two mandatory parameters:
+#  提醒: 此脚本有两个可选参数:
 #
-# $1 = kernel offset (in decimal format) - this parameter is mandatory
+# $1 = 内核偏移(十进制格式)
 # $2 = type of device (current options: mt65xx) - this parameter is optional
 #
 
@@ -20,7 +19,7 @@ type=$2
 
 if [ "$dec_offset" == "" ]
 then
-  echo "Error: No kernel offset (page size) specified"
+  echo " 提醒: 内核偏移（页面大小）未指定"
   exit 1
 fi
 
@@ -30,14 +29,14 @@ pgsz_line_num=`sed -n -e '/    unsigned pagesize = /{=;q}' tools/mkboot/mkbootim
 str=`sed ''$pad_line_num'q;d' tools/mkboot/mkbootimg.c`
 if [ "$str" != "static unsigned char padding[$dec_offset] = { 0, };" ]
 then
-  echo "Setting offset=$dec_offset in mkbootimg.c, line $pad_line_num"
+  echo " 设置 offset=$dec_offset 在 mkbootimg.c, 行 $pad_line_num"
   sed -i -e ''$pad_line_num's/.*/static unsigned char padding\['$dec_offset'\] = { 0, };/' tools/mkboot/mkbootimg.c
 fi  
 
 str=`sed ''$pgsz_line_num'q;d' tools/mkboot/mkbootimg.c`
 if [ "$str" != "    unsigned pagesize = $dec_offset;" ]
 then
-  echo "Setting offset=$dec_offset in mkbootimg.c, line $pgsz_line_num"
+  echo " 设置 offset=$dec_offset 在 mkbootimg.c, 行 $pgsz_line_num"
   sed -i -e ''$pgsz_line_num's/.*/    unsigned pagesize = '$dec_offset';/' tools/mkboot/mkbootimg.c
 fi
 
@@ -46,7 +45,7 @@ fi
 str=`sed '23q;d' tools/extract_boot_files/extract-kernel.pl`
 if [ "$str" != "\$pageSize = $dec_offset;" ]
 then
-  echo "Setting offset=$dec_offset in extract-kernel.pl, line 23"
+  echo " 设置 offset=$dec_offset 在 extract-kernel.pl, 行 23"
   sed -i -e '23s/.*/$pageSize = '$dec_offset';/' tools/extract_boot_files/extract-kernel.pl
 fi
 
@@ -61,7 +60,7 @@ fi
 str=`sed '25q;d' tools/extract_boot_files/extract-kernel.pl`
 if [ "$str" != "$new_str" ]
 then
-  echo "Modifying extract-kernel.pl, line 25"
+  echo "修改extract-kernel.pl, 行 25"
   sed -i -e '25s/.*/'"$new_str"'/' tools/extract_boot_files/extract-kernel.pl  
 fi
 
@@ -70,7 +69,7 @@ fi
 str=`sed '23q;d' tools/extract_boot_files/extract-ramdisk.pl`
 if [ "$str" != "\$pageSize = $dec_offset;" ]
 then
-  echo "Setting offset=$dec_offset in extract-ramdisk.pl, line 23"
+  echo " 设置 offset=$dec_offset 在 extract-ramdisk.pl, 行 23"
   sed -i -e '23s/.*/$pageSize = '$dec_offset';/' tools/extract_boot_files/extract-ramdisk.pl
 fi
 
@@ -85,7 +84,7 @@ fi
 str=`sed '31q;d' tools/extract_boot_files/extract-ramdisk.pl`
 if [ "$str" != "$new_str" ]
 then
-  echo "Modifying extract-ramdisk.pl, line 31"
+  echo "修改 extract-ramdisk.pl, 行 31"
   sed -i -e '31s/.*/'"$new_str"'/' tools/extract_boot_files/extract-ramdisk.pl  
 fi
 

@@ -1,18 +1,16 @@
 ############################################################################
 #
-# Copyright (c) 2013 - dsixda (dislam@rocketmail.com)
+# 本定制工具完全免费，由DsiXDA开发，由“ 半指遮天 ”完成汉化翻译。
 #
-# Android Kitchen is 100% free.  This script file is intended for personal
-# and/or educational use only.  It may not be duplicated for monetary
-# benefit or any other purpose without the permission of the developer.
+#     我的新浪微博：      http://weibo.com/hqapk
+#     我的腾讯微博：      http://t.qq.com/hqapkcom
 #
 ############################################################################
-
 
 clear
 if [ ! -d WORKING_* ]
 then
-  echo No working folder found!
+  echo " 未发现工作文件夹！"
   scripts/press_enter
   exit 0
 fi
@@ -23,13 +21,11 @@ do
 
   clear
 
-  echo
-  echo "Convert update-script/updater-script"
-  echo "--------------------------------------"
-  echo
-  echo "You should know:"
-  echo "- An update-script is in 'Amend' format"
-  echo "- An updater-script is in 'Edify' format"
+  echo "      = update-script/updater-script 转换 =      "
+  echo "----------------------------------------------------"
+  echo " 请先了解以下内容： "
+  echo " - update-script 刷机脚本是 'Amend' 格式"
+  echo " - updater-script 刷机脚本是 'Edify' 格式"
   echo
 
   default_choice=""
@@ -37,37 +33,36 @@ do
   cd WORKING_*
   if [ -e META-INF/com/google/android/updater-script ]
   then
-    echo "You currently have:"
+    echo "你当前有: "
     echo "META-INF/com/google/android/updater-script"
     echo
     default_choice=1
   elif [ -e META-INF/com/google/android/update-script ]
   then
-    echo "You currently have:"
+    echo "你当前有: "
     echo "META-INF/com/google/android/update-script"
     echo
     default_choice=2
   else
-    echo "You currently don't have either file in your"
-    echo "working folder."
+    echo "Working 文件夹内未发现脚本文件."
   fi
 
   cd ..
 
   echo
-  echo "Enter a choice:"
+  echo " 请输入选择项："
   echo 
 
-  echo "  1 = Convert updater-script to update-script (Amend)"
-  echo "  2 = Convert update-script to updater-script (Edify)"
-  echo "  0 = Exit"
+  echo "  1 = 转换 updater-script 为 update-script  (Amend)"
+  echo "  2 = 转换 update-script  为 updater-script (Edify)"
+  echo "  0 = 退出"
   echo
 
   if [ "$default_choice" == "" ]
   then
     echo -n "? "
   else
-    echo -n "(default: $default_choice)? "
+    echo -n "(默认：$default_choice)? "
   fi
 
   read enterNumber
@@ -76,7 +71,7 @@ do
   then
     if [ "$default_choice" == "" ]
     then
-      echo "Invalid option"
+      echo " 错误选项 "
       continue
     else
       enterNumber=$default_choice

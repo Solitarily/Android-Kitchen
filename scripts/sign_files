@@ -1,10 +1,9 @@
 ############################################################################
 #
-# Copyright (c) 2011 - dsixda (dislam@rocketmail.com)
+# 本定制工具完全免费，由DsiXDA开发，由“ 半指遮天 ”完成汉化翻译。
 #
-# Android Kitchen is 100% free.  This script file is intended for personal
-# and/or educational use only.  It may not be duplicated for monetary
-# benefit or any other purpose without the permission of the developer.
+#     我的新浪微博：      http://weibo.com/hqapk
+#     我的腾讯微博：      http://t.qq.com/hqapkcom
 #
 ############################################################################
 
@@ -19,22 +18,19 @@ do
   clear
 
   echo
-  echo "Sign files"
-  echo "----------"
+  echo "      =  签  名  文  件  =    【本功能适用于高级用户】   "
+  echo "------------------------------------------------------------"
+  echo " 如果只是对 ROM 进行简单定制，签名 APK应用程序并不是必须的。"
+  echo " 如果有未签名的 ZIP 刷机包文件，可以利用此功能签名。"
   echo 
-  echo "NOTE: This section is for advanced users.  If you are making simple"
-  echo "customizations to your ROM, then signing APKs is not necessary.  If"
-  echo "you have an unsigned update ZIP file, then you can sign it here."
+  echo "  选 项 :"
   echo 
+  echo "  a = 签名工作文件夹中所有 APK 应用程序"
+  echo "  s = 签名工作文件夹中一系列 APK 应用程序"
+  echo "  z = 签名非工作文件夹中的 APK 应用程序和 ZIP 刷机包"
+  echo "  x = 退出"
   echo
-  echo "Enter a choice:"
-  echo 
-  echo "  a = Sign all APKs in working folder"
-  echo "  s = Sign a set of APKs in working folder"
-  echo "  z = Sign APKs and/or ZIPs inside a non-working folder"
-  echo "  x = Exit"
-  echo
-  echo -n "? "
+  echo -n "  请输入选择项： "
 
   read enterChoice
 
@@ -51,7 +47,7 @@ do
 
     if [ ! -d WORKING_* ]
     then
-      echo "No working folder found!"
+      echo " 未发现工作文件夹！"
       scripts/press_enter
       continue
     fi
@@ -63,16 +59,14 @@ do
 
     if [ -d data/app ]
     then
+      echo "      =  提  醒  =      "
+      echo "------------------------------------------------------------------"
+      echo " 如果签名了 /data/app 中的所有 *.apk 应用程序，"
+      echo " 则它们使用电子市场更新将会失败；"
+      echo " 您可以选择现在先不签名，稍后单独签名需要的文件。"
+      echo " 所有 /system/app 和 /system/framework 下的 *.apk 程序仍将被签名。"
       echo
-      echo "NOTE: If you sign all *.apk in the /data/app folder, then their Android"
-      echo "      Market updates will fail.  You can choose to not sign them now and"
-      echo "      later individually sign the ones you want."
-      echo
-      echo "      All *.apk under /system/app and /system/framework will still be"
-      echo "      signed."
-      echo 
-      echo
-      echo -n "Sign all *.apk under /data/app (y/n)? (default: n): "
+      echo -n " 是否签名 /data/app 中的所有 *.apk 应用程序(y/n)? (默认为: n): "
       read do_data
 
       echo
@@ -82,14 +76,14 @@ do
         grep_data=`find data/app | grep \\.apk$ | sort -f`
         grep_cmd="$grep_data $grep_cmd"
       else
-        echo "Not signing data/app/*.apk"
+        echo " 无法签名 data/app/*.apk"
       fi
     fi
 
     for filename in $grep_cmd
     do
       new_file=$filename\_new
-      echo "Signing $filename ..."
+      echo " 签名 $filename ..."
 
       java -jar $util_dir/signapk.jar $util_dir/testkey.x509.pem $util_dir/testkey.pk8 $filename $new_file
 
@@ -97,13 +91,13 @@ do
       then
         mv -f $new_file $filename 
       else
-        echo "Error: Unable to sign"
+        echo " 错误: 无法签名"
       fi
     done
 
     cd $base_path
     echo
-    echo "Finished"
+    echo " 完成 "
     scripts/press_enter
 
   #
@@ -117,8 +111,8 @@ do
     cd $base_path
 
     if [ ! -d WORKING_* ]
-    then
-      echo "No working folder found!"
+    then 
+      echo " 未发现工作文件夹！"
       scripts/press_enter
       continue
     fi
@@ -131,7 +125,7 @@ do
     rm -f ../temp.list
 
     echo >> ../temp.list
-    echo "All APKs:" >> ../temp.list
+    echo " 所有 APK 应用程序:" >> ../temp.list
     echo >> ../temp.list
 
     for filename in $grep_cmd 
@@ -150,9 +144,10 @@ do
     rm -f ../temp.list
 
 
-    echo
-    echo "Enter file number, or set of file numbers (0 = cancel)"
-    echo "For example:  1 24-39 22"
+    echo "      =  提  醒  =    "
+    echo "---------------------------------------------"
+    echo " 请输入文件编号，或系列文件编号(0 = 取消)"
+    echo " 例如:  1 24-39 22"
     echo -n "> "
 
     read enterNumbers
@@ -165,7 +160,7 @@ do
     else 
       
       #
-      # Parse the input and set the array
+      # 解析输入并设置排列
       #
 
       for num in $enterNumbers
@@ -179,25 +174,25 @@ do
 
         if [ "$num_start" == "" ] || [ "`echo $num_start | sed 's/[0-9]*//'`" != "" ]
         then
-          echo "Error: Invalid input ('$num' is not a valid number or range)"
+          echo " 提醒: 错误输入('$num' 不是一个有效的数字或范围)"
           continue
         fi
 
         if [ "$num_end" == "" ] || [ "`echo $num_end | sed 's/[0-9]*//'`" != "" ]
         then
-          echo "Error: Invalid input ('$num' is not a valid number or range)"
+          echo " 提醒: 错误输入('$num' 不是一个有效的数字或范围)"
           continue
         fi
 
         if [ $num_end -lt $num_start ]
         then
-          echo "Error: Invalid input ($num_start is not less than $num_end)"
+          echo " 提醒: 错误输入($num_start 不能少于 $num_end)"
           continue
         fi
 
         
         #
-        # Designate the files that were selected
+        # 指定被选定的文件
         #
 
         for (( i=$num_start; i<=$num_end; i++ ))
@@ -205,7 +200,7 @@ do
       
           if [ "${file_array[$i]}" == "" ]
           then
-            echo "Error: No files at #$i"
+            echo " 云卓团队提醒: 没有文件在 #$i"
             continue
           else
             file_to_sign[$i]=1
@@ -216,7 +211,7 @@ do
       done
 
       #
-      # Go through the array and sign the appropriate files
+      # 通过排列并签署相应的文件
       #
 
       for (( i=1; i<=$count; i++ ))
@@ -229,21 +224,21 @@ do
         
           if [ "$file_chosen" == "" ]
           then
-            echo "Error: Invalid input (file not found for $i)"
+            echo " 云卓团队提醒: 错误输入(在 $i 未发现文件)"
             cd $base_path
             scripts/press_enter
             break
           fi
 
           new_file=$file_chosen\_new
-          echo "Signing #$i: $file_chosen ..."
+          echo " 正在签名 #$i: $file_chosen ..."
           java -jar $util_dir/signapk.jar $util_dir/testkey.x509.pem $util_dir/testkey.pk8 $file_chosen $new_file
           
           if [ -e $new_file ]
           then
             mv -f $new_file $file_chosen
           else
-            echo "Error: Unable to sign"
+            echo " 云卓团队提醒: 无法签名"
             cd $base_path
             scripts/press_enter
           fi
@@ -266,7 +261,7 @@ do
   then
     exit 0
   else 
-    echo "Invalid option"
+    echo " 云卓团队提醒:错误选项"
     continue
   fi
 

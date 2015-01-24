@@ -1,10 +1,9 @@
 ############################################################################
 #
-# Copyright (c) 2012 - dsixda (dislam@rocketmail.com)
+# 本定制工具完全免费，由DsiXDA开发，由“ 半指遮天 ”完成汉化翻译。
 #
-# Android Kitchen is 100% free.  This script file is intended for personal
-# and/or educational use only.  It may not be duplicated for monetary
-# benefit or any other purpose without the permission of the developer.
+#     我的新浪微博：      http://weibo.com/hqapk
+#     我的腾讯微博：      http://t.qq.com/hqapkcom
 #
 ############################################################################
 
@@ -17,10 +16,9 @@ do
   clear
 
   echo
-  echo "Boot image tools"
-  echo "----------------"
-  echo
-  echo "Enter a choice:"
+  echo "   Boot image  工具"
+  echo "-------------------------------------------------------------"
+  echo "   选 项 : "
   echo 
 
   if [ -d WORKING_* ]
@@ -53,43 +51,40 @@ do
 
     if [ "$boot_img" == "true" ]
     then
-      echo "  s = Show boot.img information"
+      echo "  s = 显示 boot.img 信息"
     fi
 
     if [ "$extracted" == "true" ] 
     then
-      echo "  b = Build boot.img from BOOT-EXTRACTED folder (for working folder)"
-      echo "  n = Build NAND's boot folder from BOOT-EXTRACTED (for working folder)"
-      echo "  r = Remove BOOT-EXTRACTED folder (don't build anything)"
+      echo "  b = 从 BOOT-EXTRACTED 文件夹生成 boot.img (用于工作文件夹)"
+      echo "  n = 从 BOOT-EXTRACTED 文件夹生成 NAND boot文件夹 (用于工作文件夹)"
+      echo "  r = 删除 BOOT-EXTRACTED 文件夹 (不生成任何文件)"
     else
       
       if [ "$boot_img" == "true" ]
       then
-        echo "  w = Extract kernel+ramdisk from boot.img"
-        echo "  c = Convert boot.img into NAND boot folder"
-        echo "  p = Change 'command line' parameter in boot.img"
+        echo "  w = 从 boot.img 提取 kernel+ramdisk"
+        echo "  c = boot.img 转换为 NAND boot 文件夹"
+        echo "  p = 更改在 boot.img 中的命令行参数"
 
       elif [ "$boot_folder" == "true" ]
       then
-        echo "  y = Convert NAND boot folder into boot.img"
-        echo "  z = Extract kernel+ramdisk from NAND boot folder"
+        echo "  y = 转换 NAND boot 文件夹为 boot.img"
+        echo "  z = 从 NAND boot 文件夹中提取 kernel+ramdisk (常规格式)"
       fi
     fi
   fi
 
-  echo "  a = Extract kernel+ramdisk from boot.img/recovery.img in any folder"
-  echo "  x = Exit"
+  echo "  a = 从任意文件夹中的 boot.img 提取 kernel+ramdisk (常规格式)"
+  echo "  x = 退出"
   echo
-  echo "  NOTE: Other options may not be shown in this menu *until* a specific"
-  echo "  action above is selected or a specific working folder is created."
-  echo "  (A working folder is created with Option 1 of the kitchen main menu!)"
+  echo "      = 云卓团队提醒 =      "
+  echo "-------------------------------------------------------------"
+  echo "  一些选项将不会显示在此菜单中 *until* 特定的"
+  echo "  选择上面的操作或创建一个特定的工作文件夹."
+  echo "  例如：你看不到的选项除非您解压缩 re-pack boot.img "
   echo
-  echo "  e.g. You won't see the option to re-pack a boot.img unless you unpack"
-  echo "  the boot.img first!  For re-packing you also need a working folder "
-  echo "  with the original boot.img so that the kitchen can use its header" 
-  echo "  information to construct the new boot.img."
-  echo
-  echo -n "? "
+  echo -n " 请输入选择项： "
 
   read enterLetter
 
@@ -103,7 +98,7 @@ do
 
   elif [ "$enterLetter" == "r" ] 
   then
-    rm -rf BOOT-EXTRACTED; echo; echo "Deleted"
+    rm -rf BOOT-EXTRACTED; echo; echo "删除"
 
   elif [ "$enterLetter" == "b" ] 
   then
@@ -141,7 +136,7 @@ do
   then
     exit 0
   else 
-    echo "Invalid option"
+    echo " 提醒：错误选项，请确认！"
     continue
   fi
 

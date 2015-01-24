@@ -1,51 +1,50 @@
 ############################################################################
 #
-# Copyright (c) 2013 - dsixda (dislam@rocketmail.com)
+# 本定制工具完全免费，由DsiXDA开发，由“ 半指遮天 ”完成汉化翻译。
 #
-# Android Kitchen is 100% free.  This script file is intended for personal
-# and/or educational use only.  It may not be duplicated for monetary
-# benefit or any other purpose without the permission of the developer.
+#     我的新浪微博：      http://weibo.com/hqapk
+#     我的腾讯微博：      http://t.qq.com/hqapkcom
 #
 ############################################################################
 
 #
-# This script has two arguments:
+#  提醒: 此脚本具有两个参数:
 #
-# $1 = file name (mandatory)
-# $2 = "kernel_only" or "name_given" (optional)
+# $1 = 文件名称(强制)
+# $2 = "kernel_only" 或 "name_given" (可选)
 #
 
 
 update_file=$1
  
-echo "Selected $update_file"
+echo " 已选择 $update_file"
 
 # Trim spaces in file name
 update_file2=`echo $update_file | tr ' ' '_'`
 
 if [ "$update_file" != "$update_file2" ]
 then
-  echo "Renaming to $update_file2"
+  echo " 重命名为 $update_file2"
   mv "original_update/$update_file" original_update/$update_file2
   update_file=$update_file2
 fi
 
 #
-# Working folder name
+# 工作文件夹名称
 #
 build_dir=`scripts/set_working_folder_name $2` 
 
 
 #
-# Creating folder structure
+# 创建文件夹结构
 #
 
 echo
-echo "Creating working folder $build_dir ..."
+echo " 创建工作文件夹 $build_dir ..."
 mkdir $build_dir
 
 echo
-echo "Extracting ROM from ZIP file ..."
+echo " 解压 ROM ..."
 
 if [ `uname | grep CYGWIN` ]
 then
@@ -78,33 +77,31 @@ then
   then
     echo
     echo
-    echo "WARNING"
-    echo "-------"
-    echo "One of the folders in your ZIP archive contains two files with the SAME NAME that differ"
-    echo "by upper and lower case, which is the reason you saw the prompt above.  Because Windows"
-    echo "is case-insensitive, it treats both files as a SINGLE file rather than two distinct"
-    echo "files!"
+    echo "        =  提  醒  =      "
+    echo "-------------------------------------------------------"
+    echo " 可能您的厨房文件夹中具有一个相同名次的工作文件夹，"
+    echo " 注意：也有可能是windows不能区分大小写而造成！"	
     echo
-    echo "You can choose to ignore this issue, or quit. There are two ways to resolve this:"
+    echo " 你可以选择忽略这个问题，或退出，或选择以下两种解决方式:"
     echo 
-    echo "1) Use an operating system that treats file names as case-sensitive (Linux or OS X), OR"
-    echo "2) In the Windows registry, set: "
-    echo "   HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\kernel\obcaseinsensitive to 0"
-    echo "   and reboot. However, this affects all of Windows - do this at your own risk!"
+    echo " 1)切换操作系统为Linux或者OS X，可以区分文件夹大小写；"
+    echo " 2) 通过修改Windows注册表，使之识别文件夹名称的大小写！"
+    echo " 设置注册表: HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\kernel\obcaseinsensitive 数值为 0 "
+    echo " 注册表打开方法，运行/输入regedit，回车" 
     echo 
-    echo
-    echo -n "Do you wish to ignore this issue (y/n)? (default: n): "
+    echo 
+    echo -n "你确认忽略这个问题 (y/n)? (默认: n): "
     read do_ignore
 
     if [ "$do_ignore" != "y" ]
     then
       echo
-      echo "OK, aborting"
+      echo "OK, 正在终止！"
       cd ..
       exit 1
     else
       echo
-      echo "OK, ignoring it, but your new ROM may have stability issues!"
+      echo "OK, 你选择忽略, 但忽略可能改变ROM稳定性，请谨慎选择！"
     fi
   fi
 
@@ -118,7 +115,7 @@ fi
 if [ "$unzip_result" == "9" ]
 then
   echo
-  echo "Error: Cannot extract ROM!"
+  echo " 提醒: 无法解压 ROM!"
   cd ..
   exit 1
 fi
@@ -128,14 +125,14 @@ cd $build_dir
 
 
 #
-# Check for the required IMG files
+#请检查所需的 IMG 文件
 #
 
 echo
 
 if [ "`find . -maxdepth 1 | grep .img | grep -c system_`" == "1" ]
 then
-  echo "Renaming ..."
+  echo " 重命名..."
   mv -v system_*.img system.img
 fi 
 
@@ -143,13 +140,13 @@ rm -vf hboot*.img
 
 if [ "`find . -maxdepth 1 | grep .img | grep -c boot_`" == "1" ]
 then
-  echo "Renaming ..."
+  echo " 重命名..."
   mv -v boot_*.img boot.img
 fi 
 
 if [ "`find . -maxdepth 1 | grep .img | grep -c lib_`" == "1" ]
 then
-  echo "Renaming ..."
+  echo "重命名..."
   mv -v lib_*.img lib.img
 fi 
 
@@ -158,19 +155,19 @@ if [ -e system.img ] && [ ! -d system ]
 then
 
   echo
-  echo "Found system.img"
+  echo " 已发现 system.img"
   mkdir ../temp_img
   mv system.img ../temp_img
 
   if [ -e boot.img ]
   then
-    echo "Found boot.img"
+    echo " 已发现 boot.img"
     mv boot.img ../temp_img
   fi
 
   if [ -e lib.img ]
   then
-    echo "Found lib.img"
+    echo " 已发现 lib.img"
     mv lib.img ../temp_img
   fi
 
@@ -189,30 +186,30 @@ then
 #
 elif [ -e factoryfs.img ]
 then
-  echo Found factoryfs.img
+  echo  已发现 factoryfs.img
 
   if [ -e hidden.img ]
   then
-    echo "Found hidden.img"
+    echo "  已发现 hidden.img "
   else
-    echo "No hidden.img found"
+    echo "  未发现 hidden.img "
   fi
 
   if [ -e cache.img ]
   then
-    echo "Found cache.img"
+    echo  已发现 cache.img
   else
-    echo "Warning: No cache.img found"
+    echo " 云卓团队警告: 未发现 cache.img"
   fi
 
   if [ -e zImage ]
   then
-    echo "Found zImage"
+    echo " 已发现 zImage"
     cd ..
     scripts/show_rooted_kernel_msg
     cd $build_dir
   else
-    echo "Warning: No zImage found"
+    echo " 警告: 未发现 zImage"
   fi
 
   cd ..
@@ -227,25 +224,25 @@ elif [ -e system.img.ext4 ]
 then
 
   echo
-  echo "Found system.img.ext4"
+  echo " 发现 system.img.ext4"
   mkdir ../temp_img
   mv system.img.ext4 ../temp_img
 
   if [ -e boot.img ]
   then
-    echo "Found boot.img"
+    echo " 发现 boot.img"
     mv boot.img ../temp_img
   fi
 
   if [ -e tomb.img.ext4 ]
   then
-    echo "Found tomb.img.ext4"
+    echo "  已发现 tomb.img.ext4"
     mv tomb.img.ext4 ../temp_img
   fi
 
   if [ -e cache.img.ext4 ]
   then
-    echo "Found cache.img.ext4"
+    echo " 发现 cache.img.ext4"
     mv cache.img.ext4 ../temp_img
   fi
 
@@ -267,26 +264,26 @@ elif [ -e system.rfs ]
 then
 
   cd ..
-  echo "Found system.rfs"
+  echo "已发现 system.rfs"
   scripts/rfs_files_to_working_folder no_create $2
   exit $?
 
 
 
 #
-# Check for Samsung Galaxy S2 Nandroid backup
+# 检查三星 Samsung Galaxy S2 Nandroid 备份
 #
 elif [ -e system.ext4.tar ] 
 then
 
   echo
-  echo "Found system.ext4.tar"
+  echo " 发现 system.ext4.tar"
   mkdir ../temp_img
   mv system.ext4.tar ../temp_img
 
   if [ -e boot.img ]
   then
-    echo "Found boot.img"
+    echo " 发现 boot.img"
     mv boot.img ../temp_img
   fi
 
@@ -301,25 +298,25 @@ then
 
 
 #
-# Check for Samsung Galaxy S stock ROM
+# 检查三星 Samsung Galaxy S stock ROM
 #
 elif [ -e factoryfs.rfs ]
 then
-  echo Found factoryfs.rfs
+  echo  已发现 factoryfs.rfs
 
   if [ -e cache.rfs ]
   then
-    echo Found cache.rfs
+    echo  已发现 cache.rfs
   fi
 
   if [ -e zImage ]
   then
-    echo "Found zImage"
+    echo " 已发现 zImage"
     cd ..
     scripts/show_rooted_kernel_msg
     cd $build_dir
   else
-    echo "Warning: No zImage found"
+    echo " 云卓团队警告: 未发现 zImage"
   fi
 
   cd ..
@@ -331,25 +328,25 @@ then
 #
 elif [ -e PDA.tar ]
 then
-  echo Found PDA.tar
+  echo  已发现 PDA.tar
 
   if [ -e CSC.tar ]
   then
-    echo Found CSC.tar
+    echo  已发现 CSC.tar
   else
-    echo "Warning: No CSC.tar found"
+    echo " 警告: 未发现 CSC.tar"
   fi
 
   if [ -e PHONE.tar ]
   then
-    echo Found PHONE.tar
+    echo  已发现 PHONE.tar
   fi
 
   if [ -e zImage ]
   then
-    echo "Found zImage"
+    echo " 已发现 zImage"
   else
-    echo "Warning: No zImage found"
+    echo " 警告: 未发现 zImage"
   fi
 
   cd ..
@@ -361,25 +358,25 @@ then
 #
 elif [ -e PDA.tar.md5 ]
 then
-  echo Found PDA.tar.md5
+  echo 已发现 PDA.tar.md5
 
   if [ -e CSC.tar.md5 ]
   then
-    echo Found CSC.tar.md5
+    echo  已发现 CSC.tar.md5
   else
-    echo "Warning: No CSC.tar.md5 found"
+    echo " 警告: 未发现 CSC.tar.md5"
   fi
 
   if [ -e PHONE.tar.md5 ]
   then
-    echo Found PHONE.tar.md5
+    echo 已发现 PHONE.tar.md5
   fi
 
   if [ -e zImage ]
   then
-    echo "Found zImage"
+    echo "已发现 zImage"
   else
-    echo "Warning: No zImage found"
+    echo " 警告: 未发现 zImage"
   fi
 
   cd ..
@@ -394,7 +391,7 @@ if [ -d patch ]
 then
 
   echo 
-  echo "Error: This is a ROM update, not a full ROM! Aborting."
+  echo " 提醒: 这是一个 ROM 更新包，不是一个完整 ROM ！正在正在中止 ..."
   cd ..
   exit 1
 
@@ -402,23 +399,24 @@ elif [ ! -d system ] && [ ! -d SYSTEM ]
 then
 
   echo
-  echo "Error: No system folder found!"
+  echo " 提醒: 未发现 system 文件夹"
   cd ..
   exit 1
 
 fi
 
 #
-# Check for NAND ROM - convert the boot folder to boot.img
+# 检查 NAND ROM-将 BOOT 文件夹转换为 boot.img
 #
 if [ ! -e boot.img ]
 then
   if [ -e boot/initrd.gz ] && [ -e boot/zImage ]
   then
-    echo
-    echo "NAND ROM detected, converting boot folder to boot.img for"
-    echo "compatibility with kitchen (will be converted back when"
-    echo "ROM is built) ..."
+    echo "      =  提 醒  =      "
+    echo "-------------------------------------------"
+    echo " 已检测到 NAND ROM ，为保证兼容性"
+    echo " 厨房正在转换 boot 文件夹到 boot.img"
+    echo "（创建 ROM 时将会转换回去）..."
 
     cd ..
     scripts/ensure_nand_extracted no_clear
@@ -426,12 +424,14 @@ then
     cd WORKING_*
 
   #
-  # Leaked ROMs with partitions in folder format
+  # Leaked ROMs 文件夹格式分区
   # 
   elif [ -e BOOT/kernel ] && [ -e BOOT/base ] && [ -e BOOT/cmdline ] && [ -d BOOT/RAMDISK ]
   then
-    echo "Partitions are in folder format; BOOT folder will need to be"
-    echo "converted into a boot.img ..."
+    echo "      =  提 醒  =      "
+    echo "-------------------------------------------"
+    echo " 分区是文件夹格式；BOOT 文件夹需要"
+    echo " 转换成 boot.img boot.img ..."
    
     cd ..
     scripts/build_boot_img_from_folder_form
@@ -440,7 +440,7 @@ then
   else
 
     #
-    # Check if ROM has no boot.img inside
+    # 请检查 ROM 里面有没有 boot.img
     #
 
     build_dir=`pwd`
@@ -450,10 +450,10 @@ then
 
     if [ ! -e boot.img ]
     then
-      echo "Error: No boot.img found, cannot continue"
+      echo " 提醒: 未发现 boot.img ，无法继续！"
       echo
       cd ..
-      echo "Removing $build_dir ..."
+      echo " 删除 $build_dir ..."
       rm -rf $build_dir
       echo
       exit 1
@@ -483,7 +483,7 @@ then
   cd ..
 else
   echo
-  echo "Warning: No META-INF folder found under working folder!"
+  echo " 警告: 工作文件夹中未发现 META-INF 文件夹"
 fi
 
 
@@ -503,15 +503,15 @@ then
   if [ -e updater-script ] && [ -e update-script ]
   then
     echo
-    echo "Warning: Both updater-script and update-script are found."
-    echo -n "Remove updater-script (y/n)? (default: y) "
+    echo " 提醒: 发现 updater-script 和 update-script 两种脚本"
+    echo -n "删除 updater-script 脚本(y/n)? (默认为: y) "
 
     read enterRemove
     echo
 
     if [ "$enterRemove" == "n" ]
     then
-      echo "Keeping updater-script, but we must remove update-script"
+      echo " 继续保留 updater-script 脚本，但是必须删除 update-script 脚本"
       rm -rf update-script
 
       cd ../../../../..
@@ -522,7 +522,7 @@ then
       cd META-INF/com/google/android
 
     else 
-      echo "Removing updater-script"
+      echo " 删除 updater-script 脚本"
       rm -f updater-script
     fi
 
@@ -530,15 +530,15 @@ then
   if [ -e update-binary ] && [ -e update-script ]
   then
     echo
-    echo "Warning: Both update-binary and update-script are found."
-    echo -n "Remove update-binary (y/n)? (default: y) "
+    echo " 警告: 发现 update-binary 和 update-script 两种不兼容脚本！"
+    echo -n "删除 update-binary 脚本(y/n)? (默认为: y) "
     read enterRemove
     if [ "$enterRemove" != "n" ]
     then
-      echo "Removing update-binary"
+      echo " 删除 update-binary 脚本"
       rm -f update-binary
     else
-      echo "Not removing update-binary"
+      echo " 不删除 update-binary 脚本"
     fi
   fi
 
@@ -563,7 +563,7 @@ then
 fi
 
 echo
-echo "Listing of META-INF/com/google/android:"
+echo "META-INF/com/google/android 列表:"
 
 cd WORKING_*
 cd META-INF/com/google/android
@@ -579,14 +579,14 @@ cd ../../../../..
 cd $build_dir
 
 echo
-echo Listing of $build_dir:
+echo $build_dir 列表:
 ls -l 
 
 echo
 
 if [ -d system ]
 then
-  echo "Finished setting up working folder!"
+  echo " 工作文件夹设置已完成!"
   cd ..
 
   if [ "$error_code" == "1" ]
@@ -597,7 +597,7 @@ then
   fi
 
 else
-  echo "Error: Setup failed"
+  echo " 提醒: 设置失败"
   cd ..
   scripts/press_enter
   exit 1

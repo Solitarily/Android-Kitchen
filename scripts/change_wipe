@@ -1,20 +1,18 @@
 ############################################################################
 #
-# Copyright (c) 2012 - dsixda (dislam@rocketmail.com)
+# 本定制工具完全免费，由DsiXDA开发，由“ 半指遮天 ”完成汉化翻译。
 #
-# Android Kitchen is 100% free.  This script file is intended for personal
-# and/or educational use only.  It may not be duplicated for monetary
-# benefit or any other purpose without the permission of the developer.
+#     我的新浪微博：      http://weibo.com/hqapk
+#     我的腾讯微博：      http://t.qq.com/hqapkcom
 #
 ############################################################################
-
 clear
 
 if [ -d WORKING_* ]
 then
-  echo Found working folder
+  echo 已发现工作文件夹
 else
-  echo No working folder found!
+  echo 未发现工作文件夹!
   exit 0
 fi
 
@@ -31,9 +29,11 @@ then
   
   if [ "$grep_wipe" == "0" ]
   then
-
-    echo "Currently the ROM will NOT WIPE your data during a flash"
-    echo -n "Would you like to change this to wipe (y/n)? (default: n): "
+    echo "       = 云 卓 团 队 提 醒 =     "
+	echo "-----------------------------------------------"
+    echo " 目前 ROM 将不会在刷机时 WIPE 数据"
+	echo 
+    echo -n "  你想更改 wipe (y/n)? (默认: n): "
 
     read do_wipe
     echo
@@ -44,12 +44,12 @@ then
       if [ `grep -c "delete DATA" update-script` != 0 ]
       then
         #
-        # Check if non-standard line required, e.g. format yaffs2 DATA:
+        # 检查需要的行不标准, 例如： format yaffs2 DATA:
         #
         fmt_line=`grep -om 1 "format .*SYSTEM:" update-script | sed -e 's/SYSTEM/DATA/g'`
 
         #
-        # Change only the first occurrence
+        # 更改出现的第一个
         #
         sed -i -e '0,/delete DATA/s/delete DATA/'"$fmt_line"'\ndelete DATA/' update-script
       else
@@ -59,18 +59,21 @@ then
       grep_wipe=`grep -c "format .*DATA:" update-script`
       if [ "$grep_wipe" == "1" ]
       then
-        echo "OK, ROM will now wipe your data"
+        echo " Ok, ROM 现在将wipe你的数据"
       else
-        echo "Error: Unable to modify update-script"
+        echo " ARET团队提醒: 无法修改 update-script 脚本"
       fi
     else
-      echo "OK, nothing will be changed"
+      echo " Ok, 没有修改"
     fi
     
 
   else
-    echo "Currently the ROM will WIPE your data during a flash"
-    echo -n "Would you like to change this to not wipe (y/n)? (default: n): "
+    echo "       = 云 卓 团 队 提 醒 =     "
+	echo "-----------------------------------------------"
+    echo "  目前 ROM 将会在刷机时 WIPE 数据"
+	echo 
+    echo -n "  你想更改 wipe (y/n)? (默认: n): "
 
     read dont_wipe
     echo
@@ -82,18 +85,18 @@ then
       grep_wipe=`grep -c "format .*DATA:" update-script`
       if [ "$grep_wipe" == "0" ]
       then
-        echo "OK, ROM will no longer wipe your data"
+        echo " Ok, ROM 将不再 wipe 你的数据"
       else
-        echo "Error: Unable to modify update-script"
+        echo " 云卓团队提醒：无法修改 update-script 脚本"
       fi
     else
-      echo "OK, nothing will be changed"
+      echo " Ok, 没有修改"
     fi
 
   fi
 
 else
-  echo "Error: No update-script found!"
+  echo " 云卓团队提醒: 未发现 update-script 脚本!"
 fi
 
 cd ../../../../..

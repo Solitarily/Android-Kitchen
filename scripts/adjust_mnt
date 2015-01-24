@@ -1,15 +1,13 @@
 ############################################################################
 #
-# Copyright (c) 2013 - dsixda (dislam@rocketmail.com)
+# 本定制工具完全免费，由DsiXDA开发，由“ 半指遮天 ”完成汉化翻译。
 #
-# Android Kitchen is 100% free.  This script file is intended for personal
-# and/or educational use only.  It may not be duplicated for monetary
-# benefit or any other purpose without the permission of the developer.
+#     我的新浪微博：      http://weibo.com/hqapk
+#     我的腾讯微博：      http://t.qq.com/hqapkcom
 #
 ############################################################################
-
 #
-# This script has one mandatory argument:
+#  云卓团队提醒：此脚本有一个强制性参数:
 # $1 = updater-script/update-script
 #
 
@@ -19,7 +17,7 @@ then
 
   if [ "$1" != "updater-script" ] && [ "$1" != "update-script" ]
   then
-    echo "Error: Specified '$1' instead of updater-script or update-script"
+    echo " 云卓团队提醒：指定 '$1' 而不是 updater-script 或 update-script 脚本"
     exit 1
   fi
 
@@ -96,7 +94,7 @@ then
   fi
 
   echo
-  echo "Device name in kitchen, or variant of: $device_name"
+  echo "设备名称 : $device_name"
 
 
   change_mnt=`scripts/get_edify_def_val $device_name change_mnt`
@@ -192,9 +190,9 @@ then
       fi
 
       #
-      # Certain devices use/require a special way of flashing the boot.img
+      # 某些设备使用/需要特别的方法刷入 boot.img
       #
-      # NOTE: :a;N;$!ba; = reads multi-line pattern as one-line pattern
+      # 注意: :a;N;$!ba; = 读取多行模式为一行模式
       #
 
       if [ -e updater-script.orig ] && [ "$fix_boot" != "yes" ]
@@ -222,9 +220,9 @@ then
 
 
       #
-      # Fix cases where some formats/mounts have different numbers of args in the same file
+      # 修复一些formats/mounts在相同的文件中有不同数量的参数
       #
-      # e.g.  format ext3 SYSTEM:
+      # 例如： format ext3 SYSTEM:
       #       format DATA:
       #
 
@@ -422,16 +420,16 @@ then
       fi
 
 
-      ###############################
-      # Samsung zImage and modem.bin   
-      ###############################
+      ###################################################
+      # Samsung zImage and modem.bin  FOR ARET  
+      ###################################################
 
       if [ "$is_gs2" == "1" ] 
       then
 
-        ##############################
-        # Samsung Galaxy S2 (original)
-        ##############################
+        ##################################################
+        # Samsung Galaxy S2 (original) FOR ARET
+        ##################################################
 
         if [ `grep -c flash_zimage updater-script` -gt 0 ] && [ `grep -c flash_modem updater-script` -gt 0 ]
         then
@@ -456,9 +454,9 @@ then
       elif [ "$is_gs" == "1" ]
       then
 
-        ###################
-        # Samsung Galaxy S
-        ###################
+        ###################################
+        # Samsung Galaxy S FOR ARET
+        ####################################
 
         if [ `grep -c flash_zimage updater-script` -gt 0 ] && [ `grep -c flash_modem updater-script` -gt 0 ]
         then
@@ -483,9 +481,9 @@ then
       elif [ "$is_gs3_exynos" == "1" ] || [ "$is_gnote2_common" == "1" ] || [ "$is_gs4_common" == "1" ]
       then
 
-        ###############################################
-        # Samsung Galaxy S3 International / Note 2 / S4
-        ###############################################
+        ##########################################
+        # Samsung Galaxy S3 International / Note 2
+        ##########################################
 
         if [ `grep -c flash_modem updater-script` -gt 0 ]
         then
@@ -496,9 +494,9 @@ then
       fi
 
 
-    ################################
-    # change_mnt==yes; update-script
-    ################################
+    ############################################
+    # change_mnt==yes; update-script FOR ARET
+    ############################################
 
     elif [ "$1" == "update-script" ]
     then
@@ -548,7 +546,7 @@ then
 
 
   ##########################
-  # For Dell
+  # For  DELL ARET
   ##########################
 
   elif [ "$change_mnt_dell" == "yes" ]

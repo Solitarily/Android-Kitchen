@@ -1,10 +1,9 @@
 ############################################################################
 #
-# Copyright (c) 2012 - dsixda (dislam@rocketmail.com)
+# 本定制工具完全免费，由DsiXDA开发，由“ 半指遮天 ”完成汉化翻译。
 #
-# Android Kitchen is 100% free.  This script file is intended for personal
-# and/or educational use only.  It may not be duplicated for monetary
-# benefit or any other purpose without the permission of the developer.
+#     我的新浪微博：      http://weibo.com/hqapk
+#     我的腾讯微博：      http://t.qq.com/hqapkcom
 #
 ############################################################################
 
@@ -14,20 +13,21 @@ current_ver=$1
 
 echo 
 echo "============================================================"
-echo " Android Kitchen $current_ver - by dsixda (xda-developers.com)"
+echo "           Android 定制工具  V 0.224 半指遮天自用版         "
+echo "============================================================"
+echo "       我的新浪微博：      http://weibo.com/hqapk       "
 echo "============================================================"
 echo
-echo "About the Kitchen"
+echo "  关于云卓论坛专用版厨房"
 echo
 echo "------------------------------------------------------------"
 echo
-echo "  For help and discussion : http://bit.ly/aLKQaR"
-echo "  Follow dsixda on Twitter: http://www.twitter.com/dsixda"
-echo "  For Paypal donations    : http://bit.ly/blHTKy"
+echo "  帮助及讨论 :  http://bbs.hqapk.com "
 echo
 echo "------------------------------------------------------------"
 echo
-echo -n "Check online for updates (y/n)? (default: y): "
+echo -n "联机检查更新(y/n)? (默认为: y): "
+echo
 read do_update
 
 if [ "$do_update" == "n" ]
@@ -36,14 +36,14 @@ then
 fi
 
 echo 
-echo "Searching for updates ..."
+echo " 搜索更新 ..."
 
 notes=`scripts/get_latest_notes`
 latest_ver=`echo $notes | sed -e 's/.*Version[ ]*\([0-9]*.[0-9]*\) (.*/\1/g' -e 's/[ ]*//g'`
 
 if [ "$latest_ver" == "" ]
 then
-  echo "Error: Unable to find update"
+  echo " 错误: 无法找到更新"
 
 else
 
@@ -56,7 +56,7 @@ else
   update=1
 
   #
-  # Compare our version with version online
+  # 正在使用的版本和在线版本进行比较
   #
   if [ $curr_major -gt $latest_major ]
   then
@@ -75,10 +75,10 @@ else
   
   if [ $update == 0 ] 
   then
-    echo "Latest version online is $latest_ver.  No update required."
+    echo " 最新的联机版本是 $latest_ver ，无需更新"
   else
 
-    echo "An update was found ($latest_ver)."
+    echo " 可更新($latest_ver)。"
     echo
     echo "Release notes are found online."
 
@@ -87,7 +87,7 @@ else
     #echo "$notes"
 
     echo 
-    echo -n "Download (y/n)? (default: y): "
+    echo -n " 下载 (y/n)? (默认: y): "
     read proceed_download
     if [ "$proceed_download" == "n" ]
     then
@@ -97,7 +97,7 @@ else
     new_file=dsixda_Android_Kitchen_$latest_ver.zip
 
     echo
-    echo "Downloading $new_file ..."
+    echo " 下载 $new_file ..."
     echo
 
     url=https://github.com/dsixda/Android-Kitchen/archive/$latest_ver.zip
@@ -105,7 +105,7 @@ else
     wget --no-check-certificate $url -O $new_file
     echo
 
-    #Not supported on Mac?
+    #不支持在 Mac 上吗?
     #zip_size=`stat -c %s $new_file`
 
     ls_size=`ls -l $new_file`
@@ -113,10 +113,10 @@ else
     
     if [ -e $new_file ] && [ $grep_empty == 0 ]
     then
-      echo "$new_file successfully downloaded"
-      echo "You must unzip this file to use the new kitchen"
+      echo "$new_file 下载成功"
+      echo " 你必须将下载的新版本厨房解压才可以使用"
     else
-      echo "Error: $new_file was not downloaded"
+      echo " 错误: $new_file 未下载"
       rm -f $new_file
     fi
   fi
@@ -128,6 +128,6 @@ then
 fi
 
 echo
-echo "Press Enter to continue"
+echo " 按 Enter 继续"
 read enterKey
 

@@ -1,10 +1,9 @@
 ############################################################################
 #
-# Copyright (c) 2012 - dsixda (dislam@rocketmail.com)
+# 本定制工具完全免费，由DsiXDA开发，由“ 半指遮天 ”完成汉化翻译。
 #
-# Android Kitchen is 100% free.  This script file is intended for personal
-# and/or educational use only.  It may not be duplicated for monetary
-# benefit or any other purpose without the permission of the developer.
+#     我的新浪微博：      http://weibo.com/hqapk
+#     我的腾讯微博：      http://t.qq.com/hqapkcom
 #
 ############################################################################
 
@@ -21,16 +20,15 @@ elif [ "$1" == "show_help" ]
 then
 
   clear
-  echo
+  echo "    = 云卓团队提醒 =  "
   echo "-----------------------------------------------------------------"
   echo  
-  echo "BusyBox is an executable file that combines tiny versions of"
-  echo "many common UNIX utilities.  It is required for some root-enabled"
-  echo "applications."
+  echo "  BusyBox 是一个可执行文件，它集合了很多UNIX中的常见工具"
+  echo "  一些需要Root权限的应用程序都会需要它，建议添加 。"
   echo
   echo "-----------------------------------------------------------------"
   echo
-  echo -n "Add BusyBox (y/n)? (default: y): "
+  echo -n " 添加 BusyBox (y/n)? (直接回车默认: y): "
   read do_bb
 
   if [ "$do_bb" == "n" ]
@@ -41,7 +39,7 @@ fi
 
 if [ ! -d WORKING_* ]
 then
-  echo No working folder found!
+  echo  警告：未找到工作文件夹!
   exit 1
 fi
 
@@ -51,12 +49,12 @@ su_path=`find . -name su`
 
 if [ "$su_path" == "" ]
 then
-  echo "'su' binary not found under working folder!"
+  echo " 未能在工作文件夹中发现 su 二进制文件"
   cd ..
   exit 1
 else
   echo
-  echo "Found $su_path"
+  echo " 发现 $su_path"
 fi
 
 
@@ -65,19 +63,19 @@ version=`more ../tools/busybox_files/version.txt | sed -e 's/BusyBox \(.*\)$/\1/
 if [ -e system/bin/busybox ]
 then
   echo
-  echo "Working folder already has /system/bin/busybox"
+  echo " 工作文件夹中已经包含 /system/bin/busybox 内容"
 
   if [ "$1" == "show_help" ]
   then
-    echo -n "Replace with BusyBox $version (y/n)? (default: y): "
+    echo -n " 使用 BusyBox $version 替换(y/n)? (默认: y): "
     read replace_bin_bb
     echo
 
     if [ "$replace_bin_bb" == "n" ]
     then
-      echo "Cancelled"
+      echo " 取消"
     else
-      echo "Replacing /system/bin/busybox"
+      echo " 替换 /system/bin/busybox"
       cp -f ../tools/busybox_files/busybox system/bin/
     fi
   fi
@@ -90,17 +88,16 @@ echo
 
 if [ -d system/xbin ]
 then
-  echo Found /system/xbin
+  echo  发现 /system/xbin
 
   if [ -e system/xbin/busybox ] 
   then
 
-    echo
-    echo "Working folder already has /system/xbin/busybox"
+  echo " 工作文件夹中已经存在 /system/xbin/busybox 内容"
 
     if [ "$1" == "show_help" ]
     then
-      echo -n "Replace with BusyBox $version (y/n)? (default: y): "
+    echo -n " 使用 BusyBox $version 替换(y/n)? (默认: y): "
       read replace_bb
       echo
     else
@@ -113,14 +110,14 @@ then
       exit 0
     fi
 
-    echo "Replacing /system/xbin/busybox"
+  echo " 替换 /system/xbin/busybox"
   fi
 else
   echo Creating /system/xbin
   mkdir system/xbin
 fi
 
-echo "Adding /system/xbin/busybox"
+echo "添加 /system/xbin/busybox"
 cp -f ../tools/busybox_files/busybox system/xbin/
 cd ..
 

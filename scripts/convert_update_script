@@ -1,18 +1,17 @@
 ############################################################################
 #
-# Copyright (c) 2013 - dsixda (dislam@rocketmail.com)
+# 本定制工具完全免费，由DsiXDA开发，由“ 半指遮天 ”完成汉化翻译。
 #
-# Android Kitchen is 100% free.  This script file is intended for personal
-# and/or educational use only.  It may not be duplicated for monetary
-# benefit or any other purpose without the permission of the developer.
+#     我的新浪微博：      http://weibo.com/hqapk
+#     我的腾讯微博：      http://t.qq.com/hqapkcom
 #
 ############################################################################
 
 #
-# This script has two optional arguments:
+# 此脚本有两个可选参数:
 #
-# $1 = "for_zip" - use this option after update.zip created
-# $2 = yes/no (express build mode) - relies on $1 being present
+# $1 = "for_zip" - 使用此选项在 update.zip 建立后
+# $2 = yes/no (快速创建模式) - 当前依赖 $1
 #
 
 
@@ -32,7 +31,7 @@ then
 
 else
   echo
-  echo Working folder not found, you will need to create one!
+  echo  未发现工作文件夹，你需要创建一个!
   exit 0
 fi
 
@@ -40,22 +39,19 @@ fi
 
 if [ "$1" == "" ]
 then
-
-  echo "Conversion Tool: update-script (Amend) to updater-script (Edify)"
+  echo "         = 云 卓 团 队 提 醒  =    "
   echo "--------------------------------------------------------------------------"
+  echo "  转换工具: update-script (Amend) 转换为 updater-script (Edify)"
+  echo "--------------------------------------------------------------------------"
+  echo " 此脚本将 update-script 转换为 updater-script 并且添加 update-binary 文件。"
+  echo " 此操作在打包 ROM 时也会提示, 所以现在并不是必须转换 update-script 脚本。"
+  echo " 厨房不能编译 updater-scripts 脚本，所以只有在打包 ROM 刷机包文件时，"
+  echo " 才可以使用 updater-script 脚本。"
   echo
-  echo "This script will convert your update-script into an updater-script"
-  echo "and will also add the update-binary file."
-  echo 
-  echo "This option will also be given when you build your ROM, so it is"
-  echo "not necessary to convert your update-script now.  The kitchen is NOT"
-  echo "compatible with updater-scripts, so only a few options can be used "
-  echo "afterwards if you have an updater-script."
   echo
-  echo "Ensure you have an update-script under META-INF/com/google/android"
-  echo "of your working folder."
+  echo " 请确认工作文件夹 META-INF/com/google/android 下有update-script 脚本。"
   echo
-  echo -n "Proceed with conversion (y/n)? (default: y): "
+  echo -n " 继续并转换(y/n)? (默认: y): "
 
   read proceed_now
   echo
@@ -81,11 +77,13 @@ then
     then
       remove_it=y
     else
-      echo "Error: Although you have an update-script, you also have an updater-script"
-      echo "       in the same folder. Remove one of them."
+	  echo "         = 云 卓 团 队 提 醒  =    "
+	  echo "--------------------------------------------------------------------------"
+      echo " 工作文件夹下同时存在 updater-script 脚本与 update-script 脚本"
+      echo "  请删除中其中某个文件，再继续下一步 "
       echo
 
-      echo -n "Remove updater-script and continue conversion (y/n)? (default: y): "
+      echo -n " 删除 updater-script 脚本然后继续转换(y/n)? (默认: y): "
       read remove_it
       echo
     fi
@@ -101,7 +99,7 @@ then
   fi
 
 else
-  echo "Error: update-script not found!"
+  echo " 提醒: 未发现 update-script 脚本!"
   cd ../../../../..
   exit 0
 fi
@@ -112,7 +110,7 @@ cd ../../../../..
 
 if [ "$1" != "for_zip" ]
 then
-  echo "Checking for final modifications to update-script before conversion ..."
+  echo " 转换前检查 update-script 脚本最后修改 ..."
   scripts/fix_pre_build 
 fi
 
@@ -122,11 +120,10 @@ cd WORKING_*
 cd META-INF/com/google/android
 
 
+echo "         =   云 卓 团 队 提 醒  =    "
+echo "--------------------------------------------------------"
 echo
-echo "--------------------------------------------------------------------------"
-echo
-
-echo "Converting to updater-script, please wait ..."
+echo " 将转换为 updater-script 脚本，请稍后 ..."
 echo
 
 cp update-script updater-script
@@ -136,7 +133,7 @@ new_list=( userdata system preload cache sdext boot sdcard )
 new_list_str="0 1 2 3 4 5 6"
 
 
-echo "- Initial formatting ..."
+echo "  初始格式设置 ..."
 
 #
 # In Samsung Galaxy S2 and equivalent, convert 'format' back to delete_recursive, 
@@ -163,20 +160,20 @@ fi
 
 
 
-# 3rd line: remove leading and trailing whitespace on each line
+# 第三行： 删除在每行上前导和结尾空格
 sed -i \
 -e ':a;N;$!ba;s/,\n//g' \
 -e 's/assert[^\n]*[\n]*//g' \
 updater-script
 
 #
-# Remove leading/trailing whitespace and tabs
-# Not sure why this requires a separate statement from the above, to work!
+# 删除前导/结尾的空格和制表符
+# 不确定这需要一个单独的语句从上述工作
 #
 sed -i -e 's/^[ \t]*//;s/[ \t]*$//g' updater-script
 
 #
-# Remove lines with comments
+# 删除注释行
 #
 sed -i -e '/^#/d' updater-script
 
@@ -227,7 +224,7 @@ done
 #
 if [ `grep -c write_radio_image updater-script` -gt 0 ]
 then
-  echo "- Sorry, ignoring 'write_radio_image' - unable to convert ..."
+  echo "-  抱歉，正在忽略 'write_radio_image' - 无法转换 ..."
   sed -i -e 's/write_radio_image PACKAGE:radio.img//g' updater-script
 fi
 
@@ -236,7 +233,7 @@ fi
 #
 if [ `grep -c write_hboot_image updater-script` -gt 0 ]
 then
-  echo "- Sorry, ignoring 'write_hboot_image' - unable to convert ..."
+  echo "-  抱歉，正在忽略 'write_hboot_image' - 无法转换 ..."
   sed -i -e 's/write_hboot_image PACKAGE:hboot.img//g' updater-script
 fi
 
@@ -315,14 +312,14 @@ do
     -e ''$line_num' s/DATA:/\/data\//g' \
     updater-script
 
-  # Check for scripts that are at the root of the ROM; move them to /tmp; 
-  # otherwise they won't run!!  Set permissions before you run them from /tmp.
+  # 检查 ROM的ROOT脚本;将它们移到 /tmp; 
+  # 否则为他们将不会运行 ！！设置权限之前你从 /tmp 运行它们.
  
   sed -i \
     -e ''$line_num' s/run_program("\/\([^\/^\"]*\)"\(.*\)/package_extract_file("\1", "\/tmp\/\1");\nrun_program("\/tmp\/\1"\2/g' \
     updater-script
 
-  # First check if permission already exists before adding it
+  # 添加之前首先检查权限是否已经存在
   prog_name=`sed -n -e ''$line_num' s/package_extract_file("[^\"]*",[ ]*"\([^\"]*\)");/\1/p' updater-script`
 
   if [ "$prog_name" != "" ]
@@ -446,7 +443,7 @@ sed -i \
 #
 echo "- format and mount ..."
 
-# Add 'mount' before package_extract_dir and delete.*
+# 在 package_extract_dir 和 delete.* 之前添加'mount'
 for new in ${new_list[@]}
 do
   if [ "$new" == "userdata" ]
@@ -460,7 +457,7 @@ do
     new2=$new
   fi
 
-  # Find which ones comes first
+  # 发现哪些是第一个？
   line_num_del=`sed -n -e '/delete.*("\/'"$new2"'.*")/{=;q}' updater-script`
   line_num_pkg=`sed -n -e '/package_extract_dir([^,]*, "\/'"$new2"'.*")/{=;q}' updater-script`
 
@@ -489,7 +486,7 @@ do
     fi
   fi
 
-  # Replace only the first occurrence
+  # 替换出现的第一个
   if [ $use_del == 1 ]
   then
     sed -i \
@@ -517,14 +514,14 @@ do
   fi
 
   #
-  # Convert the 'format' line
+  # 转换 'format' 行
   #
   sed -i -e 's/format '"$orig"':/format("MTD", "'"$new"'");/g' updater-script
   sed -i -e 's/format \(.*\) '"$orig"':/format("\1", "MTD", "'"$new"'");\nmount("\1", "MTD", "'"$new"'", "\/'"$new2"'");/g' updater-script
 
   #
-  # We don't want to move/remove the mount command for the boot partition, due to 
-  # the boot.img commands we used previously... unless we have a NAND ROM!
+  # 我们不想移动/删除 mount boot 分区命令, 由于 
+  # 我们以前使用的 boot.img 命令... 除非我们有 NAND ROM!
   #
   if [ "$new" == "boot" ]
   then
@@ -548,7 +545,7 @@ do
 
 
   #
-  # If a special mount is found, then remove the regular mount
+  # 如果发现特殊 mount，然后删除常规 mount
   #
 
   grep_fmt2=`grep "format(\"[A-Za-z0-9]*\", \"MTD\", \"$new\");" updater-script`
@@ -566,7 +563,7 @@ do
 
 
   #
-  # Move the associated 'mount' line (if it exists), so that it goes directly below the 'format' line
+  # 移动关联的 'mount' 行 (如果存在), 这样他会在下面的 'format' 行
   #
 
   grep_fmt=`grep "format(\"MTD\", \"$new\");" updater-script`
@@ -576,10 +573,10 @@ do
 
     if [ "$grep_mnt" != "" ]
     then
-      # Delete the line
+      # 删除行
       sed -i -e '/mount("MTD", "'"$new"'", "\/'"$new2"'");/d' updater-script
 
-      # Add it after the format
+      # 添加 format 后
       sed -i -e 's/format("MTD", "'"$new"'");/format("MTD", "'"$new"'");\nmount("MTD", "'"$new"'", "\/'"$new2"'");/g' updater-script
     fi
   fi
@@ -588,7 +585,7 @@ done
 
 
 #
-# Look for any other 'format' commands that were not covered above
+# 看看上面没有涉及任何其他 'format' 命令
 #
 line_num=`sed -n -e '/format /{=;q}' updater-script`
 
@@ -605,7 +602,7 @@ done
 
 
 #
-# Fix any incomplete ("???") mounts, using the updater-script.orig file
+# 修复任何不完整的 ("???") mounts, 使用 updater-script.orig 文件
 #
 if [ -e updater-script.orig ]
 then
@@ -619,8 +616,8 @@ then
                   -e 's/"???");//g' \
                   -e 's/"/\\\"/g' `
 
-    # Get the string we want, from the original file, but replace special characters
-    # such as the forward slash to prevent formatting issues
+    #  从原始文件, 得到我们想要的字符串
+    # 但替换特殊字符如斜杠，防止格式问题
     orig_str=`grep -m 1 "$partial_str" updater-script.orig | sed -e 's/\//fwdslash/g'`
 
     if [ "$orig_str" != "" ]
@@ -630,7 +627,7 @@ then
         -e ''$line_num' s/fwdslash/\//g' \
       updater-script
     else
-      # We don't want to be stuck in an infinite loop
+      # 我们不想停留在一个无限循环
       break
     fi
 
@@ -663,8 +660,8 @@ do
 done
 
 #
-# Fix for systems with different mounts, e.g. ext3 types
-# e.g. 'userdata' was replaced by /dev/block/whatever
+# 修复 systems 具有不同 mounts, 例如： ext3 类型
+# 例如： 'userdata' 被替换为 /dev/block/whatever
 #
 grep_mnt=`grep "mount(.* \"/data\");" updater-script`
 
@@ -677,7 +674,7 @@ fi
 
 
 
-echo "- Final formatting ..."
+echo "- 最终的格式 ..."
 
 sed -i \
   -e 's/SYSTEM:/\/system\//g' \
@@ -691,7 +688,7 @@ sed -i \
 
 
 #
-# Fix up run_program parameters that contain special characters
+# 修复包含特殊字符的 run_program 参数
 #
 
 sed -i \
@@ -702,7 +699,7 @@ sed -i \
   updater-script
 
 #
-# Check if shell script had already unmounted the partition
+# 检查 shell 脚本是否已取消卸载该分区
 #
 
 if [ `grep -c "run_program.*umount" updater-script` ]
@@ -728,7 +725,7 @@ fi
 
 
 #
-# Other commands 
+# 其他命令 
 #
 sed -i \
   -e 's/add_upgrade_property/add_upgrade_property();/g' \
@@ -739,7 +736,7 @@ sed -i -e 's/write_blob_raw_image PACKAGE:blob/assert(package_extract_file("blob
 
 
 #
-# Clean up any mess left by my script
+# 清理脚本留下的无意义字符！
 #
 sed -i \
   -e 's/\/");/");/g' \
@@ -747,21 +744,21 @@ sed -i \
   updater-script
 
 #
-# Remove blank lines
+# 删除空行
 #
 sed -i -e '/^$/d' updater-script
 
 #
-# Cool solution from the web :-)
+# Web 的解决方案 :-)
 #
-# Delete duplicate, consecutive lines from a file (emulates "uniq").
-# First line in a set of duplicate lines is kept, rest are deleted.
+# 从文件中删除重复的、 连续的行 (模拟 "uniq").
+# 设置第一行的复制的行数是保留了的, 其余的都将被删除.
 #
 sed -i -e '$!N; /^\(.*\)\n\1$/!P; D' updater-script
 
 
 #
-# Device-specific mount points
+# 特定设备的 mount 点
 #
 cd ../../../../..
 scripts/adjust_mnt updater-script
@@ -779,7 +776,7 @@ if [ "$test_mnt" != "" ] || [ "$test_mnt2" != "" ] || [ "$test_mnt3" != "" ]
 then
   echo 
   echo
-  echo "Please ensure these device mount statements are correct:"
+  echo " 请确保这些装置安装正确 "
   echo "--------------------------------------------------------------------------"  
 
   if [ "$test_mnt" != "" ]
@@ -816,22 +813,25 @@ then
 
   if [ "$2" != "yes" ]
   then
-    echo "An updater-script has been created under META-INF/com/google/android of"
-    echo "your working folder. Please review it and make any necessary changes. An"
-    echo "update-binary has also been added."
+    echo "         =  提醒  =    "
+    echo "-----------------------------------------------------------------------------"
+    echo " updater-script 脚本已经被创建在工作文件夹中 META-INF/com/google/android 下，"
+    echo " 请检查它并作出必要更改。update-binary 文件同样被添加。"
     echo ""
   fi      
 
   if [ "$1" != "for_zip" ]
   then
     mv -f update-script update-script.orig
-    echo "The original update-script has been renamed to update-script.orig - it"
-    echo "will not be included in your completed ROM's ZIP file."
+    echo "         =   提醒  =    "
+    echo "-----------------------------------------------------------------------------"
+    echo " 原始 update-script 脚本已被重命名为 update-script.orig - 它将不会包括在"
+    echo " 完成的 ROM 刷机包的 ZIP 文件中。"
   else
 
     if [ "$2" == "no" ]
     then
-      echo "DO NOT delete any of the files under META-INF/com/google/android."
+      echo " 不要删除 META-INF/com/google/android 下的任何文件。"
       echo
     fi      
   fi
@@ -843,11 +843,9 @@ then
   if [ "$grep_huh" != "" ]
   then
     echo
-    echo "--------------------------------------------------------------------------"
-    echo
-    echo "NOTE: Ensure you fix the unknown reference(s) at the line number(s) below."
-    echo "      Compare with the original version of the updater-script, if you have"
-    echo "      one."
+    echo "         =  提醒  =    "
+    echo "-----------------------------------------------------------------------------"
+    echo " 请确认修正行代码下的未知参数，对照原始 updater-script 脚本。"
     echo
     echo $grep_huh | sed -e 's/;[ ]*/;\n/g'    
     echo
@@ -855,7 +853,7 @@ then
 
 
 else
-  echo "Error: updater-script not created!"
+  echo " 提醒: updater-script 脚本未被创建!"
 fi
 
 cd ../../../../..

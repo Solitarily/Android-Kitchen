@@ -1,10 +1,9 @@
 ############################################################################
 #
-# Copyright (c) 2013 - dsixda (dislam@rocketmail.com)
+# 本定制工具完全免费，由DsiXDA开发，由“ 半指遮天 ”完成汉化翻译。
 #
-# Android Kitchen is 100% free.  This script file is intended for personal
-# and/or educational use only.  It may not be duplicated for monetary
-# benefit or any other purpose without the permission of the developer.
+#     我的新浪微博：      http://weibo.com/hqapk
+#     我的腾讯微博：      http://t.qq.com/hqapkcom
 #
 ############################################################################
 
@@ -73,10 +72,10 @@ then
     fi
 
 
-    echo "Adding installbusybox to working folder"
+      echo " 添加 installbusybox 到工作文件夹中 ..."
     cp ../../../../../tools/busybox_files/installbusybox ../../../../
 
-    echo "Adding installbusybox to update-script"
+      echo " 添加 installbusybox 内容到 update-script 脚本"
 
     if [ `grep -c "set_perm_recursive.*SYSTEM:xbin[ ]*$" update-script` != 0 ]
     then
@@ -97,12 +96,12 @@ then
 
     if [ `grep -c installbusybox update-script` == 0 ]
     then
-      echo "Error: installbusybox not added to update-script!"
+        echo " 错误: installbusybox 内容未添加到 update-script 脚本!"
     else
 
       if [ ! -e ../../../../system/bin/busybox ]
       then
-        echo "Adding symlink to /system/bin/busybox"
+          echo " 添加代码链接到 /system/bin/busybox ..."
         sed -i -e 's/set_perm 0 1000 0755 SYSTEM:xbin\/busybox/set_perm 0 1000 0755 SYSTEM:xbin\/busybox\nsymlink \/system\/xbin\/busybox SYSTEM:bin\/busybox/g' update-script
       fi
     fi
@@ -118,7 +117,7 @@ then
     # is not compatible with update-scripts)
     if [ -e ../../../../installbusybox ]
     then
-      echo "Removing existing references to BusyBox and installbusybox in update-script"
+      echo "删除update-script脚本中德 BusyBox 和 installbusybox"
       sed -i \
         -e '/set_perm.*bin\/busybox/d' \
         -e '/symlink.*bin\/busybox/d' \
@@ -127,7 +126,7 @@ then
 
       if [ -e ../../../../installbusybox ]
       then
-        echo "Removing installbusybox"
+        echo " 正在删除 installbusybox"
         rm -f ../../../../installbusybox
       fi
 
@@ -135,17 +134,17 @@ then
 
     elif [[ "$1" != "override" ]] && [[ `grep -c "symlink busybox" update-script` != 0 || `grep -c "symlink /system/xbin/busybox " update-script` != 0 ]]
     then
-      echo "update-script already has BusyBox content"
+      echo "update-script 脚本中已经包含 BusyBox 内容"
 
     elif [[ "$1" != "override" ]] && [[ "`grep -m 1 \"busybox ln\" ../../../../* 2>/dev/null`" != "" || "`grep -m 1 \"busybox --install\" ../../../../* 2>/dev/null`" != "" ]] 
     then
 
-      echo "A script containing BusyBox symlinks was detected"
-      echo "No changes to update-script required"
+      echo " BusyBox symlinks 脚本已经检查完毕"
+      echo " 没有对 update-script 进行修改"
    
     else
 
-      echo "Adding BusyBox install command to update-script"
+    echo "添加 installbusybox 内容到 update-script 脚本"
 
       if [ `grep -c "set_perm_recursive.*SYSTEM:xbin[ ]*$" update-script` != 0 ]
       then
@@ -166,12 +165,12 @@ then
 
       if [ `grep -c "busybox --install -s" update-script` == 0 ]
       then
-        echo "Error: BusyBox not added to update-script!"
+        echo "错误: installbusybox 内容未添加到 update-script 脚本!"
       else
 
         if [ ! -e ../../../../system/bin/busybox ]
         then
-          echo "Adding symlink to /system/bin/busybox"
+          echo "添加 symlink 到 /system/bin/busybox"
           sed -i -e 's/set_perm 0 1000 0755 SYSTEM:xbin\/busybox/set_perm 0 1000 0755 SYSTEM:xbin\/busybox\nsymlink \/system\/xbin\/busybox SYSTEM:bin\/busybox/g' update-script
         fi
       fi
@@ -180,7 +179,9 @@ then
   fi
 
 else
-  echo "Error: No update-script found!"
+  echo "       =  云卓团队警告 =       "
+  echo "----------------------------------------------------"
+  echo "  未发现 update-script 脚本"
 fi
 
 cd ../../../../..

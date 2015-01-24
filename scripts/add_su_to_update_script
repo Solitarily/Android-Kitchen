@@ -1,10 +1,9 @@
 ############################################################################
 #
-# Copyright (c) 2012 - dsixda (dislam@rocketmail.com)
+# 本定制工具完全免费，由DsiXDA开发，由“ 半指遮天 ”完成汉化翻译。
 #
-# Android Kitchen is 100% free.  This script file is intended for personal
-# and/or educational use only.  It may not be duplicated for monetary
-# benefit or any other purpose without the permission of the developer.
+#     我的新浪微博：      http://weibo.com/hqapk
+#     我的腾讯微博：      http://t.qq.com/hqapkcom
 #
 ############################################################################
 
@@ -16,7 +15,7 @@ if [ -e update-script ]
 then
 
   #
-  # Deleting any existing lines that end with 'bin/su' to prevent conflicts
+  # 删除任何现有的行，随着 bin/su 为防止冲突结束
   #
   sed -i -e '/bin\/su[ ]*$/d' update-script
 
@@ -28,24 +27,24 @@ then
 
     if [ "`find ../../../../system/xbin -name su`" == "" ]
     then
-      echo "Moving system/bin/su to system/xbin/su"
+      echo "移动 system/bin/su 到 system/xbin/su"
       mkdir -p ../../../../system/xbin
       mv -f ../../../../system/bin/su ../../../../system/xbin/su
     else
-      echo "/system/xbin/su found, removing the one under /system/bin/su"
+      echo "发现 /system/xbin/su ， 删除下一个 /system/bin/su"
       rm -f ../../../../system/bin/su
     fi
 
   elif [ "`find ../../../../system/xbin -name su`" == "" ]
   then
-    echo "Error: /system/xbin/su and /system/bin/su not found!"
+    echo "  提醒：未发现 /system/xbin/su 和 /system/bin/su!"
     cd ../../../../..
     echo
     exit 0
   fi
 
   echo
-  echo "Updating update-script with su entry and symbolic link"
+  echo " 添加 su 内容和链接到 update-script 脚本"
 
   if [ `grep -c "set_perm_recursive.*SYSTEM:xbin[ ]*$" update-script` != 0 ]
   then
@@ -66,18 +65,18 @@ then
 
   if [ ! -d ../../../../system/bin ]
   then
-    echo "Creating /system/bin folder"
+    echo " 创建 /system/bin 文件夹"
     mkdir -p ../../../../system/bin
     touch ../../../../system/bin/placeholder
   fi
 
   if [ `grep -c "/xbin/su " update-script` == 0 ]
   then
-    echo "Error: Could not update update-script with su"
+    echo " 云卓团队提醒：无法在 update-script 脚本中添加 su 内容"
   fi
 
 else
-  echo "Error: No update-script found!"
+  echo " 云卓团队提醒：未发现 update-script 脚本，请确认!"
 fi
 
 cd ../../../../..

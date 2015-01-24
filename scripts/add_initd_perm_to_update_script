@@ -1,10 +1,9 @@
 ############################################################################
 #
-# Copyright (c) 2011 - dsixda (dislam@rocketmail.com)
+# 本定制工具完全免费，由DsiXDA开发，由“ 半指遮天 ”完成汉化翻译。
 #
-# Android Kitchen is 100% free.  This script file is intended for personal
-# and/or educational use only.  It may not be duplicated for monetary
-# benefit or any other purpose without the permission of the developer.
+#     我的新浪微博：      http://weibo.com/hqapk
+#     我的腾讯微博：      http://t.qq.com/hqapkcom
 #
 ############################################################################
 
@@ -15,7 +14,7 @@ if [ -d system/etc/init.d ]
 then
 
   echo
-  echo "Checking whether update-script requires update for /system/etc/init.d ..."
+  echo " 检查 update-script 脚本是否需要添加 /system/etc/init.d 内容 ..."
 
   cd META-INF/com/google/android
 
@@ -25,7 +24,7 @@ then
     if [ `grep -c "set_perm_recursive .*SYSTEM:etc/init.d$" update-script` == 0 ]
     then
 
-      echo "update-script is being modified"
+      echo " update-script 脚本已经被修改 "
 
       # Look for line with set_perm_recursive of SYSTEM:
       grep_perm=`grep set_perm_recursive update-script | grep -m 1 "SYSTEM:[ ]*$"`
@@ -39,15 +38,15 @@ then
 
       if [ `grep -c "set_perm_recursive .*SYSTEM:etc/init.d$" update-script` == 0 ]
       then
-        echo "Error: Could not find the line to update in update-script"
+        echo " 云卓团队提醒：无法在 update-script 脚本中找到需要添加的代码！"
       fi
 
     else
-      echo "update-script already has permissions set for init.d folder"
+      echo " update-script 已经存在设置 init.d 文件夹权限的内容"
     fi
 
   else
-    echo "Error: No update-script found!"
+    echo " 云卓团队提醒：未发现 update-script 刷机脚本，请确认！ "
   fi
 
   cd ../../../..

@@ -1,18 +1,17 @@
 ############################################################################
 #
-# Copyright (c) 2011 - dsixda (dislam@rocketmail.com)
+# 本定制工具完全免费，由DsiXDA开发，由“ 半指遮天 ”完成汉化翻译。
 #
-# Android Kitchen is 100% free.  This script file is intended for personal
-# and/or educational use only.  It may not be duplicated for monetary
-# benefit or any other purpose without the permission of the developer.
+#     我的新浪微博：      http://weibo.com/hqapk
+#     我的腾讯微博：      http://t.qq.com/hqapkcom
 #
 ############################################################################
 
 
 #
-# This script has one optional parameter:
+# 此脚本有一个可选参数:
 #
-# $1 = folder containing boot.img
+# $1 = 文件夹包含 boot.img
 #
 
 base_dir=`pwd`
@@ -21,7 +20,7 @@ if [ "$1" == "" ]
 then
   if [ ! -d WORKING_* ]
   then
-    echo Working folder not found!
+    echo  未发现工作文件夹!
     exit 0
   fi
   cd WORKING_*

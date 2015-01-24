@@ -1,15 +1,14 @@
 ############################################################################
 #
-# Copyright (c) 2013 - dsixda (dislam@rocketmail.com)
+# 本定制工具完全免费，由DsiXDA开发，由“ 半指遮天 ”完成汉化翻译。
 #
-# Android Kitchen is 100% free.  This script file is intended for personal
-# and/or educational use only.  It may not be duplicated for monetary
-# benefit or any other purpose without the permission of the developer.
+#     我的新浪微博：      http://weibo.com/hqapk
+#     我的腾讯微博：      http://t.qq.com/hqapkcom
 #
 ############################################################################
 
 #
-# This script has two optional arguments:
+#  提醒: 此脚本具有两个可选参数:
 #
 # $1 = "no_create" or "create" or "create_working 
 #         - must specify no_create if working folder already exists
@@ -22,7 +21,7 @@ then
 
   if [ ! -e $build_dir/system.img.ext4 ]
   then
-    echo "Error: No $build_dir/system.img.ext4 found!"
+    echo " 云卓团队提醒: 未发现 $build_dir/system.img.ext4!"
     exit 1
   fi
 
@@ -52,20 +51,20 @@ then
 else
 
   #
-  # Check for system.img.ext4, tomb.img.ext4, cache.img.ext4 and boot.img in original_update  
+  # 检查 system.img.ext4, cache.img.ext4 和 boot.img 在 original_update  
   #
   if [ -e original_update/system.img.ext4 ]
   then
-    echo "Found original_update/system.img.ext4"
+    echo "发现 original_update/system.img.ext4"
 
     if [ -e original_update/tomb.img.ext4 ]
     then
-      echo "Found original_update/tomb.img.ext4"
+      echo "发现 original_update/tomb.img.ext4"
     fi
 
     if [ -e original_update/cache.img.ext4 ]
     then
-      echo "Found original_update/cache.img.ext4"
+      echo " 发现 original_update/cache.img.ext4"
     else
       scripts/show_cache_warning original_update/cache.img.ext4
     fi
@@ -73,11 +72,11 @@ else
 
     if [ -e original_update/cache.img.ext4 ]
     then
-      echo "Found original_update/cache.img.ext4"
-      echo "Error: No original_update/system.img.ext4 found"
+      echo " 发现 original_update/cache.img.ext4"
+      echo " 云卓团队提醒:未发现 original_update/system.img.ext4"
     else
       echo
-      echo "Error: No ROMs found under original_update folder!"
+      echo " 云卓团队提醒: 没有在 original_update 文件夹下找到 ROM!"
     fi
 
     exit 1
@@ -85,26 +84,26 @@ else
 
   if [ -e original_update/boot.img ]
   then
-    echo "Found original_update/boot.img"
+    echo " 发现 original_update/boot.img"
   else
-    echo "Warning: No original_update/boot.img found"
+    echo " 云卓团队警告: 未发现 original_update/boot.img"
   fi
 
 
   #
-  # Working folder name
+  # 工作文件夹名称
   #
   build_dir=`scripts/set_working_folder_name $2`
 
   echo
-  echo "Creating working folder $build_dir ..."
+  echo " 创建工作文件夹 $build_dir ..."
   mkdir $build_dir
   mkdir $build_dir/system
 
-  # Kernel is optional
+  # 内核可选
   if [ -e original_update/boot.img ]
   then
-    echo Copying boot.img ...
+    echo  复制 boot.img ...
     cp original_update/boot.img $build_dir
   fi
 
@@ -128,16 +127,16 @@ system_dir=$build_dir/system
 
 
 #
-# Compile simg2img if necessary
+# 如有必要编译 simg2img
 #
 
 echo
-echo "Analyzing system.img.ext4 ..."
+echo " 分析 system.img.ext4 ..."
 sys_bytes=`od -A n -h -j 0 -N 6 $src_dir/system.img.ext4 | sed 's/ //g'`
 
 if [ -e $src_dir/cache.img.ext4 ]
 then
-  echo "Analyzing cache.img.ext4 ..."
+  echo " 分析 cache.img.ext4 ..."
   cache_bytes=`od -A n -h -j 0 -N 6 $src_dir/cache.img.ext4 | sed 's/ //g'`
 else
   cache_bytes="000000000000"
@@ -145,7 +144,7 @@ fi
 
 if [ -e $hidden_dir/tomb.img.ext4 ]
 then
-  echo "Analyzing tomb.img.ext4 ..."
+  echo "正在解压 tomb.img.ext4 ..."
   tomb_bytes=`od -A n -h -j 0 -N 6 $hidden_dir/tomb.img.ext4 | sed 's/ //g'`
 else
   tomb_bytes="000000000000"
@@ -168,13 +167,13 @@ fi
 
 cd $system_dir
 
-# Get full path
+# 获取完整路径
 system_dir=`pwd`
 cd ../..
 
 
 #
-# Convert system.img.ext4 to ext4
+# 转换 system.img.ext4 为 ext4
 #
 
 if [ "$sys_bytes" == "000000000000" ]
@@ -184,13 +183,13 @@ then
 else 
 
   echo
-  echo "Converting system.img.ext4 into a format for unpacking ..."
+  echo " 转换system.img.ext4为解包格式 ..."
   tools/samsung_files/simg2img_files/simg2img $src_dir/system.img.ext4 \
     $system_dir/ext4_system.img 
 
   if [ ! -e $system_dir/ext4_system.img ]
   then
-    echo "Unable to convert system.img.ext4!"
+    echo " 无法转换 system.img.ext4!"
     exit 1
   fi
 fi
@@ -199,20 +198,20 @@ rm -rf $system_dir/system.img.ext4
 
 
 #
-# Directory tree
+# 目录树
 #
 
 if [ ! -e $build_dir/META-INF/com/google/android/update-script ]
 then
   mkdir -p $build_dir/META-INF/com/google/android
   echo
-  echo "Adding an update-script ..."
+  echo " 添加 update-script 脚本..."
   cp tools/update_files/update-script $build_dir/META-INF/com/google/android/
 fi
 
 
 #
-# Extract files from ext4_system.img
+# 从 ext4_system.img 提取文件
 #
 
 if [ `uname | grep CYGWIN` ]
@@ -228,7 +227,7 @@ rm -f ext4_system.img 2>/dev/null
 if [ "$?" == "1" ]
 then
   echo
-  echo "WARNING: ext4_system.img is in use.  Remove file manually after application is closed."
+  echo " 云卓团队警告： ext4_system.img 正在使用中。应用程序关闭后手动删除文件."
   echo
 fi
 
@@ -237,28 +236,28 @@ cd ..
 if [ ! -d system ]
 then
   echo
-  echo "Error:  No /system folder found!"
+  echo " 云卓团队提醒: 没有找到 /system 文件夹!"
   exit 1
 fi
 
 if [ ! -d system/framework ]
 then
   echo
-  echo "Error: No /system/framework folder found!"
+  echo " 云卓团队提醒: 没有找到 /system/framework 文件夹!"
   exit 1
 fi
 
 if [ ! -d system/app ]
 then
   echo
-  echo "Error: No /system/app folder found!"
+  echo " 云卓团队提醒: 没有找到 /system/app 文件夹!"
   exit 1
 fi
 
 if [ "`ls system`" == "" ]
 then
   echo 
-  echo "Error: /system folder is empty!"
+  echo " 云卓团队提醒: /system 文件夹是空的!"
   echo
   exit 1
 fi
@@ -267,7 +266,7 @@ fi
 cd ..
 
 echo
-echo "The file ext4_system.img has been fully unpacked into:"
+echo " ext4_system.img 文件已完全解压到:"
 echo "  $system_dir"
 
 base_dir=`pwd`
@@ -287,8 +286,8 @@ fi
 if [ -e $src_dir/cache.img.ext4 ]
 then
   echo
-  echo "Do you wish to extract the Customer Software Customization (CSC)"
-  echo -n "from the cache.img.ext4 (y/n)? (default: y): "
+  echo " 你想提取客户软件定制 (CSC)"
+  echo -n " 从 cache.img.ext4 (y/n)? (默认: y): "
 
   read do_extract
   echo
@@ -306,15 +305,15 @@ then
     else
 
       #
-      # Convert cache.img.ext4 to ext4
+      # 转换 cache.img.ext4 为 ext4
       #
-      echo "Converting cache.img.ext4 into a format for unpacking ..."
+      echo " 转换cache.img.ext4为解包格式 ..."
       tools/samsung_files/simg2img_files/simg2img $src_dir/cache.img.ext4 \
         $system_dir/ext4_cache.img
 
       if [ ! -e $system_dir/ext4_cache.img ]
       then
-        echo "Unable to convert cache.img.ext4!"
+        echo " 无法转换 cache.img.ext4!"
         exit 1
       fi
     fi
@@ -323,7 +322,7 @@ then
 
 
     #
-    # Extract files from ext4_cache.img
+    # 从 ext4_cache.img 提取文件
     #
     if [ `uname | grep CYGWIN` ]
     then
@@ -338,7 +337,7 @@ then
     if [ "$?" == "1" ]
     then
       echo
-      echo "WARNING: ext4_cache.img is in use.  Remove file manually after application is closed."
+      echo " 云卓团队警告： ext4_cache.img 正在使用中。应用程序关闭后手动删除文件."
       echo
     fi
 
@@ -362,13 +361,13 @@ fi
 
 
 #
-# update-script and other adjustments
+# update-script 脚本和其他调整
 #
 if [ "$2" != "kernel_only" ] && [ "$2" != "name_given" ]
 then
   scripts/fix_update_script 
 
-  # Modify the update-script with features found in Nandroid backup
+  # 修改 update-script 脚本与 Nandroid 备份功能
   scripts/fix_update_script_with_features
 
   scripts/remove_recovery
@@ -376,10 +375,10 @@ fi
 
 
 echo
-echo Listing of $build_dir:
+echo $build_dir 列表:
 echo
 ls -l $build_dir
 
 echo
-echo "Finished setting up working folder!"
+echo "云卓提醒:完成工作文件夹设置!"
 

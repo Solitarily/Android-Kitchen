@@ -1,12 +1,12 @@
 ############################################################################
 #
-# Copyright (c) 2012 - dsixda (dislam@rocketmail.com)
+# 本定制工具完全免费，由DsiXDA开发，由“ 半指遮天 ”完成汉化翻译。
 #
-# Android Kitchen is 100% free.  This script file is intended for personal
-# and/or educational use only.  It may not be duplicated for monetary
-# benefit or any other purpose without the permission of the developer.
+#     我的新浪微博：      http://weibo.com/hqapk
+#     我的腾讯微博：      http://t.qq.com/hqapkcom
 #
 ############################################################################
+
 
 device=`scripts/get_variant_or_device_name`
 
@@ -23,14 +23,11 @@ then
 
   if [ "$out" != "" ]
   then
-    echo
-    echo "======================================================================"
-    echo
-    echo "WARNING! Device '$device' is not defined under tools/edify_defs"
-    echo
-    echo "The kitchen will now try to create a very basic definition file based"
-    echo "on the mount points specified in your updater-script; however, it may"
-    echo "not be 100% accurate ..."
+    echo "           =  云 卓 团 队 提 醒  =    "
+    echo "----------------------------------------------------------------"
+    echo "    tools/edify_defs 文件下没有定义设备驱动'$device'  "
+    echo "    厨房现在将尝试在脚本updater-script内创建一个基本的定义文件，"
+    echo "    但它不一定非常正确，如有可能请自行创建 ！ "
 
     file_path=../tools/edify_defs/$device
 
@@ -67,7 +64,7 @@ then
         block_id=`echo $item | sed -e 's/\"//g' -e 's/,//g' -e 's/\(\/\)/'$slash'\1/g'`
 
 
-      elif [ $got_block_id == 1 ]
+      elif [ $got_block_id== 1 ]
       then
 
         # Look for mount name
@@ -128,14 +125,13 @@ then
       fi
     done
 
-    echo
-    echo "tools/edify_defs/$device:"
-    echo "-------------------------------------------------"
+    echo "           =  云 卓 团 队 提 醒  =    "
+    echo "----------------------------------------------------------------"
+    echo " tools/edify_defs/$device:"
     echo
     cat $file_path
     echo
     echo "-------------------------------------------------"
-    echo
     echo
   fi
 

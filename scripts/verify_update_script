@@ -1,10 +1,9 @@
 ############################################################################
 #
-# Copyright (c) 2011 - dsixda (dislam@rocketmail.com)
+# 本定制工具完全免费，由DsiXDA开发，由“ 半指遮天 ”完成汉化翻译。
 #
-# Android Kitchen is 100% free.  This script file is intended for personal
-# and/or educational use only.  It may not be duplicated for monetary
-# benefit or any other purpose without the permission of the developer.
+#     我的新浪微博：      http://weibo.com/hqapk
+#     我的腾讯微博：      http://t.qq.com/hqapkcom
 #
 ############################################################################
 
@@ -19,7 +18,7 @@ res=$?
 if [ "$res" == "2" ]
 then
   echo
-  echo "No working folder found!"
+  echo " 未发现工作文件夹!"
   scripts/press_enter
   exit 1
 fi
@@ -29,7 +28,7 @@ cd WORKING_*
 if [ ! -e META-INF/com/google/android/update-script ]
 then
   echo
-  echo "META-INF/com/google/android/update-script not found!"
+  echo " 未发现 META-INF/com/google/android/update-script !"
   cd ..
   scripts/press_enter
   exit 1
@@ -44,24 +43,22 @@ rm -f symlinks.log
 
 
 echo
-echo "Verification of META-INF/com/google/android/update-script"
-echo "-------------------------------------------------------------------"
+echo "         =  提  醒  =      "
+echo "--------------------------------------------------------------------"
+echo " 检验文件的路径：  META-INF/com/google/android/update-script  "
 echo  
-echo "The following tool will check your update-script for errors, so "
-echo "that you will be able to catch and diagnose potential problems"
-echo "now instead of during flashing (when the error messages are"
-echo "sometimes not descriptive enough)."
+echo " 接下来定制工具将会检查 update-script 脚本是否有错误，将会发现并诊断"
+echo " 在刷机过程（有时错误信息描写不足）中可能出现的潜在问题。"
 echo 
-echo "Please note that the script will not detect every possible error "
-echo "and may also report false alarms. Also, depending on the size of "
-echo "your update-script, it may take a few minutes to complete."
+echo " 请注意脚本将不会显示所有可能的错误，并且也会出现误报。"
+echo " 根据 update-script 脚本大小不同，可能将会花费几分钟以完成检查。"
 echo
-echo "-------------------------------------------------------------------"
+echo "--------------------------------------------------------------------"
 echo
 
 if [ "$1" != "no_clear" ]
 then
-  echo -n "Check update-script for errors (y/n)? (default: y): "
+  echo -n " 检查 update-script 脚本是否有错误(y/n)? (默认为: y): "
   read do_verify
 
   if [ "$do_verify" == "n" ]
@@ -72,7 +69,7 @@ then
   fi
 else
 
-  echo -n "Check update-script for errors (y/n)? (default: n): "
+  echo -n " 检查 update-script 脚本是否有错误(y/n)? (默认为: n): "
   read do_verify
 
   if [ "$do_verify" != "y" ]
@@ -96,7 +93,7 @@ sed -i -e ':a;N;$!ba;s/,\n[ ]*/, /g' META-INF/com/google/android/update-script
 #
 num_lines=`sed -n '$=' META-INF/com/google/android/update-script`
 
-echo "update-script has $num_lines lines"
+echo " update-script 刷机脚本拥有 $num_lines 命令行"
 echo
 
 errors_found=0
@@ -150,8 +147,8 @@ do
   if [ "$tmp_result" != "" ]
   then  
     errors_found=$(($errors_found+1))           
-    echo ">> WARNING: TMP partition is not supported in update-script.  You must"
-    echo ">>          convert this update-script to an updater-script."
+    echo ">>  提醒: update-script 刷机脚本不支持 TMP 分区，你必须将"
+    echo ">>       update-script 脚本转换为 updater-script 脚本。"
     continue
   fi
 
@@ -198,7 +195,7 @@ do
           if [ $first_line_num -lt $i ]
           then
             errors_found=$(($errors_found+1))
-            echo ">> WARNING: Overwriting permissions set in $grep_first_line"
+            echo ">>  警告: 正在覆盖 $grep_first_line 中的权限设置"
           fi
         fi
 
@@ -213,7 +210,7 @@ do
           if [ $first_line_num -lt $i ]
           then
             errors_found=$(($errors_found+1))
-            echo ">> WARNING: Same folder was referenced in $grep_first_line"
+            echo ">>  警告: 相同文件夹被引用在 $grep_first_line"
           fi
         fi
       fi
@@ -253,7 +250,7 @@ do
           "$partition" != "RECOVERY:" && "$partition" != "SDCARD:" ]]
       then
         errors_found=$(($errors_found+1))
-        echo ">> WARNING: Partition not recognized"
+        echo ">>  警告: 分区不被认可"
       fi
 
       #
@@ -280,7 +277,7 @@ do
             if [ $grep_line_num -lt $i ]
             then
               errors_found=$(($errors_found+1))
-              echo ">> ERROR: Should not be formatting this partition after files were already copied to it!"
+              echo ">>  错误: 不应在文件已经复制到分区后，再格式化此分区！"
             fi
           fi
 
@@ -293,8 +290,8 @@ do
            sed -e 's/package_extract_file[ ]*\([^ ]*\)[ ]*.*/\1/'`
 
       errors_found=$(($errors_found+1))           
-      echo ">> WARNING: Command package_extract_file not supported in update-script."
-      echo ">>          However, do not remove this line.  Convert file to updater-script."
+      echo ">>  警告: update-script 脚本不支持 package_extract_file 命令，"
+      echo ">>   但是并不会删除此命令行。转换文件为 updater-script 脚本。"
       ;;
 
     "show_progress") \
@@ -318,7 +315,7 @@ do
       fi
 
       errors_found=$(($errors_found+1))
-      echo ">> WARNING: Command \"$first_word\" not recognized by script"
+      echo ">>  警告: Command \"$first_word\" 未被脚本认可"
       ;;
   esac
 
@@ -349,7 +346,7 @@ do
           if [ "$find_result" == "" ]
           then
             errors_found=$(($errors_found+1))
-            echo ">> ERROR: $var not found in working folder"
+            echo ">>  提醒: 工作文件夹中未发现 $var"
             break
           fi
 
@@ -358,7 +355,7 @@ do
           if [ ! -e ../symlinks.log ] || [ `grep -c "$var " ../symlinks.log` == 0 ]
           then
             errors_found=$(($errors_found+1))
-            echo ">> WARNING: $var not found in working folder"
+            echo ">>  警告: 工作文件夹中未发现 $var"
             break
           fi
         fi
@@ -368,7 +365,7 @@ do
       if [ "$var" == "$not_expect_path" ] && [ -e $var ]
       then
         errors_found=$(($errors_found+1))
-        echo ">> ERROR: $var found in working folder"
+        echo ">>  提醒: 工作文件夹中已发现 $var"
 
         #
         # Automatically fix symlink conflicts
@@ -376,7 +373,7 @@ do
 
         if [ "$resolve_conflicts" == "0" ]
         then
-          echo -n "Automatically fix all symlink conflicts (y/n)? (default: y): "
+          echo -n "  自动修复所有 symlink 冲突(y/n)? (默认为: y): "
           read ask_delete
 
           if [ "$ask_delete" != "n" ]
@@ -406,16 +403,16 @@ rm -f symlinks.log
 echo
 if [ "$errors_found" != "0" ]
 then
-  echo "$errors_found issue(s) found.  Please review the update-script to ensure it is correct."
+  echo " 发现问题 $errors_found ，请检查 update-script 脚本以确保它是正确的。"
 
   if [ "$resolve_conflicts" == "1" ]
   then
     echo
-    echo "Number of symlink conflicts resolved: $resolved"
+    echo " symlink 编号冲突已经解决: $resolved"
   fi
 
 else
-  echo "No issues found."
+  echo " 未发现问题。"
 fi
 
 scripts/update_script_should_convert_back

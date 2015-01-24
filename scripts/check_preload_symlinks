@@ -1,20 +1,19 @@
 ############################################################################
 #
-# Copyright (c) 2013 - dsixda (dislam@rocketmail.com)
+# 本定制工具完全免费，由DsiXDA开发，由“ 半指遮天 ”完成汉化翻译。
 #
-# Android Kitchen is 100% free.  This script file is intended for personal
-# and/or educational use only.  It may not be duplicated for monetary
-# benefit or any other purpose without the permission of the developer.
+#     我的新浪微博：      http://weibo.com/hqapk
+#     我的腾讯微博：      http://t.qq.com/hqapkcom
 #
 ############################################################################
 
 #
-# This script has four mandatory arguments:
+# 这个脚本有四个强制的参数:
 #
-# $1 = base directory of the kitchen
-# $2 = path to system folder under working directory
-# $3 = path to img file
-# $4 = name of img file (e.g. hidden.img or tomb.img.ext4)
+# $1 = 厨房的基本目录
+# $2 = 路径到系统文件夹下的工作目录
+# $3 = 路径IMG文件
+# $4 = IMG文件名(如 hidden.img or tomb.img.ext4)
 #
 
 
@@ -41,7 +40,7 @@ then
   num_preload_links=${#preload_links[@]}
 
   echo 
-  echo -n "Under /system/app, removing <<$num_preload_links>> symlinks to APK and ODEX files in /preload/symlink/system/app "
+  echo -n "在 /system/app 文件夹下, 在 /preload/symlink/system/app 移除 <<$num_preload_links>> 软链到 APK 和 ODEX 文件"
   for item in ${preload_links[@]} 
   do
     echo -n "."
@@ -60,7 +59,7 @@ else
   if [ $num_odex_app -gt $num_apk_app ]
   then
     echo
-    echo "The /system/app folder is missing some APK (and maybe some ODEX) files."
+    echo " /system/app 文件夹中缺少某些APK文件（比如ODEX）."
 
     use_hidden=1
 
@@ -74,7 +73,7 @@ else
         [ "`grep -c ro.build.version.release=4.0 build.prop`" == "0" ]
     then
       echo
-      echo "The /system/app folder is potentially missing some APK/ODEX files"
+      echo " /system/app 文件夹可能丢失一些APK / odex文件 "
 
       use_hidden=1
     fi
@@ -88,20 +87,22 @@ if [ "$use_hidden" == "1" ]
 then
   
   echo
-  echo "These are probably found in $img_file"
+  echo " 在 $img_file 可能发现丢失的文件 "
 
   if [ ! -e $hidden_dir/$img_file ]
   then
     echo
-    echo "--> Place $img_file under the '$hidden_dir' folder <--"
-    echo "    (You can also ignore this step)"
+	echo "         =  云 卓 团 队 提 醒  =    "
+	echo "-------------------------------------------------------------"
+    echo "--> 将 $img_file 放在 '$hidden_dir' 文件夹下 <--"
+    echo "             (你也可以忽略这一步)"
     echo
     
     scripts/press_enter
 
     if [ ! -e $hidden_dir/$img_file ]
     then
-      echo "Skipping $img_file"
+      echo " 跳过 $img_file"
     fi
   fi
 
@@ -121,13 +122,13 @@ then
     cd $base_dir
 
     echo
-    echo "Converting $img_file into a format for unpacking ..."
+    echo " 转换 $img_file 的格式进行解包 ..."
     tools/samsung_files/simg2img_files/simg2img $hidden_dir/$img_file \
       $hidden_dir2/ext4_hidden.img
 
     if [ ! -e $hidden_dir2/ext4_hidden.img ]
     then
-      echo "Unable to convert $img_file!"
+      echo "错误：无法转换 $img_file 格式!"
       exit 1
     fi
 
@@ -151,7 +152,7 @@ then
     if [ "$?" == "1" ]
     then
       echo
-      echo "WARNING: ext4_hidden.img is in use.  Remove file manually after application is closed."
+      echo " 云卓团队警告: ext4_hidden.img 正在被程序占用，应用程序退出后请手动删除这个文件."
       echo
     fi
 
@@ -169,7 +170,7 @@ then
 
       if [ $num_preload_total -gt 0 ]
       then
-        echo "Found <<$num_preload_total>> APK and ODEX files under $img_file"
+        echo "发现 <<$num_preload_total>> APK 和 ODEX 在 $img_file 下"
         mkdir -p $working_dir/preload/symlink/system
         mv $hidden_dir2/symlink/system/app $working_dir/preload/symlink/system/ 
 
@@ -177,9 +178,9 @@ then
         then
           if [ $num_preload_links != $num_preload_total ]
           then
-            echo "Warning: This number does not equal the number of symlinks found under /system/app earlier!"
+            echo " 云卓团队警告: symlinks 列表与 /system/app 数目不等 ！"
           else
-            echo "This number matches the number of symlinks found under /system/app earlier"
+            echo " 云卓团队提醒：symlinks 列表与 /system/app 数目匹配 ！"
           fi
         fi
 
@@ -193,7 +194,7 @@ then
         if [ "$device_name" == "" ]
         then
           echo
-          echo "WARNING: Device name has not been defined under /tools/edify_defs!"
+          echo "云卓团队警告: 设备名称尚未在 /tools/edify_defs 文件下定义!"
           echo
         else
           preload_mnt=`scripts/get_edify_def_val $device_name preload_mnt`
@@ -203,33 +204,39 @@ then
             echo
             preload_mnt=`echo $preload_mnt | sed -e 's/\\\\//g'`
 
-            echo "The mount point for /preload has already been defined for this"
-            echo "device as $preload_mnt under /tools/edify_defs/$device_name. "
-            echo "Good."
+            echo
+	        echo "         =  云 卓 团 队 提 醒  =    "
+	        echo "-------------------------------------------------------"
+            echo "这个挂载点 /preload 是已经定义为这个设备和"
+            echo "$preload_mnt 一样在 /tools/edify_defs/$device_name 下. "
+            echo "非常好."
           else
             echo
-            echo "Warning: No /preload mount point ('preload_mnt') was defined under"
-            echo "tools/edify_defs/$device_name! Please ensure this is specified before"
-            echo "proceeding to next stage (press Enter when done or if you want to"
-            echo "skip this step)."
+	        echo "         =  云 卓 团 队 警 告  =    "
+	        echo "-------------------------------------------------------"
+            echo "没有 /preload 挂载点 ('preload_mnt') 被定义在"
+            echo "tools/edify_defs/$device_name 下! 请确认这个指定在"
+            echo "进入下一阶段之前，（完成后或者直接跳过这一步请按回车键)"
             echo
             scripts/press_enter
           fi
         fi
 
-        echo 
-        echo "NOTE: If you wish to de-odex this ROM, you will need to move the APK"
-        echo "and ODEX files from the /preload apps folder to /system/app before you"
-        echo "de-odex them. The kitchen will automatically handle this."
+        echo
+	    echo "         =  云 卓 团 队 提 醒  =    "
+	    echo "-------------------------------------------------------"
+        echo "如果你想要de-odex优化ROM，你必须移动APK和ODEX文件"
+        echo "从/preload apps folder 到 /system/app ，在de-odex优化"
+	    echo "之前，厨房将自动处理这些； 回车键继续。"
         echo
 
         scripts/press_enter
 
       else
-        echo "Warning: No APK/ODEX files found in $img_file!"
+        echo "云卓团队警告: 在 $img_file 未发现 APK/ODEX!"
       fi
     else
-      echo "Warning: No /preload/symlink/system/app folder found in $img_file!"
+      echo "云卓团队警告: 在 $img_file 未发现 /preload/symlink/system/app!"
     fi
 
     echo
@@ -241,7 +248,7 @@ then
 elif [ -e $hidden_dir/$img_file ]
 then
   echo
-  echo "Ignoring $img_file"
+  echo "忽略 $img_file"
 
   if [ "$hidden_dir" != "original_update" ]
   then

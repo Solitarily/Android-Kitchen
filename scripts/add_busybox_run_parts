@@ -1,10 +1,9 @@
 ############################################################################
 #
-# Copyright (c) 2012 - dsixda (dislam@rocketmail.com)
+# 本定制工具完全免费，由DsiXDA开发，由“ 半指遮天 ”完成汉化翻译。
 #
-# Android Kitchen is 100% free.  This script file is intended for personal
-# and/or educational use only.  It may not be duplicated for monetary
-# benefit or any other purpose without the permission of the developer.
+#     我的新浪微博：      http://weibo.com/hqapk
+#     我的腾讯微博：      http://t.qq.com/hqapkcom
 #
 ############################################################################
 
@@ -13,19 +12,18 @@ if [ "$1" == "show_help" ]
 then
 
   clear
-  echo
+  echo "      = 云卓团队提醒 =      "
   echo "-----------------------------------------------------------------"
   echo  
-  echo "The BusyBox Run-Parts feature allows the device to run scripts"
-  echo "from the /system/etc/init.d folder during a reboot. "
+  echo "  BusyBox Run-Parts 功能允许设备启动时按顺序执行"
+  echo "  路径 /system/etc/init.d  中的脚本。"
   echo 
-  echo "Normally the script names start with a number to indicate the "
-  echo "order in which they will be executed."
+  echo "  一般这些脚本的文件名都以数字开头，从而显示执行时的先后顺序。"
   echo
   echo "-----------------------------------------------------------------"
   echo
 
-  echo -n "Proceed with Run-Parts feature (y/n)? (default: y): "
+  echo -n " 添加 Run-Parts 功能(y/n)? (直接回车默认: y): "
   read do_runparts
 
   if [ "$do_runparts" == "n" ]
@@ -37,12 +35,13 @@ then
 elif [ "$1" == "for_apps2sd" ]
 then
 
-  echo
-  echo "Optional: You can decide to add the BusyBox Run-Parts method for apps2sd."
-  echo "          This option allows you to run scripts under /system/etc/init.d,"
-  echo "          and not just those for a2sd."
-  echo
-  echo -n "Do you want to implement the BusyBox Run-Parts method (y/n)? (default: n): "
+  echo "      = 云卓团队提醒 =      "
+  echo "-----------------------------------------------------------------"
+  echo "  你可以选择是否为 apps2sd 添加 BusyBox Run-Parts 方式"
+  echo "  此选项允许按顺序执行 /system/etc/init.d 文件夹中的所有脚本，"
+  echo "   而不仅只是 a2sd 脚本。"
+  echo "-----------------------------------------------------------------"
+  echo -n " 您是否希望实现 BusyBox Run-Parts 功能(y/n)? (默认: n): "
   read do_runparts
 
   if [ "$do_runparts" != "y" ]
@@ -60,8 +59,11 @@ su_path=`find . -name su`
 
 if [ "$su_path" == "" ]
 then
-  echo "'su' binary not found under working folder!"
-  echo "You must root your ROM first."
+  echo "      = 云卓团队提醒 =      "
+  echo "--------------------------------------------"
+  echo " 未能在工作文件夹中发现二进制文件 su "
+  echo " 你必须先对你的 ROM 获取Root权限"
+  echo "--------------------------------------------"
   cd ..
   exit 0
 fi
@@ -74,10 +76,10 @@ fi
 
 if [ ! -d system/etc/init.d ]
 then
-  echo 
-  echo "WARNING: You have not yet created the folder /system/etc/init.d"
+  echo "      = 云卓团队提醒 =      "
+  echo "--------------------------------------------"
+  echo "  您还没有创建文件夹/系统，正在创建...."
   echo
-  echo "Creating /system/etc/init.d folder ..."
   mkdir -p system/etc/init.d
   touch system/etc/init.d/placeholder
 fi
@@ -104,35 +106,35 @@ then
 
   if [ $test_initd != 0 ]
   then
-    echo "Busybox Run-Parts already added!"
+    echo " 已经添加 Busybox Run-Parts 功能"
     exit 0
   fi
 
   cd WORKING_*
   if [ ! -d system/etc/init.d ]
   then
-    echo "No /system/etc/init.d folder detected!"
+    echo " 未发现 /system/etc/init.d 文件夹"
     cd ..
     exit 0
   fi
   cd ..
 
-  echo 
-  echo "Because this device ($device) does not have a real boot.img with an init.rc,"
-  echo "we have to instead use a custom kernel (zImage) that has busybox run-parts"
-  echo "support built into it."
+  echo "        = 云卓团队提醒 =      "
+  echo "-----------------------------------------------------------------------"
+  echo " 因为此设备($device)并没有一个真正的 boot.img 和 init.rc 文件，我们必须"
+  echo " 替代使用一个支持 busybox run-parts 功能的定制内核(zImage)加入设备"
   echo
-  echo "If you are using a custom kernel AND you know it supports busybox run-parts"
-  echo "(/etc/init.d scripts), then all you need to do now is to set the appropriate"
-  echo "permissions in the update-script.  If you are using a different kernel, then"
-  echo "merely setting the permissions will not help."
+  echo " 如果你正在使用定制内核且支持 busybox run-parts 功能"
+  echo " (/etc/init.d 脚本)，此时需要在 update-script 脚本中设置合适的权限"
+  echo " 如果你正在使用不同的内核，此时仅仅设置权限是没用的"
+  echo "-----------------------------------------------------------------------"
   echo 
-  echo -n "Do you wish to set the /system/etc/init.d permissions (y/n)? (default: y): "
+  echo -n " 你希望设置 /system/etc/init.d 权限吗(y/n)? (默认: y): "
   read do_runparts
 
   if [ "$do_runparts" == "n" ]
   then
-    echo "Cancelled"
+    echo "取消"
     exit 0
   fi
 
@@ -157,7 +159,7 @@ else
   then
     cd BOOT-EXTRACTED/boot.img-ramdisk
   else
-    echo "Error: BOOT-EXTRACTED/boot.img-ramdisk folder not found!"
+    echo "  云卓团队提醒: 未发现 BOOT-EXTRACTED/boot.img-ramdisk 文件夹"
     exit 0
   fi
 
@@ -168,20 +170,20 @@ else
 
   if [ "$test_start" != "0" ] && [ "$test_service" != "0" ]
   then
-    echo "Busybox Run-Parts already implemented in init.rc!"
+    echo "Busybox Run-Parts 已经在 init.rc 中设置"
     cd ../..
     echo
-    echo "Removing BOOT-EXTRACTED folder ..."
+    echo " 删除 BOOT-EXTRACTED 文件夹 ..."
     rm -rf BOOT-EXTRACTED
     scripts/add_initd_perm_to_update_script
     exit 0
 
   elif [ "$test_cm_sysinit" != "0" ]
   then
-    echo "CyanogenMod sysinit for /etc/init.d is already enabled in init.rc!"
+    echo "CyanogenMod sysinit 关于 /etc/init.d 已经在 init.rc 中开启"
     cd ../..
     echo
-    echo "Removing BOOT-EXTRACTED folder ..."
+    echo " 删除 BOOT-EXTRACTED 文件夹 ..."
     rm -rf BOOT-EXTRACTED
     scripts/add_initd_perm_to_update_script
     exit 0
@@ -201,12 +203,12 @@ else
     if [ `grep -c "start a2sd" init.rc` != 0 ]
     then
       echo
-      echo "Ensuring 'start sysinit' is in init.rc in ramdisk ..."
+      echo " 确保 ramdisk 中的 init.rc 文件中有 start sysinit ..."
 
       sed -i -e 's/start a2sd/start sysinit/g' init.rc    
 
       echo
-      echo "Ensuring 'service sysinit' is in init.rc in ramdisk ..."
+      echo " 确保 ramdisk 中的 init.rc 文件中有 service sysinit ..."
 
       #sed -i -e 's/service a2sd[ ]*\/system\/bin\/logwrapper[ ]*\/system\/bin\/sh[ ]*\/system\/bin\/a2sd/service sysinit \/system\/bin\/logwrapper '"$bb_path"' run-parts \/system\/etc\/init.d/' init.rc
       sed -i -e 's/service a2sd[ ]*\/system\/bin\/logwrapper[ ]*\/system\/bin\/sh[ ]*\/system\/bin\/a2sd/service sysinit \/system\/bin\/logwrapper \/system\/xbin\/busybox run-parts \/system\/etc\/init.d/' init.rc
@@ -214,7 +216,7 @@ else
     else
 
       echo
-      echo Modifying init.rc in ramdisk ...
+      echo  修改 ramdisk 中的 init.rc 文件 ...
 
       if [ "$test_start" == "0" ] && [ "$test_property" == "0" ]
       then
@@ -241,7 +243,7 @@ else
     if [ "`grep sysinit init.rc`" == "" ]
     then
       echo
-      echo "Error: Unable to modify init.rc!"
+      echo "  云卓团队提醒: 不能修改 init.rc 文件!"
     fi
 
     cd ../..

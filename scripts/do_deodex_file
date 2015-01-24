@@ -1,31 +1,30 @@
 ############################################################################
 #
-# Copyright (c) 2012 - dsixda (dislam@rocketmail.com)
+# 本定制工具完全免费，由DsiXDA开发，由“ 半指遮天 ”完成汉化翻译。
 #
-# Android Kitchen is 100% free.  This script file is intended for personal
-# and/or educational use only.  It may not be duplicated for monetary
-# benefit or any other purpose without the permission of the developer.
+#     我的新浪微博：      http://weibo.com/hqapk
+#     我的腾讯微博：      http://t.qq.com/hqapkcom
 #
 ############################################################################
 
-# Mandatory
+# 强制性
 api_level=$1
 
-# Mandatory
+# 强制性
 odex_file=$2
 
-# Mandatory
+# 强制性
 bootclass_dir=$3
 
 if [ "$odex_file" == "" ]
 then
-  echo "Error: No .odex file specified"
+  echo " 云卓团队提醒: 未指定 .odex 文件"
 
 elif [ -e $odex_file ]
 then
-  echo "Disassembling $odex_file ..."
+  echo " 反编译 $odex_file ..."
 else
-  echo "Error: $odex_file not found"
+  echo " 云卓团队提醒: 未发现 $odex_file 文件"
 fi
 
 bin_list="baksmali.jar smali.jar"
@@ -34,7 +33,7 @@ for bin_file in $bin_list
 do
   if [ ! -e $bin_file ]
   then
-    echo "Error: $bin_file not found!"
+    echo " 云卓团队提醒: 未发现 $bin_file!"
     exit 0
   fi
 done
@@ -42,7 +41,7 @@ done
 
 
 #
-# Call baksmali
+# 调用 baksmali，但首先检查是否需要 class 文件
 #
 
 java_cmd="java -Xmx512m -jar baksmali.jar -a $api_level -d $bootclass_dir -x $odex_file"
@@ -58,7 +57,7 @@ is_error=$?
 if [ "$is_error" == "0" ] && [ -d out ]
 then
 
-  echo "Assembling into classes.dex ..."
+  echo " 反编译成 classes.dex ..."
   java_cmd="java -Xmx512m -jar smali.jar -a $api_level -o classes.dex out"
   
   echo $java_cmd
@@ -67,13 +66,13 @@ then
   rm -rf out
 
   #
-  # Ensure classes.dex was produced
+  # 确保制作 classes.dex
   #
   if [ -e classes.dex ]
   then
 
     #
-    # Ensure the .odex file's .apk or .jar is found
+    # 确保发现的.odex 文件.apk 或.jar
     #
 
     no_ext=`echo $odex_file | sed 's/.odex//'`
@@ -83,7 +82,7 @@ then
 
     if [ -e $main_file ]
     then
-      echo "Found $main_file"
+      echo " 已发现 $main_file"
       ext=apk
 
     else
@@ -91,10 +90,10 @@ then
       
       if [ -e $main_file ]
       then
-        echo "Found $main_file"
+        echo " 已发现 $main_file"
         ext=jar
       else          
-        echo "ERROR: Can't find $no_ext.jar or $no_ext.apk"
+        echo " 云卓团队提醒: 无法发现 $no_ext.jar 或 $no_ext.apk"
         error_found=yes
       fi
     fi
@@ -103,34 +102,34 @@ then
     if [ $error_found == yes ]
     then
 
-      echo "Removing classes.dex ..."
+      echo " 移除 classes.dex ..."
       rm -f classes.dex
 
-      # Keep the odex file so that it's left unchanged
+      # 保持ODEX文件，以便它保持不变
 
     else
 
-      echo "Removing $odex_file ..."
+      echo " 移除 $odex_file ..."
       rm -f $odex_file
 
-      echo "Put classes.dex into $main_file ..."
+      echo " 将 classes.dex 放入 $main_file ..."
       zip -r -q $main_file classes.dex
       rm -f classes.dex
       if [ -e $main_file ]
       then
-        echo "$main_file has been deodexed"
+        echo " $main_file 已经进行 Deodex 操作"
       fi
       exit 0
     
     fi
 
   else
-    echo "WARNING: Unable to produce classes.dex!"
+    echo " 云卓团队提醒: 无法生成 classes.dex 文件!"
     exit 1
   fi          
 
 else
-  #echo "WARNING: Cannot deodex $odex_file"
+  #echo " 云卓团队提醒: 无法对 $odex_file 文件进行 Deodex 操作"
   rm -rf out
   exit 1
 fi

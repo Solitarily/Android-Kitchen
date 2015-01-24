@@ -1,10 +1,9 @@
 ############################################################################
 #
-# Copyright (c) 2013 - dsixda (dislam@rocketmail.com)
+# 本定制工具完全免费，由DsiXDA开发，由“ 半指遮天 ”完成汉化翻译。
 #
-# Android Kitchen is 100% free.  This script file is intended for personal
-# and/or educational use only.  It may not be duplicated for monetary
-# benefit or any other purpose without the permission of the developer.
+#     我的新浪微博：      http://weibo.com/hqapk
+#     我的腾讯微博：      http://t.qq.com/hqapkcom
 #
 ############################################################################
 
@@ -17,7 +16,7 @@ update_dir=`pwd`
 if [ ! -e updater-script ]
 then
   echo
-  echo "Error: No updater-script found!"
+  echo " 云卓团队提醒: 没有发现 updater-script 脚本"
   cd ../../../../..
   exit 0
 fi
@@ -25,13 +24,13 @@ fi
 if [ -e update-binary.orig ]
 then
   echo
-  echo "Copying original update-binary"
+  echo " 复制原始 update-binary 脚本"
   cp -vf update-binary.orig update-binary
 
 elif [ -e update-binary ]
 then
   echo
-  echo "Using existing update-binary"
+  echo " 使用现有的 update-binary 脚本"
   echo
 
 else
@@ -69,7 +68,7 @@ else
   cd $update_dir
 
   echo
-  echo "Copying update-binary ..."
+  echo " 复制 update-binary 脚本 ..."
 
   if [ "$sgs2" == "1" ] || [ "$sgs2x" = "1" ]
   then
@@ -93,10 +92,10 @@ else
     then
 
       #
-      # Four args for mount
+      #  mount的四个参数为 
       #
-      # e.g. mount("ext3", "EMMC", "/dev/block/mmcblk0p26", "/data");
-      # e.g. mount("yaffs2", "MTD", "userdata", "/data");
+      # 例如： mount("ext3", "EMMC", "/dev/block/mmcblk0p26", "/data");
+      # 例如： mount("yaffs2", "MTD", "userdata", "/data");
       #
 
       if [ "$mt65xx" == "1" ]
@@ -109,15 +108,15 @@ else
     else
 
       #
-      # Three args for mount, but no MTD or assert
+      # 三个参数为 mount, 但没有 MTD 或 assert
       #
       # mount("ext3", "/dev/block/mmcblk0p25", "/system");
       #
-      # OR
+      # 或
       #
-      # Three arguments, can use MTD and assert 
+      # 三个参数, 可以使用 MTD 和 assert 
       #
-      # e.g. mount("MTD", "userdata", "/data");
+      # 例如： mount("MTD", "userdata", "/data");
       #
 
       cp -vf ../../../../../tools/update_files/mtd-update-binary update-binary

@@ -1,10 +1,9 @@
 ############################################################################
 #
-# Copyright (c) 2012 - dsixda (dislam@rocketmail.com)
+# 本定制工具完全免费，由DsiXDA开发，由“ 半指遮天 ”完成汉化翻译。
 #
-# Android Kitchen is 100% free.  This script file is intended for personal
-# and/or educational use only.  It may not be duplicated for monetary
-# benefit or any other purpose without the permission of the developer.
+#     我的新浪微博：      http://weibo.com/hqapk
+#     我的腾讯微博：      http://t.qq.com/hqapkcom
 #
 ############################################################################
 
@@ -17,7 +16,7 @@ then
 
   if [ "`grep -om 1 sysro update-script`" == "sysro" ] && [ "`grep -om 1 sysrw update-script`" == "sysrw" ]
   then
-    echo "update-script already has sysro/sysrw content"
+    echo " update-script 脚本中已存在 sysro/sysrw 内容"
 
   else
 
@@ -29,7 +28,7 @@ then
 
       if [ "`find ../../../../system/xbin -name sysro`" == "" ]
       then
-        echo "Copying system/bin/sysro to system/xbin/sysro"
+        echo " 复制 system/bin/sysro 到 system/xbin/sysro"
         cp -f ../../../../system/bin/sysro ../../../../system/xbin/sysro
       fi
     fi
@@ -39,13 +38,13 @@ then
 
       if [ "`find ../../../../system/xbin -name sysrw`" == "" ]
       then
-        echo "Copying system/bin/sysrw to system/xbin/sysrw"
+        echo " 复制 system/bin/sysrw 到 system/xbin/sysrw"
         cp -f ../../../../system/bin/sysrw ../../../../system/xbin/sysrw
       fi
     fi
 
     echo
-    echo "Updating update-script with sysro and sysrw entries"
+    echo " 添加 sysro 和 sysrw 内容到 update-script 脚本"
 
 
     if [ `grep -c "set_perm_recursive.*SYSTEM:xbin[ ]*$" update-script` != 0 ]
@@ -67,12 +66,12 @@ then
     
     if [ "`grep -om 1 sysro update-script`" != "sysro" ] || [ "`grep -om 1 sysrw update-script`" != "sysrw" ]
     then
-      echo "Error: Unable to update update-script with sysro/sysrw"
+      echo " 云卓团队提醒：无法在 update-script 脚本中添加 sysro/sysrw"
     fi
   fi
 
 else
-  echo "Error: No update-script found!"
+  echo " 云卓团队提醒：未发现 update-script 脚本，请确认!"
 fi
 
 cd ../../../../..

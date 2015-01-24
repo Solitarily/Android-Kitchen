@@ -1,26 +1,25 @@
 ############################################################################
 #
-# Copyright (c) 2012 - dsixda (dislam@rocketmail.com)
+# 本定制工具完全免费，由DsiXDA开发，由“ 半指遮天 ”完成汉化翻译。
 #
-# Android Kitchen is 100% free.  This script file is intended for personal
-# and/or educational use only.  It may not be duplicated for monetary
-# benefit or any other purpose without the permission of the developer.
+#     我的新浪微博：      http://weibo.com/hqapk
+#     我的腾讯微博：      http://t.qq.com/hqapkcom
 #
 ############################################################################
 
 
 clear
-echo
+echo "      =  云 卓 团 队 提 醒  =  "
 echo "-----------------------------------------------------------------"
 echo 
-echo "This option will disable the 'noise' that plays whenever certain"
-echo "Android devices are turned on. This option may not be supported"
-echo "for your device."
+echo " 此选项将禁用 Android 设备的开机音乐 "
+echo ""
+echo " 此功能不一定支持所有的设备，但不会对 ROM 文件造成损坏"
 echo
 echo "-----------------------------------------------------------------"
 echo
 
-echo -n "Proceed with disabling boot screen sounds (y/n)? (default: y): "
+echo -n " 禁用开机音乐继续执行(y/n)? (默认: y): "
 read do_disable
 
 if [ "$do_disable" == "n" ]
@@ -32,9 +31,9 @@ echo
 
 if [ -d WORKING_* ]
 then
-  echo Working folder found
+  echo 已发现工作文件夹
 else
-  echo Working folder not found, you will need to create one!
+  echo 未发现工作文件夹，你需要创建一个
   exit 0
 fi
 
@@ -62,26 +61,26 @@ do
     cd $xml_dir/
 
     echo
-    echo "CURRENTLY IN $xml_dir/boot_animation.xml:"
+    echo "当前在  $xml_dir/boot_animation.xml 中:"
     grep useAudio boot_animation.xml
     echo
 
     if [ "`grep useAudio='"1"' boot_animation.xml`" == "" ]
     then
-      echo Sound is already turned off, no need to change
+      echo 开机音乐已经禁用，不需要修改
     else
-      echo Modifying boot_animation.xml ...
+      echo 修改  boot_animation.xml ...
       perl -pi -e 's/useAudio="1"/useAudio="0"/g' boot_animation.xml
 
       echo
-      echo "CHANGED TO:"
+      echo " 现在 : "
       grep useAudio boot_animation.xml
     fi
 
     if [ -e boot_animation.xml.bak ]
     then
       echo
-      echo "Removing boot_animation.xml.bak"  
+      echo " 删除  boot_animation.xml.bak"  
       rm boot_animation.xml.bak
     fi
 
@@ -97,7 +96,7 @@ then
   success=0
 
   echo
-  echo "boot_animation.xml not found in this ROM"
+  echo " 在 ROM 中未发现 /system/media/bootscreen/boot_animation.xml"
 
   file_list="\
               data/local/android_media.mp3 \
@@ -129,7 +128,7 @@ then
 
     if [ -e $snd ]
     then
-      echo "--> Renaming /$snd"
+      echo "--> 重命名 /$snd"
       mv $snd $snd.bak
       success=1
     elif [ -e $snd.bak ]
@@ -137,7 +136,7 @@ then
       echo "--> Found $snd.bak (boot sound already disabled?)"
       success=-1
     else
-      echo "/$snd not found in this ROM"
+      echo " 在 ROM 中未发现 /$snd"
     fi
   
   done
